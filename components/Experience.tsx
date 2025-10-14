@@ -8,24 +8,28 @@ export default function Experience() {
         <div className="space-y-8">
           <div className="border-l-2 border-blue-400 pl-6">
             <h3 className="text-xl font-semibold text-slate-100">
-              Software Engineer
+              Registered Dental Hygienist
             </h3>
-            <p className="text-blue-400">Company Name • 2023 - Present</p>
+            <p className="text-blue-400">
+              Sackville Dental Centre • 2021 - Present
+            </p>
             <ul className="mt-4 space-y-2 text-slate-300">
               <li className="flex items-start">
                 <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Write modern, performant, maintainable code for a diverse array
-                of client and internal projects
+                Worked closely with patients and dental staff to keep treatments
+                efficient and comfortable
               </li>
               <li className="flex items-start">
                 <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Work with a variety of different languages, platforms,
-                frameworks, and content management systems
+                Educated patients on oral health, learning how to make complex
+                ideas easy to understand — a skill now applied to building
+                user-friendly software
               </li>
               <li className="flex items-start">
                 <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Communicate with multi-disciplinary teams of engineers,
-                designers, producers, and clients
+                Developed strong attention to detail and patient-focused mindset
+                that translates to creating accessible, user-centered
+                applications
               </li>
             </ul>
           </div>

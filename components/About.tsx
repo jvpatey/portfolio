@@ -9,47 +9,44 @@ export default function About() {
             </h2>
             <div className="space-y-4 text-slate-300 leading-relaxed">
               <p>
-                Hello! My name is Jeffrey and I enjoy creating things that live
-                on the internet. My interest in web development started back in
-                2012 when I decided to try editing custom Tumblr themes — turns
-                out hacking together a custom reblog button taught me a lot
-                about HTML & CSS!
+                Hello! I&apos;m Jeffrey, a full-stack software developer with a
+                background in healthcare and a passion for building practical,
+                purpose-built tools. After 10 years in patient care, I bring a
+                detail-oriented mindset and genuine interest in health tech and
+                SaaS products that simplify everyday tasks.
               </p>
               <p>
-                Fast-forward to today, and I&apos;ve had the privilege of
-                working at an advertising agency, a start-up, a huge
-                corporation, and a student-led design studio. My main focus
-                these days is building accessible, inclusive products and
-                digital experiences at Upstatement for a variety of clients.
+                I love bringing ideas to life through responsive, accessible
+                design that makes complex tasks feel simple. My projects range
+                from mobile apps like HomeKeep (available on the App Store) to
+                web applications like OralCheckr, each solving real problems
+                with clean, user-friendly interfaces.
               </p>
-              <p>
-                Here are a few technologies I&apos;ve been working with
-                recently:
-              </p>
+              <p>Here are the technologies I&apos;ve been working with:</p>
               <div className="grid grid-cols-2 gap-2 text-sm mt-4">
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  JavaScript (ES6+)
+                  React & React Native
                 </div>
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  React
+                  Next.js & TypeScript
                 </div>
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  Next.js
+                  Node.js & Express
                 </div>
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  Node.js
+                  PostgreSQL & Supabase
                 </div>
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  TypeScript
+                  RESTful API Design
                 </div>
                 <div className="flex items-center">
                   <span className="text-blue-400 mr-2">▸</span>
-                  Tailwind CSS
+                  Auth (JWT, OAuth)
                 </div>
               </div>
             </div>

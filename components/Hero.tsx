@@ -10,12 +10,12 @@ export default function Hero() {
             Jeffrey Patey.
           </h1>
           <h2 className="text-4xl md:text-6xl font-bold text-slate-300">
-            I build things for the web.
+            I&apos;m a full stack software developer.
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
-            I&apos;m a software engineer specializing in building (and
-            occasionally designing) exceptional digital experiences. Currently,
-            I&apos;m focused on building accessible, human-centered products.
+            I build web and mobile applications that solve real problems.
+            Passionate about creating intuitive user experiences and clean,
+            efficient code.
           </p>
           <div className="pt-8">
             <a
