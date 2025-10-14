@@ -13,16 +13,17 @@ export default function Hero() {
             I build things for the web.
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
-            I'm a software engineer specializing in building (and occasionally
-            designing) exceptional digital experiences. Currently, I'm focused
+            I&apos;m a software engineer specializing in building (and occasionally
+            designing) exceptional digital experiences. Currently, I&apos;m focused
             on building accessible, human-centered products.
           </p>
           <div className="pt-8">
             <a
               href="#projects"
-              className="inline-block px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-blue-500/25"
+              className="relative group inline-block px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
             >
-              Check out my work!
+              <span className="relative z-10">Check out my work!</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           </div>
         </div>
