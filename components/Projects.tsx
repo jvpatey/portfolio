@@ -2,9 +2,9 @@ export default function Projects() {
   return (
     <section id="projects" className="py-20 px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-12">
-              <span className="text-blue-400">03.</span> Some Things I&apos;ve Built
-            </h2>
+        <h2 className="text-3xl font-bold mb-12">
+          <span className="text-blue-400">03.</span> Some Things I&apos;ve Built
+        </h2>
         <div className="space-y-20">
           {/* Project 1 */}
           <div className="grid md:grid-cols-2 gap-8 items-center">

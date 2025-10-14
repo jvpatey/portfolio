@@ -13,9 +13,9 @@ export default function Hero() {
             I build things for the web.
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
-            I&apos;m a software engineer specializing in building (and occasionally
-            designing) exceptional digital experiences. Currently, I&apos;m focused
-            on building accessible, human-centered products.
+            I&apos;m a software engineer specializing in building (and
+            occasionally designing) exceptional digital experiences. Currently,
+            I&apos;m focused on building accessible, human-centered products.
           </p>
           <div className="pt-8">
             <a
