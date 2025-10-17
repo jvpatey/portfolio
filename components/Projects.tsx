@@ -27,14 +27,31 @@ export default function Projects() {
             imagePosition="right"
           />
 
-          {/* Another Project */}
+          {/* OralCheckr Project */}
           <ProjectCard
-            title="Another Project"
-            description="A clean, simple and responsive portfolio template built with Next.js and styled with Tailwind CSS. Perfect for developers who want to showcase their work in a professional way."
-            technologies={["Next.js", "React", "TypeScript", "Tailwind CSS"]}
-            githubUrl="#"
-            externalUrl="#"
-            imagePlaceholder={true}
+            title="OralCheckr"
+            description="A comprehensive web app for oral health assessment and habit tracking. Users complete a detailed questionnaire to receive a personalized oral health score with tailored recommendations. Features include a daily habit tracker with progress analytics, monthly insights with calendar views, and yearly heatmaps to visualize long-term oral health trends."
+            technologies={[
+              "React",
+              "TypeScript",
+              "Vite",
+              "Node.js",
+              "Express",
+              "MySQL",
+            ]}
+            githubUrl="https://github.com/jvpatey/OralCheckr"
+            externalUrl="https://jvpatey.github.io/OralCheckr/"
+            images={[
+              "/oralcheckr1.png",
+              "/oralcheckr2.png",
+              "/oralcheckr3.png",
+              "/oralcheckr4.png",
+              "/oralcheckr5.png",
+              "/oralcheckr6.png",
+              "/oralcheckr7.png",
+              "/oralcheckr8.png",
+              "/oralcheckr9.png",
+            ]}
             imagePosition="left"
           />
         </div>
