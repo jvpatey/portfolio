@@ -17,20 +17,10 @@ export default function Experience() {
             <ul className="mt-4 space-y-2 text-slate-300">
               <li className="flex items-start">
                 <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Worked closely with patients and dental staff to keep treatments
-                efficient and comfortable
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Educated patients on oral health, learning how to make complex
-                ideas easy to understand — a skill now applied to building
-                user-friendly software
-              </li>
-              <li className="flex items-start">
-                <span className="text-blue-400 mr-2 mt-1">▸</span>
-                Developed strong attention to detail and patient-focused mindset
-                that translates to creating accessible, user-centered
-                applications
+                Worked closely with patients to keep treatments efficient and
+                comfortable—skills I now apply to building user-friendly,
+                accessible software with attention to detail and a user-first
+                approach.
               </li>
             </ul>
           </div>

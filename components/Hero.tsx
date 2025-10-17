@@ -15,8 +15,6 @@ export default function Hero() {
           </h2>
           <p className="text-lg text-slate-400 max-w-2xl leading-relaxed">
             I build web and mobile applications that solve real problems.
-            Passionate about creating intuitive user experiences and clean,
-            efficient code.
           </p>
           <div className="pt-8">
             <a
