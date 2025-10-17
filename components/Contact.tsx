@@ -1,3 +1,4 @@
+// Contact section component - includes contact information and a call to action
 export default function Contact() {
   return (
     <section id="contact" className="py-20 px-6 lg:px-8">

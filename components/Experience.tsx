@@ -1,3 +1,4 @@
+// Experience section component - includes work experience
 export default function Experience() {
   return (
     <section id="experience" className="py-20 px-6 lg:px-8 bg-slate-800/50">

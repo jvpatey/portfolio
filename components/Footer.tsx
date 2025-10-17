@@ -1,3 +1,4 @@
+// Footer component - includes social links and copyright information
 export default function Footer() {
   return (
     <footer className="border-t border-slate-800 py-8 px-6 lg:px-8">

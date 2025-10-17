@@ -6,6 +6,7 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
+// Main portfolio page
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100">

@@ -1,5 +1,6 @@
 "use client";
 
+// Navigation component - includes logo, navigation links, and resume button
 import Link from "next/link";
 import { useState, useEffect } from "react";
 

@@ -1,3 +1,4 @@
+// Projects section component - includes featured projects links
 export default function Projects() {
   return (
     <section id="projects" className="py-20 px-6 lg:px-8">

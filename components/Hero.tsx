@@ -1,3 +1,4 @@
+// Hero section component - includes name, title, and work button
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center px-6 lg:px-8">

@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+// About section component - includes bio, portrait, and skills
 export default function About() {
   return (
     <section id="about" className="py-20 px-6 lg:px-8">
