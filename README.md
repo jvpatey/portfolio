@@ -40,6 +40,7 @@ A modern, fully responsive portfolio website featuring Apple-style scroll animat
 - Optimized images and assets
 - Production-ready build
 - SEO-friendly structure
+- Real-time analytics with Vercel Analytics
 
 ### 🎯 Key Sections
 
@@ -51,14 +52,15 @@ A modern, fully responsive portfolio website featuring Apple-style scroll animat
 
 ## 🛠️ Tech Stack
 
-| Technology        | Purpose                           |
-| ----------------- | --------------------------------- |
-| **Next.js 14**    | React framework with App Router   |
-| **React 18**      | UI library                        |
-| **TypeScript**    | Type safety and better DX         |
-| **Framer Motion** | Smooth animations and transitions |
-| **Tailwind CSS**  | Utility-first styling             |
-| **next/image**    | Optimized image loading           |
+| Technology           | Purpose                           |
+| -------------------- | --------------------------------- |
+| **Next.js 14**       | React framework with App Router   |
+| **React 18**         | UI library                        |
+| **TypeScript**       | Type safety and better DX         |
+| **Framer Motion**    | Smooth animations and transitions |
+| **Tailwind CSS**     | Utility-first styling             |
+| **Vercel Analytics** | Real-time visitor tracking        |
+| **next/image**       | Optimized image loading           |
 
 ## 📦 Getting Started
 
