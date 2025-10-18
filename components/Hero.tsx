@@ -21,7 +21,7 @@ export default function Hero() {
               href="#projects"
               className="relative group inline-block px-8 py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-lg shadow-xl shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
             >
-              <span className="relative z-10">Check out my work!</span>
+              <span className="relative z-10">Check out my work</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </a>
           </div>
