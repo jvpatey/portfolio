@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("about");
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,19 +15,48 @@ export default function Navigation() {
 
       // Update active section based on scroll position
       const sections = ["about", "experience", "projects", "contact"];
-      const currentSection = sections.find((section) => {
+
+      // Check if we're still in the hero section (top of page)
+      const aboutSection = document.getElementById("about");
+      if (aboutSection) {
+        const aboutRect = aboutSection.getBoundingClientRect();
+        // If about section hasn't reached the navbar yet, we're in hero
+        if (aboutRect.top > 150) {
+          setActiveSection("");
+          return;
+        }
+      }
+
+      // Check if we're at the bottom of the page
+      const isAtBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 10;
+
+      if (isAtBottom) {
+        setActiveSection("contact");
+        return;
+      }
+
+      // Find the current section by checking which one is most visible
+      let currentSection = "";
+
+      for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          // Section is considered active if its top is above the middle of the screen
+          // and its bottom is below the navbar (100px)
+          if (rect.top <= 150 && rect.bottom >= 100) {
+            currentSection = section;
+          }
         }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
       }
+
+      setActiveSection(currentSection);
     };
+
+    // Run on mount to set initial state
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -53,8 +82,15 @@ export default function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="#" className="group">
+          {/* Logo - scrolls to top */}
+          <Link
+            href="#"
+            className="group"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
             <div className="relative">
               {/* Animated background rings */}
               <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
