@@ -2,7 +2,7 @@
 
 A modern, fully responsive portfolio website featuring Apple-style scroll animations and a beautiful UI. Built with Next.js 14, React, TypeScript, and Framer Motion.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://your-domain.dev)
+[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://www.jeffreypatey.dev/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8)](https://tailwindcss.com/)
