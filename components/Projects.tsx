@@ -6,15 +6,18 @@ import AnimatedSection from "./AnimatedSection";
 // Projects section component - includes featured projects links
 export default function Projects() {
   return (
-    <section id="projects" className="py-20 px-6 lg:px-8">
+    <section
+      id="projects"
+      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-4xl mx-auto">
         <AnimatedSection delay={0.1}>
-          <h2 className="text-3xl font-bold mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12">
             <span className="text-blue-400">03.</span> Some Things I&apos;ve
             Built
           </h2>
         </AnimatedSection>
-        <div className="space-y-20">
+        <div className="space-y-12 sm:space-y-16 md:space-y-20">
           {/* HomeKeep Project */}
           <AnimatedSection delay={0.1}>
             <ProjectCard

@@ -10,16 +10,19 @@ import {
 // About section component - includes bio, portrait, and skills
 export default function About() {
   return (
-    <section id="about" className="py-20 px-6 lg:px-8">
+    <section
+      id="about"
+      className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-4xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <AnimatedSection delay={0.1}>
-              <h2 className="text-3xl font-bold mb-6">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
                 <span className="text-blue-400">01.</span> About Me
               </h2>
             </AnimatedSection>
-            <AnimatedStaggerContainer className="space-y-4 text-slate-300 leading-relaxed">
+            <AnimatedStaggerContainer className="space-y-3 sm:space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed">
               <AnimatedStaggerItem>
                 <p>
                   I&apos;m a full-stack software developer with a background in
@@ -73,7 +76,7 @@ export default function About() {
           </div>
           <AnimatedSection delay={0.3} direction="left">
             <div className="relative">
-              <div className="relative w-80 h-80 mx-auto">
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg transform rotate-3"></div>
                 <div className="relative w-full h-full rounded-lg overflow-hidden">
                   <Image
