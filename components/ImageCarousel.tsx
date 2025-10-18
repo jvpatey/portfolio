@@ -7,6 +7,7 @@ interface ImageCarouselProps {
   alt: string;
 }
 
+// ImageCarousel component - displays a carousel of images for a project
 export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);

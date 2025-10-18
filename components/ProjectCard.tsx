@@ -12,6 +12,7 @@ interface ProjectCardProps {
   imagePosition?: "left" | "right";
 }
 
+// ProjectCard component - displays a project card with title, description, technologies, and links to the project
 export default function ProjectCard({
   title,
   description,
