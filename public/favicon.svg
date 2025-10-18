@@ -1,0 +1,40 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with slate gradient (matching navbar) -->
+  <rect width="128" height="128" rx="24" fill="url(#bg-gradient)"/>
+  
+  <!-- Border (slate-700/50) -->
+  <rect x="1" y="1" width="126" height="126" rx="23" stroke="#334155" stroke-width="1" stroke-opacity="0.5" fill="none"/>
+  
+  <!-- Inner glow -->
+  <rect x="6" y="6" width="116" height="116" rx="20" fill="url(#inner-glow)" opacity="0.2"/>
+  
+  <!-- JP Text with gradient -->
+  <text x="64" y="82" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="url(#text-gradient)" letter-spacing="-2">JP</text>
+  
+  <!-- Decorative dots (matching navbar hover effect) -->
+  <circle cx="100" cy="28" r="3" fill="#60a5fa" opacity="0.9"/>
+  <circle cx="28" cy="100" r="2.5" fill="#818cf8" opacity="0.9"/>
+  
+  <defs>
+    <!-- Background gradient - slate-800 via slate-900 to slate-800 (matching navbar) -->
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    
+    <!-- Inner glow - blue-500/20 to indigo-600/20 (matching navbar hover) -->
+    <linearGradient id="inner-glow" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    
+    <!-- Text gradient - blue-400 via indigo-400 to purple-400 (matching navbar) -->
+    <linearGradient id="text-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="50%" stop-color="#818cf8"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+</svg>
+

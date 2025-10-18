@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Jeffrey Patey | Portfolio",
   description:
     "Software developer portfolio showcasing projects and experience",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon", type: "image/png" },
+    ],
+    apple: "/apple-icon",
+  },
 };
 
 export default function RootLayout({
