@@ -54,6 +54,30 @@ export default function Projects() {
             ]}
             imagePosition="left"
           />
+
+          {/* Burden's General Store Project */}
+          <ProjectCard
+            title="Burden's General Store"
+            description="A modern website for a family-owned general store serving St.Lunaire-Griquet since 1959. Features responsive design, dark/light mode with system preference detection, live Facebook feed integration, and detailed product showcases. Built with accessibility in mind and optimized for all devices."
+            technologies={[
+              "Next.js",
+              "TypeScript",
+              "Tailwind CSS",
+              "shadcn/ui",
+              "Vercel",
+            ]}
+            githubUrl="https://github.com/jvpatey/burdens-general-store"
+            externalUrl="https://burdensgeneralstore.com"
+            images={[
+              "/burdens1.png",
+              "/burdens2.png",
+              "/burdens3.png",
+              "/burdens4.png",
+              "/burdens5.png",
+              "/burdens6.png",
+            ]}
+            imagePosition="right"
+          />
         </div>
       </div>
     </section>
