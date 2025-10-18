@@ -27,12 +27,12 @@ export default function Projects() {
               githubUrl="https://github.com/jvpatey/homekeep-mobile"
               appStoreUrl="https://apps.apple.com/ca/app/homekeep/id6751912377"
               images={[
-                "/homekeep1.png",
-                "/homekeep2.png",
-                "/homekeep3.png",
-                "/homekeep4.png",
-                "/homekeep5.png",
-                "/homekeep6.png",
+                "/homekeep1.PNG",
+                "/homekeep2.PNG",
+                "/homekeep3.PNG",
+                "/homekeep4.PNG",
+                "/homekeep5.PNG",
+                "/homekeep6.PNG",
               ]}
               imagePosition="right"
             />
