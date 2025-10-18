@@ -148,8 +148,11 @@ export default function Navigation() {
           {/* Resume Button */}
           <div className="flex items-center gap-4">
             <a
-              href="#resume"
+              href="/jeffpatey_resume_2025.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative group px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
+              aria-label="View Resume"
             >
               <span className="relative z-10">Resume</span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
