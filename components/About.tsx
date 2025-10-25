@@ -23,7 +23,7 @@ export default function About() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -34,7 +34,7 @@ export default function About() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -51,7 +51,7 @@ export default function About() {
                   <span
                     style={{
                       background:
-                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -63,7 +63,7 @@ export default function About() {
                   <span
                     style={{
                       background:
-                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -77,7 +77,7 @@ export default function About() {
                   <span
                     style={{
                       background:
-                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -144,15 +144,36 @@ export default function About() {
             </AnimatedStaggerContainer>
           </div>
           <AnimatedSection delay={0.3} direction="left">
-            <div className="relative">
+            <div className="relative group">
               <div className="relative w-64 h-64 sm:w-72 sm:h-72 md:w-80 md:h-80 mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg transform rotate-3"></div>
-                <div className="relative w-full h-full rounded-lg overflow-hidden">
+                {/* Modern gradient background with glassmorphism */}
+                <div
+                  className="absolute inset-0 rounded-2xl transform rotate-3 transition-all duration-500 group-hover:rotate-6 group-hover:scale-105"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                    boxShadow:
+                      "0 20px 40px rgba(96, 165, 250, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(10px)",
+                  }}
+                ></div>
+
+                {/* Shimmer effect overlay */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 transform rotate-3"></div>
+
+                {/* Image container with modern styling */}
+                <div
+                  className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-105"
+                  style={{
+                    boxShadow:
+                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                  }}
+                >
                   <Image
                     src="/jeffrey-patey.jpg"
                     alt="Jeffrey Patey"
                     fill
-                    className="object-cover"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
                     priority
                   />
                 </div>

@@ -76,7 +76,8 @@ export default function Hero() {
             variants={item}
             className="text-base sm:text-lg font-medium"
             style={{
-              background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+              background:
+                "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -110,7 +111,8 @@ export default function Hero() {
             <span
               className="font-semibold"
               style={{
-                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -129,7 +131,8 @@ export default function Hero() {
             <span
               className="font-medium"
               style={{
-                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -143,16 +146,27 @@ export default function Hero() {
           <motion.div variants={item} className="pt-6 sm:pt-8">
             <motion.a
               href="#projects"
-              className="relative group inline-block px-8 sm:px-10 py-4 sm:py-5 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="relative group inline-block px-8 sm:px-10 py-4 sm:py-5 rounded-2xl font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden"
               style={{
-                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 color: "white",
+                boxShadow:
+                  "0 8px 32px rgba(52, 120, 246, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
+                backdropFilter: "blur(10px)",
               }}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow:
+                  "0 12px 40px rgba(52, 120, 246, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2)",
+              }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <span className="flex items-center gap-2">
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
+
+              <span className="relative z-10 flex items-center gap-2">
                 Check out my work
                 <motion.span
                   animate={{ x: [0, 3, 0] }}

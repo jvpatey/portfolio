@@ -16,7 +16,8 @@ export default function Projects() {
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12">
             <span
               style={{
-                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -26,7 +27,8 @@ export default function Projects() {
             </span>{" "}
             <span
               style={{
-                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
