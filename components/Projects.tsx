@@ -36,8 +36,7 @@ const BentoCard = ({
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        scale: 1.02,
-        y: -5,
+        y: -2,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
       className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
@@ -229,12 +228,10 @@ export default function Projects() {
                           onMouseEnter={(e) => {
                             e.currentTarget.style.boxShadow =
                               "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.boxShadow =
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
                           }}
                         >
                           {/* Shimmer effect */}
@@ -268,12 +265,10 @@ export default function Projects() {
                           onMouseEnter={(e) => {
                             e.currentTarget.style.boxShadow =
                               "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
                           }}
                           onMouseLeave={(e) => {
                             e.currentTarget.style.boxShadow =
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
                           }}
                         >
                           {/* Shimmer effect */}

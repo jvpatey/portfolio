@@ -41,8 +41,7 @@ const BentoCard = ({
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        scale: 1.02,
-        y: -5,
+        y: -2,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
       className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
@@ -207,7 +206,7 @@ export default function About() {
               <div className="relative w-full h-full rounded-2xl overflow-hidden">
                 {/* Gradient background */}
                 <div
-                  className="absolute inset-0 rounded-2xl transform rotate-2 transition-all duration-500 group-hover:rotate-4 group-hover:scale-105"
+                  className="absolute inset-0 rounded-2xl transform rotate-2 transition-all duration-500 group-hover:rotate-4"
                   style={{
                     background:
                       "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -218,7 +217,7 @@ export default function About() {
 
                 {/* Image container */}
                 <div
-                  className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500 group-hover:scale-105"
+                  className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500"
                   style={{
                     boxShadow:
                       "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
@@ -228,7 +227,7 @@ export default function About() {
                     src="/jeffrey-patey.jpg"
                     alt="Jeffrey Patey"
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-500"
                     priority
                   />
                 </div>

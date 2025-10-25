@@ -114,7 +114,7 @@ export default function Navigation() {
               <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/30 via-pink-500/30 to-orange-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
 
               {/* Main logo container */}
-              <div className="relative w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center shadow-xl shadow-black/20 group-hover:shadow-pink-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+              <div className="relative w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center shadow-xl shadow-black/20 group-hover:shadow-pink-500/25 transition-all duration-500 group-hover:rotate-3">
                 {/* Inner glow effect */}
                 <div className="absolute inset-1 bg-gradient-to-br from-blue-500/20 to-pink-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
@@ -239,12 +239,10 @@ export default function Navigation() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow =
                   "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                e.currentTarget.style.transform = "scale(1.05)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow =
                   "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                e.currentTarget.style.transform = "scale(1)";
               }}
               aria-label="View Resume"
             >

@@ -32,8 +32,7 @@ const ExperienceCard = ({
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        scale: 1.02,
-        y: -5,
+        y: -2,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
       className={`group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
