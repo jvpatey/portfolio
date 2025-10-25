@@ -24,16 +24,25 @@ const BentoCard = ({
 }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.95 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: "-100px" }}
+      initial={{
+        opacity: 0,
+        y: 30,
+        scale: 0.95,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      viewport={{ once: true, margin: "-50px" }}
       transition={{
         duration: 0.6,
-        delay,
-        ease: [0.21, 0.47, 0.32, 0.98],
+        delay: delay * 0.1,
+        ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
         scale: 1.02,
+        y: -5,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
       className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
@@ -73,38 +82,44 @@ export default function About() {
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <AnimatedSection delay={0.1}>
-          <div className="text-left mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-              <span
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                01.
-              </span>{" "}
-              <span
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                About Me
-              </span>
-            </h2>
-            <p className="text-slate-400 text-base max-w-2xl">
-              A glimpse into my journey from healthcare to full-stack
-              development
-            </p>
-          </div>
-        </AnimatedSection>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{
+            duration: 0.7,
+            ease: [0.25, 0.46, 0.45, 0.94],
+          }}
+          className="text-left mb-8 sm:mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+            <span
+              style={{
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              01.
+            </span>{" "}
+            <span
+              style={{
+                background:
+                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              About Me
+            </span>
+          </h2>
+          <p className="text-slate-400 text-base max-w-2xl">
+            A glimpse into my journey from healthcare to full-stack development
+          </p>
+        </motion.div>
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[180px]">
