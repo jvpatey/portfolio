@@ -96,9 +96,12 @@ export default function Navigation() {
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl shadow-slate-900/25"
-          : "bg-slate-900/60 backdrop-blur-md border-b border-slate-800/30"
+          ? "border-b border-slate-700/50"
+          : "border-b border-transparent"
       }`}
+      style={{
+        backgroundColor: "transparent",
+      }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -116,7 +119,7 @@ export default function Navigation() {
               <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
 
               {/* Main logo container */}
-              <div className="relative w-12 h-12 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-2xl shadow-slate-900/50 group-hover:shadow-blue-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+              <div className="relative w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center shadow-xl shadow-black/20 group-hover:shadow-blue-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
                 {/* Inner glow effect */}
                 <div className="absolute inset-1 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
@@ -136,7 +139,7 @@ export default function Navigation() {
           </Link>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-700/50">
+          <div className="hidden md:flex items-center gap-2 bg-white/5 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -156,11 +159,11 @@ export default function Navigation() {
 
                 {/* Active indicator */}
                 {activeSection === item.href.slice(1) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-600/20 rounded-full border border-blue-500/30"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-indigo-600/30 backdrop-blur-sm rounded-full border border-blue-400/40"></div>
                 )}
 
                 {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </Link>
             ))}
           </div>
@@ -181,7 +184,7 @@ export default function Navigation() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-10 h-10 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-300"
+              className="md:hidden w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300"
               aria-label="Toggle menu"
             >
               <svg
@@ -220,7 +223,7 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 bg-slate-900/80 backdrop-blur-md md:hidden"
             style={{ top: "80px" }}
           />
 
@@ -230,7 +233,10 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl"
+            className="md:hidden absolute top-full left-0 right-0 border-b border-slate-700/50 shadow-xl"
+            style={{
+              backgroundColor: "transparent",
+            }}
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
               {navItems.map((item, index) => (
@@ -243,10 +249,10 @@ export default function Navigation() {
                   <Link
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 backdrop-blur-sm ${
                       activeSection === item.href.slice(1)
-                        ? "bg-gradient-to-r from-blue-500/20 to-indigo-600/20 text-blue-400 border border-blue-500/30"
-                        : "text-slate-300 hover:text-slate-100 hover:bg-slate-800/50"
+                        ? "bg-gradient-to-r from-blue-500/30 to-indigo-600/30 text-blue-400 border border-blue-400/40"
+                        : "text-slate-300 hover:text-slate-100 hover:bg-white/10 border border-transparent"
                     }`}
                   >
                     <span className="text-xs text-slate-500 mr-2">
