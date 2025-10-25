@@ -14,7 +14,7 @@ interface FormStatus {
   message: string;
 }
 
-// Floating label input component
+// Input component with gradient border on focus
 const FloatingInput = ({
   id,
   name,
@@ -37,40 +37,48 @@ const FloatingInput = ({
   rows?: number;
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(value.length > 0);
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setHasValue(e.target.value.length > 0);
-    onChange(e);
-  };
-
   const handleFocus = () => setIsFocused(true);
-  const handleBlur = () => {
-    setIsFocused(false);
-    setHasValue(value.length > 0);
-  };
-
-  const isFloating = isFocused || hasValue;
+  const handleBlur = () => setIsFocused(false);
 
   return (
     <div className="relative group">
-      <div className="relative">
+      <div className="relative overflow-hidden rounded-2xl">
+        {/* Gradient Border Wrapper */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          initial={false}
+          animate={{
+            opacity: isFocused ? 1 : 0,
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background:
+              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+            padding: "2px",
+            borderRadius: "1rem",
+          }}
+        >
+          <div
+            className="w-full h-full rounded-2xl"
+            style={{ background: "#111111" }}
+          />
+        </motion.div>
+
         {type === "textarea" ? (
           <textarea
             ref={inputRef as React.RefObject<HTMLTextAreaElement>}
             id={id}
             name={name}
             value={value}
-            onChange={handleChange}
+            onChange={onChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
             required={required}
             rows={rows}
-            className="w-full px-4 pt-6 pb-2 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-blue-500/50 transition-all duration-300 resize-none backdrop-blur-sm"
             placeholder={placeholder}
+            className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm"
             style={{
               background: "rgba(255, 255, 255, 0.05)",
               backdropFilter: "blur(20px) saturate(200%)",
@@ -86,12 +94,12 @@ const FloatingInput = ({
             id={id}
             name={name}
             value={value}
-            onChange={handleChange}
+            onChange={onChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
             required={required}
-            className="w-full px-4 pt-6 pb-2 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-transparent focus:outline-none focus:border-blue-500/50 transition-all duration-300 backdrop-blur-sm"
             placeholder={placeholder}
+            className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 backdrop-blur-sm"
             style={{
               background: "rgba(255, 255, 255, 0.05)",
               backdropFilter: "blur(20px) saturate(200%)",
@@ -102,47 +110,15 @@ const FloatingInput = ({
           />
         )}
 
-        {/* Floating Label */}
-        <motion.label
-          htmlFor={id}
-          className="absolute left-4 transition-all duration-300 pointer-events-none"
-          animate={{
-            y: isFloating ? -8 : 12,
-            scale: isFloating ? 0.85 : 1,
-            color: isFloating ? "#60a5fa" : "#94a3b8",
-          }}
-          style={{
-            background: isFloating ? "rgba(17, 17, 17, 0.8)" : "transparent",
-            padding: isFloating ? "0 8px" : "0",
-            borderRadius: isFloating ? "4px" : "0",
-          }}
-        >
-          {placeholder}
-        </motion.label>
-
-        {/* Focus Ring */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          initial={false}
-          animate={{
-            opacity: isFocused ? 1 : 0,
-          }}
-          transition={{ duration: 0.2 }}
-          style={{
-            background: "rgba(96, 165, 250, 0.05)",
-            border: "1px solid rgba(96, 165, 250, 0.2)",
-          }}
-        />
-
         {/* Shimmer Effect */}
         <motion.div
           className="absolute inset-0 rounded-2xl pointer-events-none"
           initial={{ x: "-100%" }}
           animate={{ x: isFocused ? "100%" : "-100%" }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
           style={{
             background:
-              "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent)",
+              "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
           }}
         />
       </div>
