@@ -1,19 +1,9 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
-import { useState } from "react";
 
 // Hero section component - includes name, title, and work button
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-    const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-    setMousePosition({ x, y });
-  };
-
   const container: Variants = {
     hidden: { opacity: 0 },
     show: {
@@ -41,14 +31,15 @@ export default function Hero() {
   const nameChars = "Jeffrey Patey.".split("");
 
   const letterVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, y: 15, filter: "blur(2px)" },
     show: (i: number) => ({
       opacity: 1,
       y: 0,
+      filter: "blur(0px)",
       transition: {
-        duration: 0.5,
-        delay: 0.5 + i * 0.03,
-        ease: [0.21, 0.47, 0.32, 0.98],
+        duration: 0.8,
+        delay: 0.3 + i * 0.03,
+        ease: [0.16, 1, 0.3, 1],
       },
     }),
   };
@@ -57,19 +48,12 @@ export default function Hero() {
     <section
       className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden"
       style={{ backgroundColor: "#000000" }}
-      onMouseMove={handleMouseMove}
     >
       <motion.div
         className="relative max-w-4xl mx-auto w-full z-20"
         variants={container}
         initial="hidden"
         animate="show"
-        style={{
-          transform: `perspective(1000px) rotateX(${
-            mousePosition.y * 2
-          }deg) rotateY(${mousePosition.x * 2}deg)`,
-          transition: "transform 0.3s ease-out",
-        }}
       >
         <div className="space-y-4 sm:space-y-6">
           <motion.p
@@ -86,7 +70,7 @@ export default function Hero() {
             Hi, my name is
           </motion.p>
 
-          {/* Enhanced name with character-by-character animation */}
+          {/* Enhanced name with character-by-character animation and magnetic hover */}
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white">
             {nameChars.map((char, i) => (
               <motion.span
@@ -96,7 +80,10 @@ export default function Hero() {
                 initial="hidden"
                 animate="show"
                 className="inline-block"
-                style={{ display: char === " " ? "inline" : "inline-block" }}
+                style={{
+                  display: char === " " ? "inline" : "inline-block",
+                  textShadow: "0 0 20px rgba(52, 120, 246, 0.3)",
+                }}
               >
                 {char === " " ? "\u00A0" : char}
               </motion.span>
@@ -108,18 +95,25 @@ export default function Hero() {
             className="text-3xl sm:text-4xl md:text-6xl font-bold text-white"
           >
             I&apos;m a{" "}
-            <span
-              className="font-semibold"
+            <motion.span
+              className="font-semibold cursor-pointer inline-block"
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                textShadow: "0 0 30px rgba(52, 120, 246, 0.4)",
               }}
+              whileHover={{
+                scale: 1.1,
+                rotate: [0, -2, 2, 0],
+                transition: { duration: 0.4, ease: "easeInOut" },
+              }}
+              whileTap={{ scale: 0.95 }}
             >
               full stack software developer
-            </span>{" "}
+            </motion.span>{" "}
             with a healthcare background.
           </motion.h2>
 
@@ -128,18 +122,25 @@ export default function Hero() {
             className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed"
           >
             My passion for{" "}
-            <span
-              className="font-medium"
+            <motion.span
+              className="font-medium cursor-pointer inline-block"
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                textShadow: "0 0 20px rgba(255, 45, 85, 0.4)",
               }}
+              whileHover={{
+                scale: 1.15,
+                rotate: [0, -3, 3, 0],
+                transition: { duration: 0.3, ease: "easeInOut" },
+              }}
+              whileTap={{ scale: 0.9 }}
             >
               health tech
-            </span>{" "}
+            </motion.span>{" "}
             drives every solution I create.
           </motion.p>
 
