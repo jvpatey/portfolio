@@ -52,13 +52,14 @@ export default function Hero() {
             variants={item}
             className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-300"
           >
-            I&apos;m a full stack software developer.
+            I&apos;m a full stack software developer with a healthcare
+            background.
           </motion.h2>
           <motion.p
             variants={item}
             className="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed"
           >
-            I build web and mobile applications that solve real problems.
+            My passion for health tech drives every solution I create.
           </motion.p>
           <motion.div variants={item} className="pt-6 sm:pt-8">
             <a

@@ -36,9 +36,22 @@ export default function About() {
                 <p>
                   I love bringing ideas to life through responsive, accessible
                   design that makes complex tasks feel simple. My projects range
-                  from mobile apps like HomeKeep (available on the App Store) to
-                  web applications like OralCheckr, each solving real problems
-                  with clean, user-friendly interfaces.
+                  from mobile apps like{" "}
+                  <a
+                    href="#homekeep"
+                    className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-blue-400/30 hover:decoration-blue-300"
+                  >
+                    HomeKeep
+                  </a>{" "}
+                  (available on the App Store) to web applications like{" "}
+                  <a
+                    href="#oralcheckr"
+                    className="text-blue-400 hover:text-blue-300 transition-colors underline decoration-blue-400/30 hover:decoration-blue-300"
+                  >
+                    OralCheckr
+                  </a>
+                  , each solving real problems with clean, user-friendly
+                  interfaces.
                 </p>
               </AnimatedStaggerItem>
               <AnimatedStaggerItem>

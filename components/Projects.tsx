@@ -20,8 +20,9 @@ export default function Projects() {
         <div className="space-y-12 sm:space-y-16 md:space-y-20">
           {/* HomeKeep Project */}
           <AnimatedSection delay={0.1}>
-            <ProjectCard
-              title="HomeKeep"
+            <div id="homekeep">
+              <ProjectCard
+                title="HomeKeep"
               description="A mobile app that makes home maintenance manageable. Create recurring tasks, get reminders when things are due, and track your progress—all with a clean, intuitive interface. Built with React Native, TypeScript, and Supabase. Available on the App Store!"
               technologies={["React Native", "TypeScript", "Expo", "Supabase"]}
               githubUrl="https://github.com/jvpatey/homekeep-mobile"
@@ -35,13 +36,15 @@ export default function Projects() {
                 "/homekeep6.PNG",
               ]}
               imagePosition="right"
-            />
+              />
+            </div>
           </AnimatedSection>
 
           {/* OralCheckr Project */}
           <AnimatedSection delay={0.1}>
-            <ProjectCard
-              title="OralCheckr"
+            <div id="oralcheckr">
+              <ProjectCard
+                title="OralCheckr"
               description="A comprehensive web app for oral health assessment and habit tracking. Users complete a detailed questionnaire to receive a personalized oral health score with tailored recommendations. Features include a daily habit tracker with progress analytics, monthly insights with calendar views, and yearly heatmaps to visualize long-term oral health trends."
               technologies={[
                 "React",
@@ -65,7 +68,8 @@ export default function Projects() {
                 "/oralcheckr9.png",
               ]}
               imagePosition="left"
-            />
+              />
+            </div>
           </AnimatedSection>
 
           {/* Burden's General Store Project */}
