@@ -14,7 +14,7 @@ export default function Contact() {
       className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000" }}
     >
-      <div className="max-w-2xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center">
         <AnimatedStaggerContainer staggerDelay={0.15}>
           <AnimatedStaggerItem>
             <p
@@ -54,22 +54,23 @@ export default function Contact() {
           <AnimatedStaggerItem>
             <a
               href="mailto:jeffreyvpatey@gmail.com"
-              className="relative group inline-block px-8 sm:px-10 py-4 sm:py-5 text-white rounded-2xl font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden"
+              className="relative group inline-block px-10 sm:px-12 py-5 sm:py-6 text-white rounded-full font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden"
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
                 boxShadow:
-                  "0 8px 32px rgba(96, 165, 250, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                backdropFilter: "blur(10px)",
+                  "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(20px) saturate(200%)",
+                border: "0.5px solid rgba(255, 255, 255, 0.2)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 12px 40px rgba(96, 165, 250, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2)";
+                  "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
                 e.currentTarget.style.transform = "scale(1.05)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 8px 32px rgba(96, 165, 250, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)";
+                  "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
                 e.currentTarget.style.transform = "scale(1)";
               }}
             >

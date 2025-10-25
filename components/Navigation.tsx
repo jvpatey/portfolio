@@ -227,22 +227,23 @@ export default function Navigation() {
               href="/jeffpatey_resume_2025.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block relative group px-6 py-3 text-white rounded-2xl font-medium text-sm transition-all duration-500 overflow-hidden"
+              className="hidden sm:block relative group px-8 py-4 text-white rounded-full font-medium text-sm transition-all duration-500 overflow-hidden"
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
                 boxShadow:
-                  "0 6px 24px rgba(96, 165, 250, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                backdropFilter: "blur(10px)",
+                  "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                backdropFilter: "blur(20px) saturate(200%)",
+                border: "0.5px solid rgba(255, 255, 255, 0.2)",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 8px 32px rgba(96, 165, 250, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2)";
+                  "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
                 e.currentTarget.style.transform = "scale(1.05)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow =
-                  "0 6px 24px rgba(96, 165, 250, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)";
+                  "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
                 e.currentTarget.style.transform = "scale(1)";
               }}
               aria-label="View Resume"
@@ -346,13 +347,14 @@ export default function Navigation() {
                   href="/jeffpatey_resume_2025.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center px-6 py-3 text-white rounded-2xl font-medium transition-all duration-500 overflow-hidden relative group"
+                  className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
                     boxShadow:
-                      "0 6px 24px rgba(96, 165, 250, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                    backdropFilter: "blur(10px)",
+                      "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                    backdropFilter: "blur(20px) saturate(200%)",
+                    border: "0.5px solid rgba(255, 255, 255, 0.2)",
                   }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

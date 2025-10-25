@@ -11,7 +11,7 @@ export default function Projects() {
       className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#111111" }}
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <AnimatedSection delay={0.1}>
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12">
             <span
