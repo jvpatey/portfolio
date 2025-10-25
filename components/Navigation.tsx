@@ -94,14 +94,9 @@ export default function Navigation() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "border-b border-slate-700/50"
-          : "border-b border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/80 backdrop-blur-md ${
+        isScrolled ? "border-b border-white/10" : "border-b border-transparent"
       }`}
-      style={{
-        backgroundColor: "transparent",
-      }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -123,8 +118,17 @@ export default function Navigation() {
                 {/* Inner glow effect */}
                 <div className="absolute inset-1 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                {/* Text with gradient */}
-                <span className="relative z-10 bg-gradient-to-br from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent font-bold text-xl tracking-tight">
+                {/* Text with Apple-style gradient */}
+                <span
+                  className="relative z-10 font-bold text-xl tracking-tight"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
                   JP
                 </span>
 
@@ -174,7 +178,10 @@ export default function Navigation() {
               href="/jeffpatey_resume_2025.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:block relative group px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
+              className="hidden sm:block relative group px-6 py-3 text-white rounded-full font-medium text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+              }}
               aria-label="View Resume"
             >
               <span className="relative z-10">Resume</span>
@@ -274,7 +281,11 @@ export default function Navigation() {
                   href="/jeffpatey_resume_2025.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-lg font-medium shadow-lg shadow-blue-500/25"
+                  className="block text-center px-6 py-3 text-white rounded-lg font-medium shadow-lg"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                  }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   View Resume

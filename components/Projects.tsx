@@ -9,12 +9,31 @@ export default function Projects() {
     <section
       id="projects"
       className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "#111111" }}
     >
       <div className="max-w-4xl mx-auto">
         <AnimatedSection delay={0.1}>
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 sm:mb-12">
-            <span className="text-blue-400">03.</span> Some Things I&apos;ve
-            Built
+            <span
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              03.
+            </span>{" "}
+            <span
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              Some Things I&apos;ve Built
+            </span>
           </h2>
         </AnimatedSection>
         <div className="space-y-12 sm:space-y-16 md:space-y-20">
@@ -23,19 +42,24 @@ export default function Projects() {
             <div id="homekeep">
               <ProjectCard
                 title="HomeKeep"
-              description="A mobile app that makes home maintenance manageable. Create recurring tasks, get reminders when things are due, and track your progress—all with a clean, intuitive interface. Built with React Native, TypeScript, and Supabase. Available on the App Store!"
-              technologies={["React Native", "TypeScript", "Expo", "Supabase"]}
-              githubUrl="https://github.com/jvpatey/homekeep-mobile"
-              appStoreUrl="https://apps.apple.com/ca/app/homekeep/id6751912377"
-              images={[
-                "/homekeep1.PNG",
-                "/homekeep2.PNG",
-                "/homekeep3.PNG",
-                "/homekeep4.PNG",
-                "/homekeep5.PNG",
-                "/homekeep6.PNG",
-              ]}
-              imagePosition="right"
+                description="A mobile app that makes home maintenance manageable. Create recurring tasks, get reminders when things are due, and track your progress—all with a clean, intuitive interface. Built with React Native, TypeScript, and Supabase. Available on the App Store!"
+                technologies={[
+                  "React Native",
+                  "TypeScript",
+                  "Expo",
+                  "Supabase",
+                ]}
+                githubUrl="https://github.com/jvpatey/homekeep-mobile"
+                appStoreUrl="https://apps.apple.com/ca/app/homekeep/id6751912377"
+                images={[
+                  "/homekeep1.PNG",
+                  "/homekeep2.PNG",
+                  "/homekeep3.PNG",
+                  "/homekeep4.PNG",
+                  "/homekeep5.PNG",
+                  "/homekeep6.PNG",
+                ]}
+                imagePosition="right"
               />
             </div>
           </AnimatedSection>
@@ -45,29 +69,29 @@ export default function Projects() {
             <div id="oralcheckr">
               <ProjectCard
                 title="OralCheckr"
-              description="A comprehensive web app for oral health assessment and habit tracking. Users complete a detailed questionnaire to receive a personalized oral health score with tailored recommendations. Features include a daily habit tracker with progress analytics, monthly insights with calendar views, and yearly heatmaps to visualize long-term oral health trends."
-              technologies={[
-                "React",
-                "TypeScript",
-                "Vite",
-                "Node.js",
-                "Express",
-                "MySQL",
-              ]}
-              githubUrl="https://github.com/jvpatey/OralCheckr"
-              externalUrl="https://jvpatey.github.io/OralCheckr/"
-              images={[
-                "/oralcheckr1.png",
-                "/oralcheckr2.png",
-                "/oralcheckr3.png",
-                "/oralcheckr4.png",
-                "/oralcheckr5.png",
-                "/oralcheckr6.png",
-                "/oralcheckr7.png",
-                "/oralcheckr8.png",
-                "/oralcheckr9.png",
-              ]}
-              imagePosition="left"
+                description="A comprehensive web app for oral health assessment and habit tracking. Users complete a detailed questionnaire to receive a personalized oral health score with tailored recommendations. Features include a daily habit tracker with progress analytics, monthly insights with calendar views, and yearly heatmaps to visualize long-term oral health trends."
+                technologies={[
+                  "React",
+                  "TypeScript",
+                  "Vite",
+                  "Node.js",
+                  "Express",
+                  "MySQL",
+                ]}
+                githubUrl="https://github.com/jvpatey/OralCheckr"
+                externalUrl="https://jvpatey.github.io/OralCheckr/"
+                images={[
+                  "/oralcheckr1.png",
+                  "/oralcheckr2.png",
+                  "/oralcheckr3.png",
+                  "/oralcheckr4.png",
+                  "/oralcheckr5.png",
+                  "/oralcheckr6.png",
+                  "/oralcheckr7.png",
+                  "/oralcheckr8.png",
+                  "/oralcheckr9.png",
+                ]}
+                imagePosition="left"
               />
             </div>
           </AnimatedSection>

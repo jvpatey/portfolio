@@ -56,6 +56,7 @@ export default function Hero() {
   return (
     <section
       className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8 overflow-hidden"
+      style={{ backgroundColor: "#000000" }}
       onMouseMove={handleMouseMove}
     >
       <motion.div
@@ -74,14 +75,18 @@ export default function Hero() {
           <motion.p
             variants={item}
             className="text-base sm:text-lg font-medium"
+            style={{
+              background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
           >
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-              Hi, my name is
-            </span>
+            Hi, my name is
           </motion.p>
 
           {/* Enhanced name with character-by-character animation */}
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-slate-100">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white">
             {nameChars.map((char, i) => (
               <motion.span
                 key={i}
@@ -99,10 +104,18 @@ export default function Hero() {
 
           <motion.h2
             variants={item}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-slate-300"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white"
           >
             I&apos;m a{" "}
-            <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+            <span
+              className="font-semibold"
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
               full stack software developer
             </span>{" "}
             with a healthcare background.
@@ -110,30 +123,41 @@ export default function Hero() {
 
           <motion.p
             variants={item}
-            className="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed"
+            className="text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed"
           >
             My passion for{" "}
-            <span className="text-cyan-400 font-medium">health tech</span>{" "}
+            <span
+              className="font-medium"
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              health tech
+            </span>{" "}
             drives every solution I create.
           </motion.p>
 
           <motion.div variants={item} className="pt-6 sm:pt-8">
             <motion.a
               href="#projects"
-              className="relative group inline-block px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-base sm:text-lg shadow-xl shadow-blue-500/25 overflow-hidden"
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 20px 60px rgba(59, 130, 246, 0.4)",
+              className="relative group inline-block px-8 sm:px-10 py-4 sm:py-5 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 shadow-lg hover:shadow-xl"
+              style={{
+                background: "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                color: "white",
               }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="flex items-center gap-2">
                 Check out my work
                 <motion.span
-                  animate={{ x: [0, 5, 0] }}
+                  animate={{ x: [0, 3, 0] }}
                   transition={{
-                    duration: 1.5,
+                    duration: 2,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
@@ -141,29 +165,6 @@ export default function Hero() {
                   →
                 </motion.span>
               </span>
-
-              {/* Hover gradient overlay */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-600 rounded-full"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              />
-
-              {/* Ripple effect on hover */}
-              <motion.div
-                className="absolute inset-0 rounded-full"
-                initial={{ scale: 0, opacity: 0.5 }}
-                whileHover={{
-                  scale: 1.5,
-                  opacity: 0,
-                  transition: { duration: 0.8, ease: "easeOut" },
-                }}
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%)",
-                }}
-              />
             </motion.a>
           </motion.div>
         </div>

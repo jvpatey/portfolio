@@ -1,7 +1,10 @@
 // Footer component - includes social links and copyright information
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800 py-8 px-6 lg:px-8">
+    <footer
+      className="border-t border-white/10 py-8 px-6 lg:px-8"
+      style={{ backgroundColor: "#111111" }}
+    >
       <div className="max-w-4xl mx-auto text-center">
         <div className="flex justify-center gap-6 mb-4">
           <a

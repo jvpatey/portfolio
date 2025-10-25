@@ -13,22 +13,78 @@ export default function About() {
     <section
       id="about"
       className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "#111111" }}
     >
       <div className="max-w-4xl mx-auto">
         <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <AnimatedSection delay={0.1}>
               <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">
-                <span className="text-blue-400">01.</span> About Me
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  01.
+                </span>{" "}
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  About Me
+                </span>
               </h2>
             </AnimatedSection>
             <AnimatedStaggerContainer className="space-y-3 sm:space-y-4 text-sm sm:text-base text-slate-300 leading-relaxed">
               <AnimatedStaggerItem>
                 <p>
-                  I&apos;m a full-stack software developer with a background in
-                  healthcare and a passion for building practical, purpose-built
-                  tools. After 10 years in patient care, I bring a
-                  detail-oriented mindset and genuine interest in health tech
+                  I&apos;m a{" "}
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    full-stack software developer
+                  </span>{" "}
+                  with a background in{" "}
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    healthcare
+                  </span>{" "}
+                  and a passion for building practical, purpose-built tools.
+                  After 10 years in patient care, I bring a detail-oriented
+                  mindset and genuine interest in{" "}
+                  <span
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    health tech
+                  </span>{" "}
                   and SaaS products that simplify everyday tasks.
                 </p>
               </AnimatedStaggerItem>
