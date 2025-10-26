@@ -117,14 +117,9 @@ export default function Experience() {
           <ExperienceCard delay={0.2} className="p-6">
             <div className="h-full flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
-                    Registered Dental Hygienist
-                  </h3>
-                  <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
-                    Current
-                  </span>
-                </div>
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
+                  Registered Dental Hygienist
+                </h3>
                 <p
                   className="text-base md:text-lg mb-4"
                   style={{

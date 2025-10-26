@@ -9,6 +9,103 @@ interface FormData {
   message: string;
 }
 
+const FloatingTextarea = ({
+  id,
+  name,
+  value,
+  onChange,
+  placeholder,
+  required = false,
+  rows = 1,
+}: {
+  id: string;
+  name: string;
+  value: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  placeholder: string;
+  required?: boolean;
+  rows?: number;
+}) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
+  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+    const text = e.currentTarget.innerText;
+    onChange({
+      target: { name, value: text },
+    } as React.ChangeEvent<HTMLInputElement>);
+  };
+
+  return (
+    <div className="relative group">
+      <div className="relative overflow-hidden rounded-2xl">
+        {/* Gradient Border Wrapper */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+          initial={false}
+          animate={{
+            opacity: isFocused ? 1 : 0,
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          style={{
+            background:
+              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+            padding: "2px",
+          }}
+        >
+          <div
+            className="w-full h-full rounded-2xl"
+            style={{ background: "#111111" }}
+          />
+        </motion.div>
+
+        <div
+          ref={divRef}
+          contentEditable
+          onInput={handleInput}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm min-h-[100px]"
+          style={{
+            background: "rgba(255, 255, 255, 0.05)",
+            backdropFilter: "blur(20px) saturate(200%)",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            boxShadow:
+              "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+          }}
+          data-placeholder={placeholder}
+          suppressContentEditableWarning={true}
+        />
+
+        {/* Shimmer Effect */}
+        <motion.div
+          className="absolute inset-0 rounded-2xl pointer-events-none"
+          initial={{ x: "-100%" }}
+          animate={{ x: isFocused ? "100%" : "-100%" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
+          }}
+        />
+      </div>
+
+      <style jsx>{`
+        [contenteditable][data-placeholder]:empty::before {
+          content: attr(data-placeholder);
+          color: #64748b;
+          pointer-events: none;
+        }
+      `}</style>
+    </div>
+  );
+};
+
 interface FormStatus {
   type: "idle" | "loading" | "success" | "error";
   message: string;
@@ -44,83 +141,84 @@ const FloatingInput = ({
 
   return (
     <div className="relative group">
-      <div className="relative overflow-hidden rounded-2xl">
-        {/* Gradient Border Wrapper */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          initial={false}
-          animate={{
-            opacity: isFocused ? 1 : 0,
-          }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          style={{
-            background:
-              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-            padding: "2px",
-            borderRadius: "1rem",
-          }}
-        >
-          <div
-            className="w-full h-full rounded-2xl"
-            style={{ background: "#111111" }}
-          />
-        </motion.div>
-
-        {type === "textarea" ? (
-          <textarea
-            ref={inputRef as React.RefObject<HTMLTextAreaElement>}
-            id={id}
-            name={name}
-            value={value}
-            onChange={onChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            required={required}
-            rows={rows}
-            placeholder={placeholder}
-            className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm"
+      <div className="relative">
+        <div className="relative overflow-hidden rounded-2xl">
+          {/* Gradient Border Wrapper */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none z-0"
+            initial={false}
+            animate={{
+              opacity: isFocused ? 1 : 0,
+            }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             style={{
-              background: "rgba(255, 255, 255, 0.05)",
-              backdropFilter: "blur(20px) saturate(200%)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow:
-                "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              background:
+                "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+              padding: "2px",
+            }}
+          >
+            <div
+              className="w-full h-full rounded-2xl"
+              style={{ background: "#111111" }}
+            />
+          </motion.div>
+
+          {type === "textarea" ? (
+            <textarea
+              ref={inputRef as React.RefObject<HTMLTextAreaElement>}
+              id={id}
+              name={name}
+              value={value}
+              onChange={onChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required={required}
+              rows={rows}
+              placeholder={placeholder}
+              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm"
+              style={{
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(20px) saturate(200%)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                boxShadow:
+                  "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              }}
+            />
+          ) : (
+            <input
+              ref={inputRef as React.RefObject<HTMLInputElement>}
+              type={type}
+              id={id}
+              name={name}
+              value={value}
+              onChange={onChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              required={required}
+              placeholder={placeholder}
+              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 backdrop-blur-sm"
+              style={{
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(20px) saturate(200%)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                boxShadow:
+                  "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              }}
+            />
+          )}
+
+          {/* Shimmer Effect */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none"
+            initial={{ x: "-100%" }}
+            animate={{ x: isFocused ? "100%" : "-100%" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
             }}
           />
-        ) : (
-          <input
-            ref={inputRef as React.RefObject<HTMLInputElement>}
-            type={type}
-            id={id}
-            name={name}
-            value={value}
-            onChange={onChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            required={required}
-            placeholder={placeholder}
-            className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 backdrop-blur-sm"
-            style={{
-              background: "rgba(255, 255, 255, 0.05)",
-              backdropFilter: "blur(20px) saturate(200%)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow:
-                "0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-            }}
-          />
-        )}
-
-        {/* Shimmer Effect */}
-        <motion.div
-          className="absolute inset-0 rounded-2xl pointer-events-none"
-          initial={{ x: "-100%" }}
-          animate={{ x: isFocused ? "100%" : "-100%" }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          style={{
-            background:
-              "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
-          }}
-        />
+        </div>
       </div>
     </div>
   );
@@ -220,15 +318,13 @@ export default function ContactForm() {
             required
           />
 
-          <FloatingInput
+          <FloatingTextarea
             id="message"
             name="message"
-            type="textarea"
             value={formData.message}
             onChange={handleChange}
             placeholder="Your message"
             required
-            rows={4}
           />
         </div>
 

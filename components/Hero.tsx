@@ -66,6 +66,21 @@ export default function Hero() {
     }
   }, [isTyping, showCursor]);
 
+  // Smooth scroll handler
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    const element = document.querySelector(targetId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section
       className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
@@ -163,7 +178,8 @@ export default function Hero() {
             <motion.div variants={item}>
               <motion.a
                 href="#projects"
-                className="relative group inline-block px-10 sm:px-12 py-5 sm:py-6 rounded-full font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden"
+                onClick={(e) => handleSmoothScroll(e, "#projects")}
+                className="relative group inline-block px-10 sm:px-12 py-5 sm:py-6 rounded-full font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden cursor-pointer"
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",

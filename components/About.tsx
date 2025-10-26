@@ -73,6 +73,21 @@ const BentoCard = ({
 
 // About section component with bento grid layout
 export default function About() {
+  // Smooth scroll handler
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    const element = document.querySelector(targetId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  };
+
   return (
     <section
       id="about"
@@ -251,7 +266,8 @@ export default function About() {
                   <div className="flex items-center justify-between">
                     <a
                       href="#homekeep"
-                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30"
+                      onClick={(e) => handleSmoothScroll(e, "#homekeep")}
+                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
                     >
                       HomeKeep
                     </a>
@@ -260,7 +276,8 @@ export default function About() {
                   <div className="flex items-center justify-between">
                     <a
                       href="#oralcheckr"
-                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30"
+                      onClick={(e) => handleSmoothScroll(e, "#oralcheckr")}
+                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
                     >
                       OralCheckr
                     </a>

@@ -10,6 +10,25 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Smooth scroll handler
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    if (targetId === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const element = document.querySelector(targetId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -105,11 +124,8 @@ export default function Navigation() {
           <div>
             <Link
               href="#"
-              className="group inline-block"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+              className="group inline-block cursor-pointer"
+              onClick={(e) => handleSmoothScroll(e, "#")}
             >
               <div className="relative">
                 {/* Gradient glow on hover */}
@@ -166,13 +182,8 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={(e) => {
-                    if (item.href === "#") {
-                      e.preventDefault();
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }
-                  }}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap ${
+                  onClick={(e) => handleSmoothScroll(e, item.href)}
+                  className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap cursor-pointer ${
                     (item.href === "#" && activeSection === "") ||
                     (item.href !== "#" && activeSection === item.href.slice(1))
                       ? ""
@@ -319,8 +330,11 @@ export default function Navigation() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                    onClick={(e) => {
+                      handleSmoothScroll(e, item.href);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer ${
                       activeSection === item.href.slice(1)
                         ? "text-white"
                         : "text-slate-300 hover:text-white"
