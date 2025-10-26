@@ -94,7 +94,7 @@ export default function Navigation() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/80 backdrop-blur-md ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/40 backdrop-blur-md ${
         isScrolled ? "border-b border-white/10" : "border-b border-transparent"
       }`}
     >
@@ -111,17 +111,35 @@ export default function Navigation() {
               }}
             >
               <div className="relative">
-                {/* Animated background rings */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/30 via-pink-500/30 to-orange-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+                {/* Gradient glow on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-pink-500/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
 
-                {/* Main logo container */}
-                <div className="relative w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-center shadow-xl shadow-black/20 group-hover:shadow-pink-500/25 transition-all duration-500 group-hover:rotate-3">
-                  {/* Inner glow effect */}
-                  <div className="absolute inset-1 bg-gradient-to-br from-blue-500/20 to-pink-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Main logo container - Glassmorphism */}
+                <div
+                  className="relative w-12 h-12 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-105"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.05)",
+                    backdropFilter: "blur(20px) saturate(200%)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    boxShadow:
+                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                  }}
+                >
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-3xl"></div>
 
-                  {/* Text with Apple-style gradient */}
+                  {/* Gradient overlay on hover */}
+                  <div
+                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+                    }}
+                  />
+
+                  {/* Text with gradient */}
                   <span
-                    className="relative z-10 font-bold text-xl tracking-tight"
+                    className="relative z-10 font-bold text-lg tracking-tight transition-all duration-300"
                     style={{
                       background:
                         "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -133,14 +151,8 @@ export default function Navigation() {
                     JP
                   </span>
 
-                  {/* Subtle animation dots */}
-                  <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping"></div>
-                  <div className="absolute bottom-1 left-1 w-1 h-1 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping delay-150"></div>
-                </div>
-
-                {/* Outer glow on hover */}
-                <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/10 to-pink-500/10 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {" "}
+                  {/* Inner highlight */}
+                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-sm opacity-50"></div>
                 </div>
               </div>
             </Link>

@@ -3,7 +3,7 @@ export default function Footer() {
   return (
     <footer
       className="border-t border-white/10 py-8 px-6 lg:px-8"
-      style={{ backgroundColor: "#111111" }}
+      style={{ backgroundColor: "#000000" }}
     >
       <div className="max-w-6xl mx-auto text-center">
         <div className="flex justify-center gap-6 mb-4">

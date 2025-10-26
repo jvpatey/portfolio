@@ -72,7 +72,7 @@ export default function Contact() {
     <section
       id="contact"
       className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8"
-      style={{ backgroundColor: "#111111" }}
+      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
