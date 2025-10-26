@@ -121,10 +121,10 @@ export default function About() {
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[180px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(200px,1fr)] md:auto-rows-[minmax(180px,1fr)] lg:auto-rows-[minmax(160px,1fr)]">
           {/* Bio & Philosophy Card - Large */}
           <BentoCard
-            span="col-span-1 md:col-span-2"
+            span="col-span-1 md:col-span-2 lg:col-span-2"
             rowSpan="row-span-2"
             delay={0.2}
             className="p-4 sm:p-6"
@@ -197,7 +197,7 @@ export default function About() {
 
           {/* Profile Image Card */}
           <BentoCard
-            span="col-span-1 md:col-span-2 lg:col-span-1"
+            span="col-span-1 lg:col-span-1"
             rowSpan="row-span-2"
             delay={0.3}
             className="p-3"
@@ -273,7 +273,7 @@ export default function About() {
 
           {/* Skills Card - Large */}
           <BentoCard
-            span="col-span-1 md:col-span-2"
+            span="col-span-1 md:col-span-2 lg:col-span-2"
             rowSpan="row-span-1"
             delay={0.5}
             className="p-4"
@@ -283,7 +283,7 @@ export default function About() {
                 <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4">
                   Tech Stack
                 </h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-2 text-xs md:text-sm">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-2 text-xs sm:text-sm">
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
                     React & React Native
