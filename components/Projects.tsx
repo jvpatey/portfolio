@@ -505,7 +505,7 @@ export default function Projects() {
                     backgroundClip: "text",
                   }}
                 >
-                  Freelance Website Development
+                  Freelance Web Development
                 </span>
               </h3>
             </motion.div>

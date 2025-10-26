@@ -117,8 +117,7 @@ export default function Contact() {
                 </h3>
                 <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                   I'm always happy to connect! Whether you have a question, want
-                  to collaborate, or just want to say hi, feel free to reach
-                  out.
+                  to collaborate, or just want to say hi.
                 </p>
               </div>
 
