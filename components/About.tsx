@@ -131,10 +131,10 @@ export default function About() {
           >
             <div className="h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
                   My Story & Philosophy
                 </h3>
-                <AnimatedStaggerContainer className="space-y-3 text-sm text-slate-300 leading-relaxed">
+                <AnimatedStaggerContainer className="space-y-3 text-base md:text-lg text-slate-300 leading-relaxed">
                   <AnimatedStaggerItem>
                     <p>
                       I&apos;m a{" "}
@@ -244,10 +244,10 @@ export default function About() {
           >
             <div className="h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-base font-bold text-white mb-3">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4">
                   Featured Projects
                 </h3>
-                <div className="space-y-2 text-sm text-slate-300">
+                <div className="space-y-2 text-base md:text-lg text-slate-300">
                   <div className="flex items-center justify-between">
                     <a
                       href="#homekeep"
@@ -255,7 +255,7 @@ export default function About() {
                     >
                       HomeKeep
                     </a>
-                    <span className="text-xs text-slate-500">App Store</span>
+                    <span className="text-sm text-slate-500">App Store</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <a
@@ -264,7 +264,7 @@ export default function About() {
                     >
                       OralCheckr
                     </a>
-                    <span className="text-xs text-slate-500">Web App</span>
+                    <span className="text-sm text-slate-500">Web App</span>
                   </div>
                 </div>
               </div>
@@ -273,24 +273,20 @@ export default function About() {
 
           {/* Skills Card - Large */}
           <BentoCard
-            span="col-span-1 md:col-span-2 lg:col-span-1"
+            span="col-span-1 md:col-span-2"
             rowSpan="row-span-1"
             delay={0.5}
             className="p-4"
           >
             <div className="h-full flex flex-col justify-between">
               <div>
-                <h3 className="text-base font-bold text-white mb-3">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4">
                   Tech Stack
                 </h3>
-                <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-2 text-xs md:text-sm">
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
                     React & React Native
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
-                    Next.js & TypeScript
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
@@ -298,11 +294,11 @@ export default function About() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    PostgreSQL & Supabase
+                    Next.js & TypeScript
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    Vercel
+                    PostgreSQL & Supabase
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
@@ -310,12 +306,13 @@ export default function About() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
+                    Vercel
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-[#FF2D55] mr-2">▸</span>
                     Auth (JWT, OAuth)
                   </div>
                 </div>
-              </div>
-              <div className="text-xs text-slate-400">
-                Always learning new technologies
               </div>
             </div>
           </BentoCard>

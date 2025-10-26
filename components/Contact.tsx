@@ -121,10 +121,10 @@ export default function Contact() {
           <BentoCard span="col-span-1" delay={0.1} className="p-6 sm:p-8">
             <div className="flex flex-col space-y-6 h-full">
               <div>
-                <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-4">
                   Let's Connect
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed">
+                <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                   I'm always happy to connect! Whether you have a question, want
                   to collaborate, or just want to say hi, feel free to reach
                   out.
@@ -147,7 +147,7 @@ export default function Contact() {
             >
               <div className="flex flex-col space-y-6 h-full">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-4">
                     Where to Find Me
                   </h3>
                 </div>

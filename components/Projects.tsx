@@ -169,15 +169,17 @@ export default function Projects() {
                   className="p-4 sm:p-6 flex-1"
                 >
                   <div className="flex flex-col space-y-4 h-full">
-                    <h4 className="text-sm font-semibold text-white">About</h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      About
+                    </h4>
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                       A mobile app that makes home maintenance manageable.
                       Create recurring tasks, get reminders when things are due,
                       and track your progress—all with a clean, intuitive
                       interface.
                     </p>
-                    <div className="flex-1">
-                      <h5 className="text-xs font-semibold text-white mb-2">
+                    <div className="flex-1 mt-4">
+                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
                         Tech Stack
                       </h5>
                       <div className="flex flex-wrap gap-1">
@@ -208,7 +210,9 @@ export default function Projects() {
                   className="p-4 sm:p-6 flex-1"
                 >
                   <div className="flex flex-col space-y-4 h-full">
-                    <h4 className="text-sm font-semibold text-white">Links</h4>
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      Links
+                    </h4>
                     <div className="flex-1 flex flex-col justify-center">
                       <div className="space-y-3">
                         <a
@@ -302,7 +306,7 @@ export default function Projects() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h3 className="text-xl sm:text-2xl font-bold">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 <span
                   style={{
                     background:
@@ -344,14 +348,16 @@ export default function Projects() {
                 {/* Description & Tech Stack Card */}
                 <BentoCard span="col-span-1" delay={0.3} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
-                    <h4 className="text-sm font-semibold text-white">About</h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      About
+                    </h4>
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                       A comprehensive web app for oral health assessment and
                       habit tracking with personalized recommendations and
                       progress analytics.
                     </p>
-                    <div>
-                      <h5 className="text-xs font-semibold text-white mb-2">
+                    <div className="mt-4">
+                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
                         Tech Stack
                       </h5>
                       <div className="flex flex-wrap gap-1">
@@ -383,7 +389,9 @@ export default function Projects() {
                 {/* Links Card */}
                 <BentoCard span="col-span-1" delay={0.4} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
-                    <h4 className="text-sm font-semibold text-white">Links</h4>
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      Links
+                    </h4>
                     <div className="space-y-3">
                       <a
                         href="https://github.com/jvpatey/OralCheckr"
@@ -485,7 +493,7 @@ export default function Projects() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h3 className="text-xl sm:text-2xl font-bold">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 <span
                   style={{
                     background:
@@ -524,14 +532,16 @@ export default function Projects() {
                 {/* Description & Tech Stack Card */}
                 <BentoCard span="col-span-1" delay={0.3} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
-                    <h4 className="text-sm font-semibold text-white">About</h4>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      About
+                    </h4>
+                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                       A modern website for a family-owned general store with
                       responsive design, dark/light mode, and live Facebook feed
                       integration.
                     </p>
-                    <div>
-                      <h5 className="text-xs font-semibold text-white mb-2">
+                    <div className="mt-4">
+                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
                         Tech Stack
                       </h5>
                       <div className="flex flex-wrap gap-1">
@@ -562,7 +572,9 @@ export default function Projects() {
                 {/* Links Card */}
                 <BentoCard span="col-span-1" delay={0.4} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
-                    <h4 className="text-sm font-semibold text-white">Links</h4>
+                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                      Links
+                    </h4>
                     <div className="space-y-3">
                       <a
                         href="https://github.com/jvpatey/burdens-general-store"

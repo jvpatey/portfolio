@@ -118,7 +118,7 @@ export default function Experience() {
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-white">
+                  <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white">
                     Registered Dental Hygienist
                   </h3>
                   <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-400 border border-green-500/30">
@@ -126,7 +126,7 @@ export default function Experience() {
                   </span>
                 </div>
                 <p
-                  className="text-sm mb-4"
+                  className="text-base md:text-lg mb-4"
                   style={{
                     background:
                       "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
@@ -137,8 +137,8 @@ export default function Experience() {
                 >
                   Sackville Dental Centre
                 </p>
-                <p className="text-xs text-slate-400 mb-4">2021 - Present</p>
-                <div className="space-y-2 text-sm text-slate-300">
+                <p className="text-sm text-slate-400 mb-4">2021 - Present</p>
+                <div className="space-y-2 text-base md:text-lg text-slate-300">
                   <div className="flex items-start">
                     <span className="text-[#FF2D55] mr-2 mt-1">▸</span>
                     <span>
@@ -179,14 +179,14 @@ export default function Experience() {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-3">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
                   Career Transition
                 </h3>
-                <p className="text-sm text-slate-300 leading-relaxed mb-4">
+                <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-4">
                   Leveraging healthcare experience to build technology solutions
                   that prioritize user experience and accessibility.
                 </p>
-                <div className="space-y-2 text-xs text-slate-400">
+                <div className="space-y-2 text-sm md:text-base text-slate-400">
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
                     Patient care → User experience

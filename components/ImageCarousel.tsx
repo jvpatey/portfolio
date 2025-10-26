@@ -30,7 +30,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   };
 
   return (
-    <div className="relative group bg-slate-800 rounded-lg p-8 border border-slate-700 flex justify-center overflow-hidden">
+    <div className="relative group rounded-lg flex justify-center overflow-hidden">
       {/* Previous Button */}
       <button
         onClick={prevSlide}
