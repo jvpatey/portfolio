@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ImageCarousel from "./ImageCarousel";
 import MediaCarousel from "./MediaCarousel";
+import TypewriterHeader from "./TypewriterHeader";
 
 // Bento grid card component with glassmorphism
 const BentoCard = ({
@@ -88,7 +89,10 @@ export default function Projects() {
           className="text-left mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <span
+            <TypewriterHeader
+              fullText="04. What I've Built"
+              delay={100}
+              speed={80}
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -96,20 +100,7 @@ export default function Projects() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-            >
-              04.
-            </span>{" "}
-            <span
-              style={{
-                background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              What I&apos;ve Built
-            </span>
+            />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
             Featured projects

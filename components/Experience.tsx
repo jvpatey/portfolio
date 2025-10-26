@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import AnimatedSection from "./AnimatedSection";
+import TypewriterHeader from "./TypewriterHeader";
 
 // Experience card component with glassmorphism
 const ExperienceCard = ({
@@ -83,7 +84,10 @@ export default function Experience() {
           className="text-left mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <span
+            <TypewriterHeader
+              fullText="03. Where I've Worked"
+              delay={100}
+              speed={80}
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -91,20 +95,7 @@ export default function Experience() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-            >
-              03.
-            </span>{" "}
-            <span
-              style={{
-                background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Where I&apos;ve Worked
-            </span>
+            />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
             My professional journey from healthcare to technology

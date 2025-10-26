@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ContactForm from "./ContactForm";
+import TypewriterHeader from "./TypewriterHeader";
 
 // Bento grid card component with glassmorphism
 const BentoCard = ({
@@ -87,7 +88,10 @@ export default function Contact() {
           className="text-left mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <span
+            <TypewriterHeader
+              fullText="05. Get In Touch"
+              delay={100}
+              speed={80}
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -95,20 +99,7 @@ export default function Contact() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-            >
-              05.
-            </span>{" "}
-            <span
-              style={{
-                background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              Get In Touch
-            </span>
+            />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
             Feel free to reach out — I'd love to hear from you.

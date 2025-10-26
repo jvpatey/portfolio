@@ -7,6 +7,7 @@ import {
   AnimatedStaggerContainer,
   AnimatedStaggerItem,
 } from "./AnimatedStagger";
+import TypewriterHeader from "./TypewriterHeader";
 
 // Bento grid card component with glassmorphism
 const BentoCard = ({
@@ -107,7 +108,10 @@ export default function About() {
           className="text-left mb-8 sm:mb-12"
         >
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <span
+            <TypewriterHeader
+              fullText="02. About Me"
+              delay={100}
+              speed={80}
               style={{
                 background:
                   "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
@@ -115,20 +119,7 @@ export default function About() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}
-            >
-              02.
-            </span>{" "}
-            <span
-              style={{
-                background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            >
-              About Me
-            </span>
+            />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
             A glimpse into my journey from healthcare to full-stack development
@@ -147,7 +138,7 @@ export default function About() {
             <div className="h-full flex flex-col justify-between">
               <div>
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
-                  My Story & Philosophy
+                  My Story
                 </h3>
                 <AnimatedStaggerContainer className="space-y-3 text-base md:text-lg text-slate-300 leading-relaxed">
                   <AnimatedStaggerItem>
