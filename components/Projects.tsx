@@ -71,7 +71,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8"
+      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
@@ -96,7 +96,7 @@ export default function Projects() {
                 backgroundClip: "text",
               }}
             >
-              03.
+              04.
             </span>{" "}
             <span
               style={{
@@ -126,7 +126,7 @@ export default function Projects() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              <h3 className="text-xl sm:text-2xl font-bold">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 <span
                   style={{
                     background:
@@ -503,7 +503,7 @@ export default function Projects() {
                     backgroundClip: "text",
                   }}
                 >
-                  Burden's General Store
+                  Freelance Website Development
                 </span>
               </h3>
             </motion.div>
@@ -536,9 +536,9 @@ export default function Projects() {
                       About
                     </h4>
                     <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                      A modern website for a family-owned general store with
-                      responsive design, dark/light mode, and live Facebook feed
-                      integration.
+                      A freelance web development project featuring modern
+                      design, responsive layouts, dark/light mode, and seamless
+                      third-party integrations.
                     </p>
                     <div className="mt-4">
                       <h5 className="text-base md:text-lg font-semibold text-white mb-2">

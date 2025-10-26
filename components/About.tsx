@@ -76,7 +76,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8"
+      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
@@ -101,7 +101,7 @@ export default function About() {
                 backgroundClip: "text",
               }}
             >
-              01.
+              02.
             </span>{" "}
             <span
               style={{

@@ -83,10 +83,11 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { href: "#about", label: "About", number: "01" },
-    { href: "#experience", label: "Experience", number: "02" },
-    { href: "#projects", label: "Projects", number: "03" },
-    { href: "#contact", label: "Contact", number: "04" },
+    { href: "#", label: "Home", number: "01" },
+    { href: "#about", label: "About", number: "02" },
+    { href: "#experience", label: "Experience", number: "03" },
+    { href: "#projects", label: "Projects", number: "04" },
+    { href: "#contact", label: "Contact", number: "05" },
   ];
 
   return (
@@ -165,8 +166,15 @@ export default function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={(e) => {
+                    if (item.href === "#") {
+                      e.preventDefault();
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  }}
                   className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap ${
-                    activeSection === item.href.slice(1)
+                    (item.href === "#" && activeSection === "") ||
+                    (item.href !== "#" && activeSection === item.href.slice(1))
                       ? ""
                       : "text-slate-300 hover:text-slate-100"
                   }`}

@@ -71,7 +71,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8"
+      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
@@ -96,7 +96,7 @@ export default function Contact() {
                 backgroundClip: "text",
               }}
             >
-              04.
+              05.
             </span>{" "}
             <span
               style={{
@@ -111,7 +111,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
-            Let's connect and build something amazing together
+            Feel free to reach out — I'd love to hear from you.
           </p>
         </motion.div>
 
@@ -240,10 +240,10 @@ export default function Contact() {
             >
               <div className="flex flex-col space-y-6 h-full">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-4">
                     Download Resume
                   </h3>
-                  <p className="text-sm text-slate-300 leading-relaxed">
+                  <p className="text-base md:text-lg text-slate-300 leading-relaxed">
                     Get a detailed overview of my experience and skills
                   </p>
                 </div>
