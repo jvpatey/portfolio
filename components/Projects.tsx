@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import ImageCarousel from "./ImageCarousel";
+import VideoCarousel from "./VideoCarousel";
 
 // Bento grid card component with glassmorphism
 const BentoCard = ({
@@ -338,6 +339,19 @@ export default function Projects() {
                     "/oralcheckr9.png",
                   ]}
                   alt="OralCheckr screenshots"
+                />
+              </BentoCard>
+
+              {/* Video Carousel Card - Core Functionality */}
+              <BentoCard span="col-span-1" delay={0.25} className="p-4">
+                <VideoCarousel
+                  videos={[
+                    "/oralcheckr-recording-1.mp4",
+                    "/oralcheckr-recording-2.mp4",
+                    "/oralcheckr-recording-3.mp4",
+                    "/oralcheckr-recording-4.mp4",
+                  ]}
+                  alt="OralCheckr core functionality"
                 />
               </BentoCard>
 
