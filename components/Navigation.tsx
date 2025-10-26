@@ -99,7 +99,7 @@ export default function Navigation() {
         isScrolled ? "border-b border-white/10" : "border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
         <div className="grid grid-cols-3 items-center h-20">
           {/* Logo - scrolls to top */}
           <div>
@@ -248,10 +248,10 @@ export default function Navigation() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center justify-end">
+          <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300"
+              className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 absolute top-1/2 -translate-y-1/2 right-6"
               aria-label="Toggle menu"
             >
               <svg
@@ -300,9 +300,13 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-full left-0 right-0 border-b border-slate-700/50 shadow-xl"
+            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 shadow-xl"
             style={{
-              backgroundColor: "transparent",
+              background: "rgba(0, 0, 0, 0.95)",
+              backdropFilter: "blur(20px) saturate(200%)",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              boxShadow:
+                "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
             }}
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
@@ -316,11 +320,26 @@ export default function Navigation() {
                   <Link
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 backdrop-blur-sm ${
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
                       activeSection === item.href.slice(1)
-                        ? "bg-gradient-to-r from-blue-500/30 to-indigo-600/30 text-blue-400 border border-blue-400/40"
-                        : "text-slate-300 hover:text-slate-100 hover:bg-white/10 border border-transparent"
+                        ? "text-white"
+                        : "text-slate-300 hover:text-white"
                     }`}
+                    style={{
+                      background:
+                        activeSection === item.href.slice(1)
+                          ? "linear-gradient(135deg, rgba(52, 120, 246, 0.2) 0%, rgba(255, 45, 85, 0.2) 50%, rgba(255, 149, 0, 0.2) 100%)"
+                          : "rgba(255, 255, 255, 0.05)",
+                      backdropFilter: "blur(20px) saturate(200%)",
+                      border:
+                        activeSection === item.href.slice(1)
+                          ? "1px solid rgba(255, 255, 255, 0.2)"
+                          : "1px solid rgba(255, 255, 255, 0.1)",
+                      boxShadow:
+                        activeSection === item.href.slice(1)
+                          ? "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                          : "0 2px 8px rgba(0, 0, 0, 0.1)",
+                    }}
                   >
                     <span className="text-xs text-slate-500 mr-2">
                       {item.number}.

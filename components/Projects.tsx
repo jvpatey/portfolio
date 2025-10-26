@@ -325,22 +325,20 @@ export default function Projects() {
             <div className="space-y-6">
               {/* Image Carousel Card - Full Width */}
               <BentoCard span="col-span-1" delay={0.2} className="p-4">
-                <div className="min-h-[400px]">
-                  <ImageCarousel
-                    images={[
-                      "/oralcheckr1.png",
-                      "/oralcheckr2.png",
-                      "/oralcheckr3.png",
-                      "/oralcheckr4.png",
-                      "/oralcheckr5.png",
-                      "/oralcheckr6.png",
-                      "/oralcheckr7.png",
-                      "/oralcheckr8.png",
-                      "/oralcheckr9.png",
-                    ]}
-                    alt="OralCheckr screenshots"
-                  />
-                </div>
+                <ImageCarousel
+                  images={[
+                    "/oralcheckr1.png",
+                    "/oralcheckr2.png",
+                    "/oralcheckr3.png",
+                    "/oralcheckr4.png",
+                    "/oralcheckr5.png",
+                    "/oralcheckr6.png",
+                    "/oralcheckr7.png",
+                    "/oralcheckr8.png",
+                    "/oralcheckr9.png",
+                  ]}
+                  alt="OralCheckr screenshots"
+                />
               </BentoCard>
 
               {/* Description and Links Row */}
@@ -512,19 +510,17 @@ export default function Projects() {
             <div className="space-y-6">
               {/* Image Carousel Card - Full Width */}
               <BentoCard span="col-span-1" delay={0.2} className="p-4">
-                <div className="min-h-[400px]">
-                  <ImageCarousel
-                    images={[
-                      "/burdens1.png",
-                      "/burdens2.png",
-                      "/burdens3.png",
-                      "/burdens4.png",
-                      "/burdens5.png",
-                      "/burdens6.png",
-                    ]}
-                    alt="Burden's General Store screenshots"
-                  />
-                </div>
+                <ImageCarousel
+                  images={[
+                    "/burdens1.png",
+                    "/burdens2.png",
+                    "/burdens3.png",
+                    "/burdens4.png",
+                    "/burdens5.png",
+                    "/burdens6.png",
+                  ]}
+                  alt="Burden's General Store screenshots"
+                />
               </BentoCard>
 
               {/* Description and Links Row */}

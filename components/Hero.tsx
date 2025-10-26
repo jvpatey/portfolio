@@ -98,7 +98,7 @@ export default function Hero() {
           <div className="mb-12 md:mb-16 space-y-2">
             <motion.div
               variants={item}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight whitespace-nowrap"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight sm:whitespace-nowrap"
             >
               I&apos;m a{" "}
               <span
