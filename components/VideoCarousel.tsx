@@ -12,15 +12,15 @@ export default function VideoCarousel({ videos, alt }: VideoCarouselProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Create refs for each video
-  const videoRefs = videos.map(() => useRef<HTMLVideoElement>(null));
+  // Create refs for each video using a single ref object
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
 
   const handleSlideChange = (newIndex: number) => {
     if (isTransitioning) return;
 
     // Pause current video
-    if (videoRefs[currentSlide]?.current) {
-      videoRefs[currentSlide].current?.pause();
+    if (videoRefs.current[currentSlide]) {
+      videoRefs.current[currentSlide]?.pause();
     }
 
     setIsTransitioning(true);
@@ -30,13 +30,13 @@ export default function VideoCarousel({ videos, alt }: VideoCarouselProps) {
 
   // Auto-play the video when it becomes active
   useEffect(() => {
-    const currentVideo = videoRefs[currentSlide]?.current;
+    const currentVideo = videoRefs.current[currentSlide];
     if (currentVideo) {
       currentVideo.play().catch(() => {
         // Autoplay might be blocked by browser
       });
     }
-  }, [currentSlide, videoRefs]);
+  }, [currentSlide]);
 
   const nextSlide = () => {
     const newIndex = (currentSlide + 1) % videos.length;
@@ -77,7 +77,9 @@ export default function VideoCarousel({ videos, alt }: VideoCarouselProps) {
         {videos.map((video, index) => (
           <video
             key={index}
-            ref={videoRefs[index]}
+            ref={(el) => {
+              videoRefs.current[index] = el;
+            }}
             src={video}
             controls
             muted

@@ -20,8 +20,8 @@ export default function MediaCarousel({
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Create refs for videos
-  const videoRefs = videos.map(() => useRef<HTMLVideoElement>(null));
+  // Create refs for videos using a single ref object
+  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
 
   // Reset to first slide when switching media types
   useEffect(() => {
@@ -32,8 +32,8 @@ export default function MediaCarousel({
     if (isTransitioning) return;
 
     // Pause current video if switching from videos
-    if (currentMediaType === "videos" && videoRefs[currentSlide]?.current) {
-      videoRefs[currentSlide].current?.pause();
+    if (currentMediaType === "videos" && videoRefs.current[currentSlide]) {
+      videoRefs.current[currentSlide]?.pause();
     }
 
     setIsTransitioning(true);
@@ -44,14 +44,14 @@ export default function MediaCarousel({
   // Auto-play the video when it becomes active
   useEffect(() => {
     if (currentMediaType === "videos") {
-      const currentVideo = videoRefs[currentSlide]?.current;
+      const currentVideo = videoRefs.current[currentSlide];
       if (currentVideo) {
         currentVideo.play().catch(() => {
           // Autoplay might be blocked by browser
         });
       }
     }
-  }, [currentSlide, videoRefs, currentMediaType]);
+  }, [currentSlide, currentMediaType]);
 
   const nextSlide = () => {
     const items = currentMediaType === "images" ? images : videos;
@@ -188,7 +188,9 @@ export default function MediaCarousel({
           >
             {currentMediaType === "videos" && index === currentSlide && (
               <video
-                ref={videoRefs[index]}
+                ref={(el) => {
+                  videoRefs.current[index] = el;
+                }}
                 src={video}
                 controls
                 muted

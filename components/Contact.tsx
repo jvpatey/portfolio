@@ -102,7 +102,7 @@ export default function Contact() {
             />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
-            Feel free to reach out — I'd love to hear from you.
+            Feel free to reach out — I&apos;d love to hear from you.
           </p>
         </motion.div>
 
@@ -113,11 +113,11 @@ export default function Contact() {
             <div className="flex flex-col space-y-6 h-full">
               <div>
                 <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-white mb-4">
-                  Let's Connect
+                  Let&apos;s Connect
                 </h3>
                 <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                  I'm always happy to connect! Whether you have a question, want
-                  to collaborate, or just want to say hi.
+                  I&apos;m always happy to connect! Whether you have a question,
+                  want to collaborate, or just want to say hi.
                 </p>
               </div>
 
