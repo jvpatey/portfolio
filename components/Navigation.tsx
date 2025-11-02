@@ -10,6 +10,25 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // Smooth scroll handler
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    if (targetId === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      const element = document.querySelector(targetId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -83,10 +102,11 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { href: "#about", label: "About", number: "01" },
-    { href: "#experience", label: "Experience", number: "02" },
-    { href: "#projects", label: "Projects", number: "03" },
-    { href: "#contact", label: "Contact", number: "04" },
+    { href: "#", label: "Home", number: "01" },
+    { href: "#about", label: "About", number: "02" },
+    { href: "#experience", label: "Experience", number: "03" },
+    { href: "#projects", label: "Projects", number: "04" },
+    { href: "#contact", label: "Contact", number: "05" },
   ];
 
   return (
@@ -94,94 +114,155 @@ export default function Navigation() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl shadow-slate-900/25"
-          : "bg-slate-900/60 backdrop-blur-md border-b border-slate-800/30"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/40 backdrop-blur-md ${
+        isScrolled ? "border-b border-white/10" : "border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
+        <div className="grid grid-cols-3 items-center h-20">
           {/* Logo - scrolls to top */}
-          <Link
-            href="#"
-            className="group"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            <div className="relative">
-              {/* Animated background rings */}
-              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/30 via-indigo-500/30 to-purple-500/30 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+          <div>
+            <Link
+              href="#"
+              className="group inline-block cursor-pointer"
+              onClick={(e) => handleSmoothScroll(e, "#")}
+            >
+              <div className="relative">
+                {/* Gradient glow on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-pink-500/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
 
-              {/* Main logo container */}
-              <div className="relative w-12 h-12 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-2xl border border-slate-700/50 flex items-center justify-center shadow-2xl shadow-slate-900/50 group-hover:shadow-blue-500/25 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
-                {/* Inner glow effect */}
-                <div className="absolute inset-1 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                {/* Main logo container - Glassmorphism */}
+                <div
+                  className="relative w-12 h-12 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-105"
+                  style={{
+                    background: "rgba(255, 255, 255, 0.05)",
+                    backdropFilter: "blur(20px) saturate(200%)",
+                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                    boxShadow:
+                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+                  }}
+                >
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-3xl"></div>
 
-                {/* Text with gradient */}
-                <span className="relative z-10 bg-gradient-to-br from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent font-bold text-xl tracking-tight">
-                  JP
-                </span>
+                  {/* Gradient overlay on hover */}
+                  <div
+                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+                    }}
+                  />
 
-                {/* Subtle animation dots */}
-                <div className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-ping"></div>
-                <div className="absolute bottom-1 left-1 w-1 h-1 bg-indigo-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-ping delay-150"></div>
+                  {/* Text with gradient */}
+                  <span
+                    className="relative z-10 font-bold text-lg tracking-tight transition-all duration-300"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                      backgroundClip: "text",
+                    }}
+                  >
+                    JP
+                  </span>
+
+                  {/* Inner highlight */}
+                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-sm opacity-50"></div>
+                </div>
               </div>
-
-              {/* Outer glow on hover */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-blue-500/10 to-indigo-600/10 rounded-2xl blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-          </Link>
-
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-2 bg-slate-800/50 backdrop-blur-sm rounded-full px-4 py-2 border border-slate-700/50">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 group ${
-                  activeSection === item.href.slice(1)
-                    ? "text-blue-400"
-                    : "text-slate-300 hover:text-slate-100"
-                }`}
-              >
-                <span className="relative z-10">
-                  <span className="text-xs text-slate-500 group-hover:text-blue-400 transition-colors duration-300">
-                    {item.number}.
-                  </span>{" "}
-                  {item.label}
-                </span>
-
-                {/* Active indicator */}
-                {activeSection === item.href.slice(1) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-indigo-600/20 rounded-full border border-blue-500/30"></div>
-                )}
-
-                {/* Hover effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-700/50 to-slate-600/50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </Link>
-            ))}
+            </Link>
           </div>
 
-          {/* Desktop Resume Button & Mobile Menu Button */}
-          <div className="flex items-center gap-4">
-            <a
-              href="/jeffpatey_resume_2025.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:block relative group px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-full font-medium text-sm shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-105"
-              aria-label="View Resume"
-            >
-              <span className="relative z-10">Resume</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-blue-600 to-indigo-600 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
+          {/* Navigation Links - Centered */}
+          <div className="hidden md:flex items-center justify-center">
+            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleSmoothScroll(e, item.href)}
+                  className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap cursor-pointer ${
+                    (item.href === "#" && activeSection === "") ||
+                    (item.href !== "#" && activeSection === item.href.slice(1))
+                      ? ""
+                      : "text-slate-300 hover:text-slate-100"
+                  }`}
+                >
+                  <span className="relative z-10 whitespace-nowrap">
+                    <span
+                      className="text-xs transition-colors duration-300"
+                      style={{
+                        color:
+                          activeSection === item.href.slice(1)
+                            ? "transparent"
+                            : "#6b7280",
+                        background:
+                          activeSection === item.href.slice(1)
+                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
+                            : "none",
+                        WebkitBackgroundClip:
+                          activeSection === item.href.slice(1)
+                            ? "text"
+                            : "initial",
+                        WebkitTextFillColor:
+                          activeSection === item.href.slice(1)
+                            ? "transparent"
+                            : "initial",
+                        backgroundClip:
+                          activeSection === item.href.slice(1)
+                            ? "text"
+                            : "initial",
+                      }}
+                    >
+                      {item.number}.
+                    </span>{" "}
+                    <span
+                      style={{
+                        color:
+                          activeSection === item.href.slice(1)
+                            ? "transparent"
+                            : "inherit",
+                        background:
+                          activeSection === item.href.slice(1)
+                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
+                            : "none",
+                        WebkitBackgroundClip:
+                          activeSection === item.href.slice(1)
+                            ? "text"
+                            : "initial",
+                        WebkitTextFillColor:
+                          activeSection === item.href.slice(1)
+                            ? "transparent"
+                            : "initial",
+                        backgroundClip:
+                          activeSection === item.href.slice(1)
+                            ? "text"
+                            : "initial",
+                      }}
+                    >
+                      {item.label}
+                    </span>
+                  </span>
 
-            {/* Mobile menu button */}
+                  {/* Active indicator */}
+                  {activeSection === item.href.slice(1) && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-pink-500/30 backdrop-blur-sm rounded-full border border-pink-400/40"></div>
+                  )}
+
+                  {/* Hover effect */}
+                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-10 h-10 bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700/50 flex items-center justify-center text-slate-300 hover:text-white hover:bg-slate-700/50 transition-all duration-300"
+              className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 absolute top-1/2 -translate-y-1/2 right-6"
               aria-label="Toggle menu"
             >
               <svg
@@ -220,7 +301,7 @@ export default function Navigation() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 bg-slate-900/80 backdrop-blur-md md:hidden"
             style={{ top: "80px" }}
           />
 
@@ -230,7 +311,14 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl"
+            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 shadow-xl"
+            style={{
+              background: "rgba(0, 0, 0, 0.95)",
+              backdropFilter: "blur(20px) saturate(200%)",
+              border: "1px solid rgba(255, 255, 255, 0.1)",
+              boxShadow:
+                "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+            }}
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
               {navItems.map((item, index) => (
@@ -242,12 +330,30 @@ export default function Navigation() {
                 >
                   <Link
                     href={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 ${
+                    onClick={(e) => {
+                      handleSmoothScroll(e, item.href);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer ${
                       activeSection === item.href.slice(1)
-                        ? "bg-gradient-to-r from-blue-500/20 to-indigo-600/20 text-blue-400 border border-blue-500/30"
-                        : "text-slate-300 hover:text-slate-100 hover:bg-slate-800/50"
+                        ? "text-white"
+                        : "text-slate-300 hover:text-white"
                     }`}
+                    style={{
+                      background:
+                        activeSection === item.href.slice(1)
+                          ? "linear-gradient(135deg, rgba(52, 120, 246, 0.2) 0%, rgba(255, 45, 85, 0.2) 50%, rgba(255, 149, 0, 0.2) 100%)"
+                          : "rgba(255, 255, 255, 0.05)",
+                      backdropFilter: "blur(20px) saturate(200%)",
+                      border:
+                        activeSection === item.href.slice(1)
+                          ? "1px solid rgba(255, 255, 255, 0.2)"
+                          : "1px solid rgba(255, 255, 255, 0.1)",
+                      boxShadow:
+                        activeSection === item.href.slice(1)
+                          ? "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                          : "0 2px 8px rgba(0, 0, 0, 0.1)",
+                    }}
                   >
                     <span className="text-xs text-slate-500 mr-2">
                       {item.number}.
@@ -268,10 +374,21 @@ export default function Navigation() {
                   href="/jeffpatey_resume_2025.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center px-6 py-3 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white rounded-lg font-medium shadow-lg shadow-blue-500/25"
+                  className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                    boxShadow:
+                      "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                    backdropFilter: "blur(20px) saturate(200%)",
+                    border: "0.5px solid rgba(255, 255, 255, 0.2)",
+                  }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  View Resume
+                  {/* Shimmer effect */}
+                  <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
+
+                  <span className="relative z-10">View Resume</span>
                 </a>
               </motion.div>
             </div>

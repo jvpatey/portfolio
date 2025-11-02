@@ -17,34 +17,47 @@ export default function Icon() {
     (
       <div
         style={{
-          background:
-            "linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e293b 100%)",
+          background: "#000000",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 24,
+          borderRadius: 32,
           position: "relative",
-          border: "1px solid rgba(51, 65, 85, 0.5)",
+          border: "1px solid rgba(255, 255, 255, 0.1)",
         }}
       >
-        {/* Inner glow layer */}
+        {/* Glassmorphism overlay */}
         <div
           style={{
             position: "absolute",
-            inset: "6px",
-            background:
-              "linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(79, 70, 229, 0.2) 100%)",
-            borderRadius: 20,
+            inset: 0,
+            background: "rgba(255, 255, 255, 0.05)",
+            borderRadius: 32,
+            border: "1px solid rgba(255, 255, 255, 0.1)",
           }}
         />
 
-        {/* JP Text */}
+        {/* Inner highlight */}
+        <div
+          style={{
+            position: "absolute",
+            top: 4,
+            left: 4,
+            width: 6,
+            height: 6,
+            borderRadius: "50%",
+            background: "rgba(255, 255, 255, 0.4)",
+            filter: "blur(2px)",
+          }}
+        />
+
+        {/* JP Text with gradient */}
         <div
           style={{
             background:
-              "linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #a78bfa 100%)",
+              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             color: "transparent",
@@ -58,32 +71,6 @@ export default function Icon() {
         >
           JP
         </div>
-
-        {/* Decorative dots */}
-        <div
-          style={{
-            position: "absolute",
-            top: 22,
-            right: 22,
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#60a5fa",
-            opacity: 0.9,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 22,
-            left: 22,
-            width: 5,
-            height: 5,
-            borderRadius: "50%",
-            background: "#818cf8",
-            opacity: 0.9,
-          }}
-        />
       </div>
     ),
     {
