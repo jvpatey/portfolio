@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { HeartPulse } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import TypewriterHeader from "./TypewriterHeader";
 
@@ -98,49 +99,14 @@ export default function Experience() {
             />
           </h2>
           <p className="text-slate-400 text-base max-w-2xl">
-            My professional journey from healthcare to technology
+            My professional experience in technology and healthcare
           </p>
         </motion.div>
 
         {/* Experience Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Current Role Card */}
+          {/* Aura App Card */}
           <ExperienceCard delay={0.2} className="p-6">
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
-                  Registered Dental Hygienist
-                </h3>
-                <p
-                  className="text-base md:text-lg mb-4"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  Sackville Dental Centre
-                </p>
-                <p className="text-sm text-slate-400 mb-4">2021 - Present</p>
-                <div className="space-y-2 text-base md:text-lg text-slate-300">
-                  <div className="flex items-start">
-                    <span className="text-[#FF2D55] mr-2 mt-1">▸</span>
-                    <span>
-                      Worked closely with patients to keep treatments efficient
-                      and comfortable—skills I now apply to building
-                      user-friendly, accessible software with attention to
-                      detail and a user-first approach.
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ExperienceCard>
-
-          {/* Skills Transfer Card */}
-          <ExperienceCard delay={0.3} className="p-6">
             <div className="h-full flex flex-col justify-center">
               <div className="text-center">
                 <div
@@ -161,29 +127,87 @@ export default function Experience() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                      d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
                     />
                   </svg>
                 </div>
                 <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
-                  Career Transition
+                  Mobile App Developer
                 </h3>
+                <p
+                  className="text-base md:text-lg mb-4"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  ThinkRad
+                </p>
+                <p className="text-sm text-slate-400 mb-4">In Development</p>
                 <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-4">
-                  Leveraging healthcare experience to build technology solutions
-                  that prioritize user experience and accessibility.
+                  Developing Aura, a writing app in collaboration with ThinkRad.
+                  Will be available on the App Store in the near future.
                 </p>
                 <div className="space-y-2 text-sm md:text-base text-slate-400">
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    Patient care → User experience
+                    Built with SwiftUI and Xcode
                   </div>
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    Attention to detail → Code quality
+                    iOS mobile development
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ExperienceCard>
+
+          {/* Dental Hygienist Card */}
+          <ExperienceCard delay={0.3} className="p-6">
+            <div className="h-full flex flex-col justify-center">
+              <div className="text-center">
+                <div
+                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  }}
+                >
+                  <HeartPulse className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
+                  Registered Dental Hygienist
+                </h3>
+                <p
+                  className="text-base md:text-lg mb-4"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Sackville Dental Centre
+                </p>
+                <p className="text-sm text-slate-400 mb-4">2021 - Present</p>
+                <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-4">
+                  Worked closely with patients to keep treatments efficient and
+                  comfortable—skills I now apply to building user-friendly,
+                  accessible software with attention to detail and a user-first
+                  approach.
+                </p>
+                <div className="space-y-2 text-sm md:text-base text-slate-400">
+                  <div className="flex items-center justify-center">
+                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    Patient care and treatment
                   </div>
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    Problem solving → Technical solutions
+                    Healthcare experience
                   </div>
                 </div>
               </div>
