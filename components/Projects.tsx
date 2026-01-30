@@ -109,6 +109,100 @@ export default function Projects() {
 
         {/* Projects Grid - Each project has separate cards */}
         <div className="space-y-16 sm:space-y-20">
+          {/* Aura Project */}
+          <div id="aura" className="space-y-6 scroll-mt-20">
+            {/* Project Title */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="flex flex-wrap items-center gap-3"
+            >
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
+                  Aura
+                </span>
+              </h3>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-medium animate-pulse"
+                style={{
+                  background: "rgba(255, 149, 0, 0.2)",
+                  border: "1px solid rgba(255, 149, 0, 0.4)",
+                  color: "#ff9500",
+                }}
+              >
+                Currently building
+              </span>
+            </motion.div>
+
+            {/* Project Cards Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Image Carousel Card - Left Side */}
+              <BentoCard span="col-span-1" delay={0.2} className="p-4">
+                <MediaCarousel
+                  images={[
+                    "/aura1.png",
+                    "/aura2.png",
+                    "/aura3.png",
+                    "/aura4.png",
+                  ]}
+                  videos={["/auravideo1.mov", "/auravideo2.mov", "/auravideo3.mov"]}
+                  alt="Aura app media"
+                />
+              </BentoCard>
+
+              {/* Right Side - About & Tech Stack Card */}
+              <BentoCard
+                span="col-span-1"
+                delay={0.3}
+                className="p-4 sm:p-6 flex-1"
+              >
+                <div className="flex flex-col space-y-4 h-full">
+                  <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
+                    About
+                  </h4>
+                  <p className="text-base md:text-lg text-slate-300 leading-relaxed">
+                    A clean, distraction-free writing app for macOS and iOS,
+                    built in collaboration with ThinkRad. It supports tags, rich
+                    text, and will be available on the App Store soon.
+                  </p>
+                  <div className="flex-1 mt-4">
+                    <h5 className="text-base md:text-lg font-semibold text-white mb-2">
+                      Tech Stack
+                    </h5>
+                    <div className="flex flex-wrap gap-1">
+                      {["SwiftUI", "iCloud", "Xcode"].map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-2 py-1 rounded-full text-xs"
+                          style={{
+                            background: "rgba(52, 120, 246, 0.1)",
+                            border: "1px solid rgba(52, 120, 246, 0.2)",
+                            color: "#60a5fa",
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <p className="text-slate-400 text-sm mt-4">
+                      Coming to the App Store soon.
+                    </p>
+                  </div>
+                </div>
+              </BentoCard>
+            </div>
+          </div>
+
           {/* HomeKeep Project */}
           <div id="homekeep" className="space-y-6 scroll-mt-20">
             {/* Project Title */}
