@@ -266,6 +266,16 @@ export default function About() {
                   </div>
                   <div className="flex items-center justify-between">
                     <a
+                      href="#streamln"
+                      onClick={(e) => handleSmoothScroll(e, "#streamln")}
+                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
+                    >
+                      StreamLn
+                    </a>
+                    <span className="text-sm text-slate-500">Building</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <a
                       href="#homekeep"
                       onClick={(e) => handleSmoothScroll(e, "#homekeep")}
                       className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
