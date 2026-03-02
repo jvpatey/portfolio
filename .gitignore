@@ -35,3 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# large video sources (compressed mp4s are used instead)
+public/streamln_video_*.mov
+

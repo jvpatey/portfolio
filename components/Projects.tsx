@@ -254,16 +254,16 @@ export default function Projects() {
                     "/streamln8.png",
                   ]}
                   videos={[
-                    "/streamln_video_1.mov",
-                    "/streamln_video_2.mov",
-                    "/streamln_video_3.mov",
-                    "/streamln_video_4.mov",
-                    "/streamln_video_5.mov",
-                    "/streamln_video_6.mov",
-                    "/streamln_video_7.mov",
-                    "/streamln_video_8.mov",
-                    "/streamln_video_9.mov",
-                    "/streamln_video_10.mov",
+                    "/streamln_video_1.mp4",
+                    "/streamln_video_2.mp4",
+                    "/streamln_video_3.mp4",
+                    "/streamln_video_4.mp4",
+                    "/streamln_video_5.mp4",
+                    "/streamln_video_6.mp4",
+                    "/streamln_video_7.mp4",
+                    "/streamln_video_8.mp4",
+                    "/streamln_video_9.mp4",
+                    "/streamln_video_10.mp4",
                   ]}
                   alt="StreamLn media"
                 />
