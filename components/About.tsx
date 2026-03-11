@@ -318,6 +318,10 @@ export default function About() {
                   </div>
                   <div className="flex items-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
+                    SwiftUI & Xcode
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-[#FF2D55] mr-2">▸</span>
                     Node.js & Express
                   </div>
                   <div className="flex items-center">
