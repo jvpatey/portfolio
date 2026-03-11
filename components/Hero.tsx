@@ -69,7 +69,7 @@ export default function Hero() {
   // Smooth scroll handler
   const handleSmoothScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string
+    targetId: string,
   ) => {
     e.preventDefault();
     const element = document.querySelector(targetId);
@@ -83,7 +83,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-screen flex items-start sm:items-center justify-start sm:justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-8 sm:pb-16 sm:py-16 overflow-hidden"
       style={{ backgroundColor: "#000000" }}
     >
       <motion.div
@@ -92,28 +92,28 @@ export default function Hero() {
         initial="hidden"
         animate="show"
       >
-        <div>
+        <div className="w-full">
           {/* Section 1: Name */}
-          <div className="mb-12 md:mb-16">
+          <div className="mb-12 sm:mb-8 md:mb-16">
             <motion.p
               variants={item}
-              className="text-base sm:text-lg font-medium text-slate-400 mb-3"
+              className="text-lg sm:text-lg font-medium text-slate-400 mb-3"
             >
               Hi, my name is
             </motion.p>
             <motion.h1
               variants={item}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white"
+              className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
             >
               Jeffrey Patey.
             </motion.h1>
           </div>
 
           {/* Section 2: Role */}
-          <div className="mb-12 md:mb-16 space-y-2">
+          <div className="mb-12 sm:mb-8 md:mb-16 space-y-3 sm:space-y-2">
             <motion.div
               variants={item}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight xl:whitespace-nowrap"
+              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight xl:whitespace-nowrap leading-tight"
             >
               I&apos;m a{" "}
               <span
@@ -137,17 +137,17 @@ export default function Hero() {
             </motion.div>
             <motion.div
               variants={item}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight"
+              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight"
             >
               with a healthcare background.
             </motion.div>
           </div>
 
           {/* Section 3: Passion Statement */}
-          <div className="mb-12 md:mb-16">
+          <div className="mb-12 sm:mb-8 md:mb-16">
             <motion.p
               variants={item}
-              className="text-lg sm:text-xl text-slate-300 max-w-2xl leading-relaxed"
+              className="text-xl sm:text-xl text-slate-300 max-w-2xl leading-relaxed"
             >
               My passion for{" "}
               <motion.span
@@ -174,12 +174,12 @@ export default function Hero() {
           </div>
 
           {/* Section 4: CTA Button */}
-          <div>
+          <div className="mt-4 sm:mt-0">
             <motion.div variants={item}>
               <motion.a
                 href="#projects"
                 onClick={(e) => handleSmoothScroll(e, "#projects")}
-                className="relative group inline-block px-10 sm:px-12 py-5 sm:py-6 rounded-full font-semibold text-base sm:text-lg transition-all duration-500 overflow-hidden cursor-pointer"
+                className="relative group inline-block w-full sm:w-auto text-center px-12 py-6 rounded-full font-semibold text-lg transition-all duration-500 overflow-hidden cursor-pointer"
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",

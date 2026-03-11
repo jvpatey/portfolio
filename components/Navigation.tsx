@@ -3,7 +3,7 @@
 // Navigation component - includes logo, navigation links, and resume button
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -293,24 +293,26 @@ export default function Navigation() {
       </div>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="fixed inset-0 bg-slate-900/80 backdrop-blur-md md:hidden"
-            style={{ top: "80px" }}
-          />
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="fixed inset-0 bg-slate-900/80 backdrop-blur-md md:hidden"
+              style={{ top: "80px" }}
+            />
 
-          {/* Menu Content */}
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
+            {/* Menu Content */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
             className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 shadow-xl"
             style={{
               background: "rgba(0, 0, 0, 0.95)",
@@ -394,7 +396,8 @@ export default function Navigation() {
             </div>
           </motion.div>
         </>
-      )}
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

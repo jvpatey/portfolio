@@ -467,14 +467,14 @@ export default function Projects() {
               </BentoCard>
 
               {/* Right Side - Two Separate Cards */}
-              <div className="flex flex-col space-y-4 h-full">
+              <div className="flex flex-col space-y-4 lg:h-full">
                 {/* About & Tech Stack Card */}
                 <BentoCard
-                  span="col-span-1"
+                  span="col-span-1 min-w-0"
                   delay={0.3}
-                  className="p-4 sm:p-6 flex-1"
+                  className="p-4 sm:p-6 lg:flex-1"
                 >
-                  <div className="flex flex-col space-y-4 h-full">
+                  <div className="flex flex-col space-y-4">
                     <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
                       About
                     </h4>
@@ -484,7 +484,7 @@ export default function Projects() {
                       and track your progress—all with a clean, intuitive
                       interface.
                     </p>
-                    <div className="flex-1 mt-4">
+                    <div className="mt-4">
                       <h5 className="text-base md:text-lg font-semibold text-white mb-2">
                         Tech Stack
                       </h5>
@@ -511,9 +511,9 @@ export default function Projects() {
 
                 {/* Links Card */}
                 <BentoCard
-                  span="col-span-1"
+                  span="col-span-1 min-w-0"
                   delay={0.4}
-                  className="p-4 sm:p-6 flex-1"
+                  className="p-4 sm:p-6 lg:flex-1"
                 >
                   <div className="flex flex-col space-y-4 h-full">
                     <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
