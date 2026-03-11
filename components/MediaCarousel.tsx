@@ -68,7 +68,7 @@ export default function MediaCarousel({
   const currentItems = currentMediaType === "images" ? images : videos;
 
   return (
-    <div className="relative group rounded-lg flex flex-col items-center overflow-hidden">
+    <div className="relative group rounded-lg flex flex-col items-center w-full min-w-0 overflow-hidden">
       {/* Media Type Toggle - Apple Liquid Glass Style */}
       <div className="relative z-20 mb-4 flex items-center">
         <div
@@ -126,11 +126,11 @@ export default function MediaCarousel({
         </div>
       </div>
 
-      {/* Previous Button */}
+      {/* Previous Button - always visible on touch/mobile, hover on desktop */}
       <button
         onClick={prevSlide}
         disabled={isTransitioning}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-3 rounded-full shadow-lg disabled:opacity-50"
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
         aria-label={`Previous ${currentMediaType}`}
       >
         <svg
@@ -148,8 +148,8 @@ export default function MediaCarousel({
         </svg>
       </button>
 
-      {/* Media Container */}
-      <div className="relative max-h-[500px] w-full">
+      {/* Media Container - responsive height, constrained width for mobile, centered */}
+      <div className="relative flex justify-center items-center max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] w-full max-w-full">
         {/* Images */}
         {images.map((image, index) => (
           <div
@@ -167,7 +167,7 @@ export default function MediaCarousel({
               <img
                 src={image}
                 alt={`${alt} ${index + 1}`}
-                className="max-h-[500px] w-auto mx-auto rounded-lg shadow-2xl"
+                className="max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
               />
             )}
           </div>
@@ -196,7 +196,7 @@ export default function MediaCarousel({
                 muted
                 loop
                 playsInline
-                className="max-h-[500px] w-auto mx-auto rounded-lg shadow-2xl"
+                className="max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
               >
                 Your browser does not support the video tag.
               </video>
@@ -205,11 +205,11 @@ export default function MediaCarousel({
         ))}
       </div>
 
-      {/* Next Button */}
+      {/* Next Button - always visible on touch/mobile, hover on desktop */}
       <button
         onClick={nextSlide}
         disabled={isTransitioning}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-3 rounded-full shadow-lg disabled:opacity-50"
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
         aria-label={`Next ${currentMediaType}`}
       >
         <svg

@@ -81,7 +81,7 @@ export default function Experience() {
       className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto overflow-x-hidden">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -113,7 +113,7 @@ export default function Experience() {
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-w-0">
           {/* ThinkRad Consultant Card - featured, takes 2/3 width */}
           <ExperienceCard delay={0.2} featured className="p-6 lg:p-8 lg:col-span-2">
             <div className="h-full flex flex-col justify-center">

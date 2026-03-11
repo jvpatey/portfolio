@@ -30,12 +30,12 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
   };
 
   return (
-    <div className="relative group rounded-lg flex justify-center overflow-hidden">
-      {/* Previous Button */}
+    <div className="relative group rounded-lg flex justify-center w-full min-w-0 overflow-hidden">
+      {/* Previous Button - always visible on touch/mobile */}
       <button
         onClick={prevSlide}
         disabled={isTransitioning}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-3 rounded-full shadow-lg disabled:opacity-50"
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
         aria-label="Previous screenshot"
       >
         <svg
@@ -53,17 +53,17 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         </svg>
       </button>
 
-      {/* Images Container with Fade and Slide Effect */}
-      <div className="relative max-h-[500px]">
+      {/* Images Container - responsive height for mobile, centered */}
+      <div className="relative flex justify-center items-center max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] w-full max-w-full">
         {images.map((image, index) => (
           <img
             key={index}
             src={image}
             alt={`${alt} ${index + 1}`}
-            className={`max-h-[500px] w-auto rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
+            className={`max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
               index === currentSlide
                 ? "opacity-100 translate-x-0 relative"
-                : "opacity-0 absolute top-0 left-0 translate-x-4"
+                : "opacity-0 absolute top-0 left-0 translate-x-4 pointer-events-none"
             }`}
             style={{
               transitionProperty: "opacity, transform",
@@ -72,11 +72,11 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         ))}
       </div>
 
-      {/* Next Button */}
+      {/* Next Button - always visible on touch/mobile */}
       <button
         onClick={nextSlide}
         disabled={isTransitioning}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-3 rounded-full shadow-lg disabled:opacity-50"
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
         aria-label="Next screenshot"
       >
         <svg

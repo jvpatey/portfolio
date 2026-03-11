@@ -41,7 +41,7 @@ const BentoCard = ({
         y: -2,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
-      className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
+      className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 min-w-0 ${className}`}
       style={{
         background: "rgba(255, 255, 255, 0.05)",
         backdropFilter: "blur(20px) saturate(200%)",
@@ -76,7 +76,7 @@ export default function Projects() {
       className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto overflow-x-hidden">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -145,9 +145,9 @@ export default function Projects() {
             </motion.div>
 
             {/* Project Cards Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
               {/* Image Carousel Card - Left Side */}
-              <BentoCard span="col-span-1" delay={0.2} className="p-4">
+              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
                 <MediaCarousel
                   images={[
                     "/aura1.png",
@@ -270,9 +270,9 @@ export default function Projects() {
               </BentoCard>
 
               {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
                 {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1" delay={0.3} className="p-4 sm:p-6">
+                <BentoCard span="col-span-1 min-w-0" delay={0.3} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
                     <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
                       About
@@ -440,9 +440,9 @@ export default function Projects() {
             </motion.div>
 
             {/* Project Cards Grid - Side by Side for Mobile App */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
               {/* Media Carousel Card - Left Side - Images and Videos */}
-              <BentoCard span="col-span-1" delay={0.2} className="p-4">
+              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
                 <MediaCarousel
                   images={[
                     "/homekeep1.png",
@@ -628,9 +628,9 @@ export default function Projects() {
             </motion.div>
 
             {/* Project Cards Grid */}
-            <div className="space-y-6">
+            <div className="space-y-6 min-w-0">
               {/* Combined Media Carousel Card - Images and Videos */}
-              <BentoCard span="col-span-1" delay={0.2} className="p-4">
+              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
                 <MediaCarousel
                   images={[
                     "/oralcheckr1.png",
@@ -654,9 +654,9 @@ export default function Projects() {
               </BentoCard>
 
               {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
                 {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1" delay={0.3} className="p-4 sm:p-6">
+                <BentoCard span="col-span-1 min-w-0" delay={0.3} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
                     <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
                       About
@@ -825,9 +825,9 @@ export default function Projects() {
             </motion.div>
 
             {/* Project Cards Grid */}
-            <div className="space-y-6">
+            <div className="space-y-6 min-w-0">
               {/* Image Carousel Card - Full Width */}
-              <BentoCard span="col-span-1" delay={0.2} className="p-4">
+              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
                 <ImageCarousel
                   images={[
                     "/burdens1.png",
@@ -842,9 +842,9 @@ export default function Projects() {
               </BentoCard>
 
               {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
                 {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1" delay={0.3} className="p-4 sm:p-6">
+                <BentoCard span="col-span-1 min-w-0" delay={0.3} className="p-4 sm:p-6">
                   <div className="flex flex-col space-y-4">
                     <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
                       About

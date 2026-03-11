@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 // Main portfolio page
 export default function Home() {
   return (
-    <div className="min-h-screen text-white bg-black">
+    <div className="min-h-screen text-white bg-black overflow-x-hidden">
       <Navigation />
 
       {/* Main Content */}
