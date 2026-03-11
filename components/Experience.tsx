@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { HeartPulse } from "lucide-react";
+import { Code, HeartPulse } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import TypewriterHeader from "./TypewriterHeader";
 
@@ -10,10 +10,12 @@ const ExperienceCard = ({
   children,
   className = "",
   delay = 0,
+  featured = false,
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  featured?: boolean;
 }) => {
   return (
     <motion.div
@@ -34,24 +36,31 @@ const ExperienceCard = ({
         ease: [0.25, 0.46, 0.45, 0.94],
       }}
       whileHover={{
-        y: -2,
+        y: featured ? -4 : -2,
         transition: { duration: 0.3, ease: "easeOut" },
       }}
       className={`group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
       style={{
-        background: "rgba(255, 255, 255, 0.05)",
+        background: featured
+          ? "rgba(255, 255, 255, 0.08)"
+          : "rgba(255, 255, 255, 0.05)",
         backdropFilter: "blur(20px) saturate(200%)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        boxShadow:
-          "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+        border: featured
+          ? "1px solid rgba(255, 255, 255, 0.2)"
+          : "1px solid rgba(255, 255, 255, 0.1)",
+        boxShadow: featured
+          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(255, 255, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+          : "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
       }}
     >
-      {/* Gradient overlay */}
+      {/* Gradient overlay - more visible on featured card */}
       <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className={`absolute inset-0 transition-opacity duration-500 ${
+          featured ? "opacity-60 group-hover:opacity-100" : "opacity-0 group-hover:opacity-100"
+        }`}
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "linear-gradient(135deg, rgba(52, 120, 246, 0.12) 0%, rgba(255, 45, 85, 0.12) 50%, rgba(255, 149, 0, 0.12) 100%)",
         }}
       />
 
@@ -104,35 +113,22 @@ export default function Experience() {
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Aura App Card */}
-          <ExperienceCard delay={0.2} className="p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* ThinkRad Consultant Card - featured, takes 2/3 width */}
+          <ExperienceCard delay={0.2} featured className="p-6 lg:p-8 lg:col-span-2">
             <div className="h-full flex flex-col justify-center">
               <div className="text-center">
                 <div
-                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
+                  className="w-16 h-16 lg:w-20 lg:h-20 rounded-full mx-auto mb-4 flex items-center justify-center"
                   style={{
                     background:
                       "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
                   }}
                 >
-                  <svg
-                    className="w-8 h-8 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
-                    />
-                  </svg>
+                  <Code className="w-8 h-8 lg:w-10 lg:h-10 text-white" />
                 </div>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
-                  Mobile App Developer
+                <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-white mb-4">
+                  Consultant
                 </h3>
                 <p
                   className="text-base md:text-lg mb-4"
@@ -146,19 +142,20 @@ export default function Experience() {
                 >
                   ThinkRad
                 </p>
-                <p className="text-sm text-slate-400 mb-4">In Development</p>
-                <p className="text-base md:text-lg text-slate-300 leading-relaxed mb-4">
-                  Developing Aura, a writing app in collaboration with ThinkRad.
-                  Will be available on the App Store in the near future.
+                <p className="text-sm text-slate-400 mb-4">Sept 2025 - Present</p>
+                <p className="text-base md:text-lg lg:text-xl text-slate-300 leading-relaxed mb-4">
+                  Collaborated on the design and development of multiple iOS apps
+                  using Swift, SwiftUI, CloudKit, and Xcode, contributing to core
+                  features, architecture, and UX.
                 </p>
                 <div className="space-y-2 text-sm md:text-base text-slate-400">
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    Built with SwiftUI and Xcode
+                    Swift, SwiftUI, CloudKit & Xcode
                   </div>
                   <div className="flex items-center justify-center">
                     <span className="text-[#FF2D55] mr-2">▸</span>
-                    iOS mobile development
+                    Core features, architecture & UX
                   </div>
                 </div>
               </div>
@@ -166,7 +163,7 @@ export default function Experience() {
           </ExperienceCard>
 
           {/* Dental Hygienist Card */}
-          <ExperienceCard delay={0.3} className="p-6">
+          <ExperienceCard delay={0.3} className="p-6 lg:col-span-1">
             <div className="h-full flex flex-col justify-center">
               <div className="text-center">
                 <div
