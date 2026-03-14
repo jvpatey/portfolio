@@ -148,8 +148,8 @@ export default function MediaCarousel({
         </svg>
       </button>
 
-      {/* Media Container - responsive height, constrained width for mobile, centered */}
-      <div className="relative flex justify-center items-center max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] w-full max-w-full">
+      {/* Media Container */}
+      <div className="relative flex justify-center items-center max-h-[500px] w-full max-w-full">
         {/* Images */}
         {images.map((image, index) => (
           <div
@@ -167,7 +167,7 @@ export default function MediaCarousel({
               <img
                 src={image}
                 alt={`${alt} ${index + 1}`}
-                className="max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
+                className="max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
               />
             )}
           </div>
@@ -196,7 +196,7 @@ export default function MediaCarousel({
                 muted
                 loop
                 playsInline
-                className="max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
+                className="max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
               >
                 Your browser does not support the video tag.
               </video>

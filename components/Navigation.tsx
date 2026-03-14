@@ -373,7 +373,7 @@ export default function Navigation() {
                 className="pt-4"
               >
                 <a
-                  href="/jeffpatey_resume_2025.pdf"
+                  href="/jeffpatey_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"

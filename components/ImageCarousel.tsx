@@ -53,14 +53,14 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         </svg>
       </button>
 
-      {/* Images Container - responsive height for mobile, centered */}
-      <div className="relative flex justify-center items-center max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] w-full max-w-full">
+      {/* Images Container */}
+      <div className="relative flex justify-center items-center max-h-[500px] w-full max-w-full">
         {images.map((image, index) => (
           <img
             key={index}
             src={image}
             alt={`${alt} ${index + 1}`}
-            className={`max-h-[280px] sm:max-h-[360px] md:max-h-[420px] lg:max-h-[500px] max-w-full w-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
+            className={`max-h-[500px] max-w-full w-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
               index === currentSlide
                 ? "opacity-100 translate-x-0 relative"
                 : "opacity-0 absolute top-0 left-0 translate-x-4 pointer-events-none"

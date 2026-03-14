@@ -240,7 +240,7 @@ export default function Contact() {
 
                 <div className="flex-1 flex flex-col justify-center">
                   <a
-                    href="/jeffpatey_resume_2025.pdf"
+                    href="/jeffpatey_resume_2026.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
