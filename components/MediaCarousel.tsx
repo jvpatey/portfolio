@@ -15,7 +15,7 @@ export default function MediaCarousel({
   alt,
 }: MediaCarouselProps) {
   const [currentMediaType, setCurrentMediaType] = useState<"images" | "videos">(
-    "images"
+    "images",
   );
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);

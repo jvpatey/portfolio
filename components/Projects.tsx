@@ -70,7 +70,7 @@ const BentoCard = ({
       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500" />
 
       {/* Content */}
-      <div className="relative z-10 h-full">{children}</div>
+      <div className="relative z-10 h-full w-full min-w-0">{children}</div>
     </motion.div>
   );
 };
@@ -80,10 +80,10 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
+      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
-      <div className="max-w-6xl mx-auto overflow-x-hidden">
+      <div className="max-w-6xl mx-auto overflow-hidden">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -176,7 +176,6 @@ export default function Projects() {
                     "/streamln_video_7.mp4",
                     "/streamln_video_8.mp4",
                     "/streamln_video_9.mp4",
-                    "/streamln_video_10.mp4",
                   ]}
                   alt="StreamLn media"
                 />
@@ -380,8 +379,8 @@ export default function Projects() {
                 />
               </BentoCard>
 
-              {/* Right Side - Two Separate Cards */}
-              <div className="flex flex-col space-y-4">
+              {/* Right Side - Two Separate Cards (grid ensures full width like StreamLn) */}
+              <div className="grid grid-cols-1 gap-4 min-w-0">
                 {/* About & Tech Stack Card */}
                 <BentoCard
                   span="col-span-1 min-w-0"

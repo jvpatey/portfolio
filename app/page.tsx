@@ -12,7 +12,7 @@ export default function Home() {
       <Navigation />
 
       {/* Main Content */}
-      <main className="pt-16">
+      <main className="pt-16 overflow-hidden">
         <Hero />
         <About />
         <Experience />

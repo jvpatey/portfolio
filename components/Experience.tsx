@@ -56,7 +56,9 @@ const ExperienceCard = ({
       {/* Gradient overlay - more visible on featured card */}
       <div
         className={`absolute inset-0 transition-opacity duration-500 ${
-          featured ? "opacity-60 group-hover:opacity-100" : "opacity-0 group-hover:opacity-100"
+          featured
+            ? "opacity-60 group-hover:opacity-100"
+            : "opacity-0 group-hover:opacity-100"
         }`}
         style={{
           background:
@@ -78,10 +80,10 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8"
+      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
       style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
     >
-      <div className="max-w-6xl mx-auto overflow-x-hidden">
+      <div className="max-w-6xl mx-auto overflow-hidden">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -115,11 +117,16 @@ export default function Experience() {
         {/* Experience Cards */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 min-w-0 items-stretch">
           {/* ThinkRad Consultant Card - 3/5 width */}
-          <ExperienceCard delay={0.2} featured className="h-full p-6 lg:p-8 lg:col-span-3 flex flex-col self-stretch">
+          <ExperienceCard
+            delay={0.2}
+            featured
+            className="h-full p-6 lg:p-8 lg:col-span-3 flex flex-col self-stretch"
+          >
             <div
               className="flex-1 grid text-center gap-0 min-h-0"
               style={{
-                gridTemplateRows: "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
+                gridTemplateRows:
+                  "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
               }}
             >
               <div
@@ -170,11 +177,15 @@ export default function Experience() {
           </ExperienceCard>
 
           {/* Dental Hygienist Card - 2/5 width */}
-          <ExperienceCard delay={0.3} className="h-full p-6 lg:p-8 lg:col-span-2 flex flex-col self-stretch">
+          <ExperienceCard
+            delay={0.3}
+            className="h-full p-6 lg:p-8 lg:col-span-2 flex flex-col self-stretch"
+          >
             <div
               className="flex-1 grid text-center gap-0 min-h-0"
               style={{
-                gridTemplateRows: "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
+                gridTemplateRows:
+                  "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
               }}
             >
               <div
