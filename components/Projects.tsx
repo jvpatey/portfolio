@@ -555,12 +555,15 @@ export default function Projects() {
                     "/oralcheckr7.png",
                     "/oralcheckr8.png",
                     "/oralcheckr9.png",
+                    "/oralcheckr10.png",
                   ]}
                   videos={[
-                    "/oralcheckr-recording-1.mp4",
-                    "/oralcheckr-recording-2.mp4",
-                    "/oralcheckr-recording-3.mp4",
-                    "/oralcheckr-recording-4.mp4",
+                    "/oralcheckr-recording-1.mov",
+                    "/oralcheckr-recording-2.mov",
+                    "/oralcheckr-recording-3.mov",
+                    "/oralcheckr-recording-4.mov",
+                    "/oralcheckr-recording-5.mov",
+                    "/oralcheckr-recording-6.mov",
                   ]}
                   alt="OralCheckr media"
                 />
