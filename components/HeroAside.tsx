@@ -4,19 +4,19 @@ import { motion, type Variants } from "framer-motion";
 
 const stats = [
   {
-    value: "5+",
+    value: "10+",
     label: "Years in healthcare",
-    detail: "Patient-facing practice since 2021",
+    detail: "Built around patient care and education",
   },
   {
-    value: "Now",
-    label: "ThinkRad · Consultant",
-    detail: "iOS, SwiftUI & CloudKit",
+    label: "Experience",
+    value: "ThinkRad - Consultant",
+    detail: "Halifax, NS",
   },
   {
+    label: "Focus",
     value: "Full stack",
-    label: "Web & native",
-    detail: "TypeScript, React, Swift",
+    detail: "Next.js, TypeScript, React, Swift & SwiftUI",
   },
 ] as const;
 
@@ -44,7 +44,7 @@ export default function HeroAside({ item }: { item: Variants }) {
               className="flex flex-col gap-1 border-b border-white/5 pb-6 last:border-0 last:pb-0"
             >
               <p className="text-sm text-slate-400">{row.label}</p>
-              <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+              <p className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--accent-primary)]">
                 {row.value}
               </p>
               <p className="text-sm text-slate-400 leading-snug">{row.detail}</p>
