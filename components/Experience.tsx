@@ -1,250 +1,266 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Code, HeartPulse } from "lucide-react";
-import AnimatedSection from "./AnimatedSection";
-import TypewriterHeader from "./TypewriterHeader";
+import SectionTitleRule from "./SectionTitleRule";
 
-// Experience card component with glassmorphism
-const ExperienceCard = ({
-  children,
-  className = "",
-  delay = 0,
-  featured = false,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-  featured?: boolean;
-}) => {
-  return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-        scale: 0.95,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-      }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: delay * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      whileHover={{
-        y: featured ? -4 : -2,
-        transition: { duration: 0.3, ease: "easeOut" },
-      }}
-      className={`group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
-      style={{
-        background: featured
-          ? "rgba(255, 255, 255, 0.08)"
-          : "rgba(255, 255, 255, 0.05)",
-        backdropFilter: "blur(20px) saturate(200%)",
-        border: featured
-          ? "1px solid rgba(255, 255, 255, 0.2)"
-          : "1px solid rgba(255, 255, 255, 0.1)",
-        boxShadow: featured
-          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(52, 120, 246, 0.12), 0 0 60px rgba(255, 45, 85, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
-          : "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-      }}
-    >
-      {/* Gradient overlay - more visible on featured card */}
-      <div
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          featured
-            ? "opacity-60 group-hover:opacity-100"
-            : "opacity-0 group-hover:opacity-100"
-        }`}
-        style={{
-          background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.12) 0%, rgba(255, 45, 85, 0.12) 50%, rgba(255, 149, 0, 0.12) 100%)",
-        }}
-      />
+const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500" />
+const asideShadow = {
+  boxShadow:
+    "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+} as const;
 
-      {/* Content */}
-      <div className="relative z-10 h-full flex flex-col">{children}</div>
-    </motion.div>
-  );
+const panelClass =
+  "rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors duration-300 hover:border-white/15";
+
+type ExperienceEntry = {
+  id: string;
+  title: string;
+  company: string;
+  period: string;
+  summary: string;
+  bullets: string[];
+  icon: "code" | "health";
 };
 
-// Experience section component with card layout
+const experiences: ExperienceEntry[] = [
+  {
+    id: "thinkrad",
+    title: "Consultant",
+    company: "ThinkRad",
+    period: "Sept 2025 - Present",
+    summary:
+      "Collaborated on the design and development of multiple iOS apps using Swift, SwiftUI, CloudKit, and Xcode, contributing to core features, architecture, and UX.",
+    bullets: [
+      "Swift, SwiftUI, CloudKit & Xcode",
+      "Core features, architecture & UX",
+    ],
+    icon: "code",
+  },
+  {
+    id: "hygienist",
+    title: "Registered Dental Hygienist",
+    company: "Sackville Dental Centre",
+    period: "2021 - Present",
+    summary:
+      "Worked closely with patients to keep treatments efficient and comfortable—skills I now apply to building user-friendly, accessible software with attention to detail and a user-first approach.",
+    bullets: ["Patient care and treatment", "Healthcare experience"],
+    icon: "health",
+  },
+];
+
+const DETAIL_PANEL_ID = "experience-detail-panel";
+
+function ExperienceIcon({ kind }: { kind: ExperienceEntry["icon"] }) {
+  const wrap = "inline-flex shrink-0 pt-px sm:pt-0.5";
+  const size = "h-4 w-4 sm:h-[1.15rem] sm:w-[1.15rem] md:h-5 md:w-5";
+  if (kind === "code") {
+    return (
+      <span className={wrap} aria-hidden>
+        <Code
+          className={`${size} text-[var(--accent-primary)]`}
+          strokeWidth={1.65}
+        />
+      </span>
+    );
+  }
+  return (
+    <span className={wrap} aria-hidden>
+      <HeartPulse
+        className={`${size} text-[var(--accent-secondary)]`}
+        strokeWidth={1.65}
+      />
+    </span>
+  );
+}
+
 export default function Experience() {
+  const reduceMotion = useReducedMotion();
+  const [selectedId, setSelectedId] = useState(experiences[0].id);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const selected = useMemo(
+    () => experiences.find((e) => e.id === selectedId) ?? experiences[0],
+    [selectedId],
+  );
+
+  const focusTab = useCallback((index: number) => {
+    const i = (index + experiences.length) % experiences.length;
+    queueMicrotask(() => tabRefs.current[i]?.focus());
+  }, []);
+
+  const onTabKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+      switch (e.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          e.preventDefault();
+          setSelectedId(experiences[(index + 1) % experiences.length].id);
+          focusTab(index + 1);
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          e.preventDefault();
+          setSelectedId(
+            experiences[(index - 1 + experiences.length) % experiences.length]
+              .id,
+          );
+          focusTab(index - 1);
+          break;
+        case "Home":
+          e.preventDefault();
+          setSelectedId(experiences[0].id);
+          focusTab(0);
+          break;
+        case "End":
+          e.preventDefault();
+          setSelectedId(experiences[experiences.length - 1].id);
+          focusTab(experiences.length - 1);
+          break;
+        default:
+          break;
+      }
+    },
+    [focusTab],
+  );
+
   return (
     <section
       id="experience"
-      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
+      className="py-8 sm:py-10 md:py-14 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-[60px] lg:py-12"
     >
       <div className="max-w-6xl mx-auto overflow-hidden">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+        <motion.header
+          initial={
+            reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{
-            duration: 0.7,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            duration: reduceMotion ? 0 : 0.55,
+            ease: heroEase,
           }}
-          className="text-left mb-8 sm:mb-12"
+          className="text-left mb-6 space-y-2 sm:mb-10 sm:space-y-3 lg:mb-8"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <TypewriterHeader
-              fullText="03. Where I've Worked"
-              delay={100}
-              speed={80}
-              style={{
-                background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight text-balance">
+            Experience
           </h2>
-          <p className="text-slate-400 text-base max-w-2xl">
+          <SectionTitleRule />
+          <p className="text-slate-400 text-base md:text-lg max-w-2xl leading-relaxed">
             My professional experience in technology and healthcare
           </p>
-        </motion.div>
+        </motion.header>
 
-        {/* Experience Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 min-w-0 items-stretch">
-          {/* ThinkRad Consultant Card - 3/5 width */}
-          <ExperienceCard
-            delay={0.2}
-            featured
-            className="h-full p-6 lg:p-8 lg:col-span-3 flex flex-col self-stretch"
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-x-6 xl:gap-x-7 lg:items-stretch min-w-0">
+          <motion.div
+            initial={
+              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+            }
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.55,
+              delay: reduceMotion ? 0 : 0.06,
+              ease: heroEase,
+            }}
+            className={`lg:col-span-4 min-w-0 max-w-md lg:max-w-none ${panelClass} p-1.5 sm:p-2`}
+            style={asideShadow}
           >
+            <p className="px-2 pt-1.5 pb-0.5 text-[0.65rem] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">
+              Roles
+            </p>
             <div
-              className="flex-1 grid text-center gap-0 min-h-0"
-              style={{
-                gridTemplateRows:
-                  "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
-              }}
+              role="tablist"
+              aria-label="Work history"
+              aria-orientation="vertical"
+              className="flex flex-col gap-0.5"
             >
-              <div
-                className="w-16 h-16 rounded-full mx-auto flex items-center justify-center flex-shrink-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                }}
-              >
-                <Code className="w-8 h-8 text-white" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white flex items-center justify-center">
-                Consultant
-              </h3>
-              <p
-                className="text-base md:text-lg flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                ThinkRad
-              </p>
-              <p className="text-sm text-slate-400 flex items-center justify-center">
-                Sept 2025 - Present
-              </p>
-              <p className="text-base md:text-lg text-slate-300 leading-relaxed flex items-start justify-center pt-2">
-                Collaborated on the design and development of multiple iOS apps
-                using Swift, SwiftUI, CloudKit, and Xcode, contributing to core
-                features, architecture, and UX.
-              </p>
-              <div className="flex flex-col items-center pt-4">
-                <div className="space-y-2 text-sm md:text-base text-slate-400 w-fit text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#FF2D55] flex-shrink-0">▸</span>
-                    <span>Swift, SwiftUI, CloudKit & Xcode</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#FF2D55] flex-shrink-0">▸</span>
-                    <span>Core features, architecture & UX</span>
-                  </div>
+              {experiences.map((exp, index) => {
+                const isSelected = selectedId === exp.id;
+                return (
+                  <button
+                    key={exp.id}
+                    ref={(el) => {
+                      tabRefs.current[index] = el;
+                    }}
+                    type="button"
+                    role="tab"
+                    id={`exp-tab-${exp.id}`}
+                    aria-selected={isSelected}
+                    aria-controls={DETAIL_PANEL_ID}
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={() => setSelectedId(exp.id)}
+                    onKeyDown={(e) => onTabKeyDown(e, index)}
+                    className={`flex w-full items-start gap-2 rounded-xl px-2 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
+                      isSelected
+                        ? "bg-white/[0.08] text-white ring-1 ring-white/12"
+                        : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
+                    }`}
+                  >
+                    <ExperienceIcon kind={exp.icon} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold leading-snug text-white sm:text-base">
+                        {exp.company}
+                      </span>
+                      <span className="mt-0.5 block text-xs font-medium leading-snug text-slate-300 sm:text-sm">
+                        {exp.title}
+                      </span>
+                      <span className="mt-0.5 block text-[0.65rem] text-slate-500 sm:text-xs">
+                        {exp.period}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          <motion.div
+            key={selectedId}
+            initial={
+              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
+            }
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.35,
+              ease: heroEase,
+            }}
+            id={DETAIL_PANEL_ID}
+            role="tabpanel"
+            aria-labelledby={`exp-tab-${selectedId}`}
+            className={`lg:col-span-8 min-w-0 ${panelClass} p-5 sm:p-6 lg:p-7`}
+            style={asideShadow}
+          >
+            <div className="flex flex-col gap-4 sm:gap-5">
+              <div className="flex items-start gap-3">
+                <ExperienceIcon kind={selected.icon} />
+                <div className="min-w-0">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+                    {selected.title}
+                  </h3>
+                  <p className="mt-1 text-base font-medium text-slate-200">
+                    {selected.company}
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">{selected.period}</p>
                 </div>
               </div>
-            </div>
-          </ExperienceCard>
-
-          {/* Dental Hygienist Card - 2/5 width */}
-          <ExperienceCard
-            delay={0.3}
-            className="h-full p-6 lg:p-8 lg:col-span-2 flex flex-col self-stretch"
-          >
-            <div
-              className="flex-1 grid text-center gap-0 min-h-0"
-              style={{
-                gridTemplateRows:
-                  "80px 4rem 2rem 1.5rem minmax(8rem, 1fr) auto",
-              }}
-            >
-              <div
-                className="w-16 h-16 rounded-full mx-auto flex items-center justify-center flex-shrink-0"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(52, 120, 246, 0.4) 0%, rgba(255, 45, 85, 0.35) 50%, rgba(255, 149, 0, 0.35) 100%)",
-                }}
+              <p className="text-base md:text-lg text-slate-400 leading-relaxed">
+                {selected.summary}
+              </p>
+              <ul
+                role="list"
+                className="list-disc list-outside pl-5 text-sm sm:text-base text-slate-400 marker:text-slate-500 space-y-1.5"
               >
-                <HeartPulse className="w-8 h-8 text-white/90" />
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-200 flex items-center justify-center">
-                Registered Dental Hygienist
-              </h3>
-              <p
-                className="text-base md:text-lg flex items-center justify-center"
-                style={{
-                  background:
-                    "linear-gradient(135deg, rgba(96, 165, 250, 0.8) 0%, rgba(52, 211, 153, 0.7) 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                Sackville Dental Centre
-              </p>
-              <p className="text-sm text-slate-400 flex items-center justify-center">
-                2021 - Present
-              </p>
-              <p className="text-base md:text-lg text-slate-400 leading-relaxed flex items-start justify-center pt-2">
-                Worked closely with patients to keep treatments efficient and
-                comfortable—skills I now apply to building user-friendly,
-                accessible software with attention to detail and a user-first
-                approach.
-              </p>
-              <div className="flex flex-col items-center pt-4">
-                <div className="space-y-2 text-sm md:text-base text-slate-400 w-fit text-left">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="flex-shrink-0"
-                      style={{ color: "rgba(255, 45, 85, 0.7)" }}
-                    >
-                      ▸
-                    </span>
-                    <span>Patient care and treatment</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="flex-shrink-0"
-                      style={{ color: "rgba(255, 45, 85, 0.7)" }}
-                    >
-                      ▸
-                    </span>
-                    <span>Healthcare experience</span>
-                  </div>
-                </div>
-              </div>
+                {selected.bullets.map((b) => (
+                  <li key={b} className="leading-snug">
+                    {b}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </ExperienceCard>
+          </motion.div>
         </div>
       </div>
     </section>

@@ -3,12 +3,13 @@
 // Navigation component - includes logo, navigation links, and resume button
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Smooth scroll handler
   const handleSmoothScroll = (
@@ -16,13 +17,14 @@ export default function Navigation() {
     targetId: string
   ) => {
     e.preventDefault();
+    const scrollBehavior = reduceMotion ? "auto" : "smooth";
     if (targetId === "#") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: scrollBehavior });
     } else {
       const element = document.querySelector(targetId);
       if (element) {
         element.scrollIntoView({
-          behavior: "smooth",
+          behavior: scrollBehavior,
           block: "start",
         });
       }
@@ -102,11 +104,11 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { href: "#", label: "Home", number: "01" },
-    { href: "#about", label: "About", number: "02" },
-    { href: "#experience", label: "Experience", number: "03" },
-    { href: "#projects", label: "Projects", number: "04" },
-    { href: "#contact", label: "Contact", number: "05" },
+    { href: "#", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#experience", label: "Experience" },
+    { href: "#projects", label: "Projects" },
+    { href: "#contact", label: "Contact" },
   ];
 
   return (
@@ -114,156 +116,87 @@ export default function Navigation() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/40 backdrop-blur-md ${
-        isScrolled ? "border-b border-white/10" : "border-b border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-nav-surface backdrop-blur-xl backdrop-saturate-150 ${
+        isScrolled ? "border-b border-white/10" : "border-b border-white/[0.04]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-        <div className="grid grid-cols-3 items-center h-20">
-          {/* Logo - scrolls to top */}
-          <div>
+        <div className="flex items-center justify-between gap-3 md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:justify-stretch h-20">
+          {/* Wordmark — full name lg+; compact JP below lg */}
+          <div className="min-w-0 flex-1 md:flex-none flex justify-start pr-1 md:pr-2">
             <Link
               href="#"
-              className="group inline-block cursor-pointer"
+              className="group inline-flex min-w-0 max-w-full items-baseline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               onClick={(e) => handleSmoothScroll(e, "#")}
+              aria-label="Jeffrey Patey, home"
             >
-              <div className="relative">
-                {/* Gradient glow on hover */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-pink-500/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
-
-                {/* Main logo container - Glassmorphism */}
-                <div
-                  className="relative w-12 h-12 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-105"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.05)",
-                    backdropFilter: "blur(20px) saturate(200%)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    boxShadow:
-                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                  }}
+              <span className="hidden lg:inline-flex items-baseline gap-x-1.5 leading-none">
+                <span className="font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-primary)] shrink-0">
+                  Jeffrey
+                </span>
+                <span
+                  className={`font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-secondary)] shrink-0 ${
+                    reduceMotion
+                      ? ""
+                      : "transition-transform duration-300 ease-out group-hover:translate-x-1.5"
+                  }`}
                 >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-3xl"></div>
-
-                  {/* Gradient overlay on hover */}
-                  <div
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
-                    }}
-                  />
-
-                  {/* Text with gradient */}
-                  <span
-                    className="relative z-10 font-bold text-lg tracking-tight transition-all duration-300"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    JP
-                  </span>
-
-                  {/* Inner highlight */}
-                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-sm opacity-50"></div>
-                </div>
-              </div>
+                  Patey
+                </span>
+              </span>
+              <span
+                className="lg:hidden inline-flex items-baseline gap-0.5 font-bold text-base sm:text-lg tracking-tight leading-none"
+                aria-hidden="true"
+              >
+                <span className="text-[var(--accent-primary)]">J</span>
+                <span className="text-[var(--accent-secondary)]">P</span>
+              </span>
             </Link>
           </div>
 
           {/* Navigation Links - Centered */}
-          <div className="hidden md:flex items-center justify-center">
-            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap cursor-pointer ${
-                    (item.href === "#" && activeSection === "") ||
-                    (item.href !== "#" && activeSection === item.href.slice(1))
-                      ? ""
-                      : "text-slate-300 hover:text-slate-100"
-                  }`}
-                >
-                  <span className="relative z-10 whitespace-nowrap">
+          <div className="hidden md:flex md:justify-self-center items-center justify-center min-w-0">
+            <div className="flex items-center gap-1 sm:gap-1.5 bg-white/[0.04] backdrop-blur-md rounded-full px-2 sm:px-2.5 py-1.5 border border-white/10">
+              {navItems.map((item) => {
+                const isActive =
+                  (item.href === "#" && activeSection === "") ||
+                  (item.href !== "#" &&
+                    activeSection === item.href.slice(1));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
+                    className={`group relative px-3 sm:px-3.5 lg:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                      isActive
+                        ? "text-white bg-white/10 ring-1 ring-white/15"
+                        : "text-slate-400 hover:text-slate-100"
+                    }`}
+                  >
                     <span
-                      className="text-xs transition-colors duration-300"
-                      style={{
-                        color:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "#6b7280",
-                        background:
-                          activeSection === item.href.slice(1)
-                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
-                            : "none",
-                        WebkitBackgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                        WebkitTextFillColor:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "initial",
-                        backgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                      }}
-                    >
-                      {item.number}.
-                    </span>{" "}
-                    <span
-                      style={{
-                        color:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "inherit",
-                        background:
-                          activeSection === item.href.slice(1)
-                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
-                            : "none",
-                        WebkitBackgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                        WebkitTextFillColor:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "initial",
-                        backgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                      }}
+                      className={`relative z-10 whitespace-nowrap ${
+                        isActive ? "text-white" : "text-slate-300"
+                      }`}
                     >
                       {item.label}
                     </span>
-                  </span>
-
-                  {/* Active indicator */}
-                  {activeSection === item.href.slice(1) && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-pink-500/30 backdrop-blur-sm rounded-full border border-pink-400/40"></div>
-                  )}
-
-                  {/* Hover effect */}
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </Link>
-              ))}
+                    {!isActive && (
+                      <div className="absolute inset-0 rounded-full bg-white/[0.06] opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="flex shrink-0 justify-end md:justify-self-end">
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 absolute top-1/2 -translate-y-1/2 right-6"
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-[0_8px_24px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md transition-colors hover:border-white/15 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
             >
               <svg
                 className="w-5 h-5"
@@ -313,17 +246,15 @@ export default function Navigation() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 shadow-xl"
-            style={{
-              background: "rgba(0, 0, 0, 0.95)",
-              backdropFilter: "blur(20px) saturate(200%)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow:
-                "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-            }}
+            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 bg-[var(--hero-base)]/92 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150"
           >
-            <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
-              {navItems.map((item, index) => (
+            <div className="max-w-7xl mx-auto px-6 py-6 space-y-2">
+              {navItems.map((item, index) => {
+                const isMobileActive =
+                  item.href === "#"
+                    ? activeSection === ""
+                    : activeSection === item.href.slice(1);
+                return (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, x: -20 }}
@@ -336,34 +267,17 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer ${
-                      activeSection === item.href.slice(1)
-                        ? "text-white"
-                        : "text-slate-300 hover:text-white"
+                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_8px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                      isMobileActive
+                        ? "border-cyan-400/25 bg-white/[0.1] text-white ring-1 ring-white/10"
+                        : "border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
                     }`}
-                    style={{
-                      background:
-                        activeSection === item.href.slice(1)
-                          ? "linear-gradient(135deg, rgba(52, 120, 246, 0.2) 0%, rgba(255, 45, 85, 0.2) 50%, rgba(255, 149, 0, 0.2) 100%)"
-                          : "rgba(255, 255, 255, 0.05)",
-                      backdropFilter: "blur(20px) saturate(200%)",
-                      border:
-                        activeSection === item.href.slice(1)
-                          ? "1px solid rgba(255, 255, 255, 0.2)"
-                          : "1px solid rgba(255, 255, 255, 0.1)",
-                      boxShadow:
-                        activeSection === item.href.slice(1)
-                          ? "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-                          : "0 2px 8px rgba(0, 0, 0, 0.1)",
-                    }}
                   >
-                    <span className="text-xs text-slate-500 mr-2">
-                      {item.number}.
-                    </span>
                     {item.label}
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
 
               {/* Mobile Resume Button */}
               <motion.div
@@ -376,21 +290,11 @@ export default function Navigation() {
                   href="/jeffpatey_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
-                    boxShadow:
-                      "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                    backdropFilter: "blur(20px) saturate(200%)",
-                    border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                  }}
+                  className="block rounded-full border border-cyan-300/35 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+                  style={{ backgroundColor: "var(--cta-solid)" }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
-
-                  <span className="relative z-10">View Resume</span>
+                  View Resume
                 </a>
               </motion.div>
             </div>

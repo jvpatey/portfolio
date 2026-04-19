@@ -67,70 +67,55 @@ export default function MediaCarousel({
 
   const currentItems = currentMediaType === "images" ? images : videos;
 
+  const carouselArrowBtn =
+    "absolute top-1/2 z-10 flex -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/10 bg-[var(--hero-base)] p-2 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.04)] transition-[opacity,background-color,border-color] duration-300 hover:border-white/15 hover:bg-[var(--surface-1)] disabled:opacity-50 sm:p-2.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100";
+
   return (
     <div className="relative group rounded-lg flex flex-col items-center w-full min-w-0 overflow-hidden">
-      {/* Media Type Toggle - Apple Liquid Glass Style */}
+      {/* Media type toggle — HeroAside-style */}
       <div className="relative z-20 mb-4 flex items-center">
-        <div
-          className="relative inline-flex items-center"
-          style={{
-            background: "rgba(255, 255, 255, 0.08)",
-            backdropFilter: "blur(20px) saturate(200%)",
-            borderRadius: "9999px",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
-            boxShadow:
-              "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-            padding: "3px",
-          }}
-        >
-          {/* Animated background */}
+        <div className="relative inline-flex items-center rounded-full border border-white/10 bg-[var(--hero-base)] p-0.5 shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.04)]">
           <div
-            className="absolute h-[calc(100%-6px)] transition-all duration-500 ease-out"
+            className="absolute h-[calc(100%-4px)] rounded-full bg-white/[0.08] transition-all duration-500 ease-out"
             style={{
-              width: "calc(50% - 3px)",
-              left: currentMediaType === "images" ? "3px" : "calc(50% + 0px)",
-              background:
-                "linear-gradient(135deg, rgba(52, 120, 246, 0.15) 0%, rgba(255, 45, 85, 0.15) 50%, rgba(255, 149, 0, 0.15) 100%)",
-              borderRadius: "9999px",
-              backdropFilter: "blur(10px)",
-              boxShadow:
-                "0 2px 8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-              top: "3px",
+              width: "calc(50% - 2px)",
+              left: currentMediaType === "images" ? "2px" : "calc(50% + 0px)",
+              top: "2px",
+              boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.08)",
             }}
           />
 
           <button
+            type="button"
             onClick={() => setCurrentMediaType("images")}
-            className="relative px-4 py-1.5 text-sm font-medium transition-all duration-300 z-10"
-            style={{
-              color:
-                currentMediaType === "images"
-                  ? "white"
-                  : "rgba(255, 255, 255, 0.6)",
-            }}
+            className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-300 ${
+              currentMediaType === "images"
+                ? "text-white"
+                : "text-slate-400 hover:text-slate-200"
+            }`}
           >
             Images
           </button>
           <button
+            type="button"
             onClick={() => setCurrentMediaType("videos")}
-            className="relative px-4 py-1.5 text-sm font-medium transition-all duration-300 z-10"
-            style={{
-              color:
-                currentMediaType === "videos"
-                  ? "white"
-                  : "rgba(255, 255, 255, 0.6)",
-            }}
+            className={`relative z-10 rounded-full px-4 py-1.5 text-sm font-medium transition-colors duration-300 ${
+              currentMediaType === "videos"
+                ? "text-white"
+                : "text-slate-400 hover:text-slate-200"
+            }`}
           >
             Videos
           </button>
         </div>
       </div>
 
-      {/* Previous Button - always visible on touch/mobile, hover on desktop */}
+      {/* Previous */}
       <button
+        type="button"
         onClick={prevSlide}
         disabled={isTransitioning}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
+        className={`left-2 ${carouselArrowBtn}`}
         aria-label={`Previous ${currentMediaType}`}
       >
         <svg
@@ -148,8 +133,8 @@ export default function MediaCarousel({
         </svg>
       </button>
 
-      {/* Media Container */}
-      <div className="relative flex justify-center items-center max-h-[500px] w-full max-w-full">
+      {/* Media — subtle inset surface */}
+      <div className="relative flex max-h-[500px] w-full max-w-full items-center justify-center rounded-xl border border-white/10 bg-transparent p-1 sm:p-2">
         {/* Images */}
         {images.map((image, index) => (
           <div
@@ -205,11 +190,12 @@ export default function MediaCarousel({
         ))}
       </div>
 
-      {/* Next Button - always visible on touch/mobile, hover on desktop */}
+      {/* Next */}
       <button
+        type="button"
         onClick={nextSlide}
         disabled={isTransitioning}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
+        className={`right-2 ${carouselArrowBtn}`}
         aria-label={`Next ${currentMediaType}`}
       >
         <svg
@@ -232,12 +218,13 @@ export default function MediaCarousel({
         {currentItems.map((_, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => handleSlideChange(index)}
             disabled={isTransitioning}
-            className={`w-2 h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
+            className={`h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
               index === currentSlide
-                ? "bg-blue-400 w-8"
-                : "bg-slate-600 hover:bg-slate-500"
+                ? "w-8 bg-[var(--accent-primary)]/90"
+                : "w-2 bg-white/20 hover:bg-white/35"
             }`}
             aria-label={`Go to ${currentMediaType.slice(0, -1)} ${index + 1}`}
           />

@@ -57,7 +57,7 @@ const BentoCard = ({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "var(--accent-gradient-faint)",
         }}
       />
 
@@ -122,7 +122,7 @@ export default function AppSandbox({
               {features.map((feature, index) => (
                 <AnimatedStaggerItem key={index}>
                   <div className="flex items-center text-xs text-slate-300">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     {feature}
                   </div>
                 </AnimatedStaggerItem>
@@ -141,9 +141,9 @@ export default function AppSandbox({
                       key={tech}
                       className="px-2 py-1 rounded-full text-xs"
                       style={{
-                        background: "rgba(52, 120, 246, 0.1)",
-                        border: "1px solid rgba(52, 120, 246, 0.2)",
-                        color: "#60a5fa",
+                        background: "rgba(34, 211, 238, 0.1)",
+                        border: "1px solid rgba(34, 211, 238, 0.22)",
+                        color: "#67e8f9",
                       }}
                     >
                       {tech}
