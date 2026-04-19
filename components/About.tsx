@@ -1,343 +1,158 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import AnimatedSection from "./AnimatedSection";
-import {
-  AnimatedStaggerContainer,
-  AnimatedStaggerItem,
-} from "./AnimatedStagger";
-import TypewriterHeader from "./TypewriterHeader";
+import { motion, useReducedMotion } from "framer-motion";
+import SectionTitleRule from "./SectionTitleRule";
 
-// Bento grid card component with glassmorphism
-const BentoCard = ({
+const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
+
+const asideShadow = {
+  boxShadow:
+    "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+} as const;
+
+// About: editorial layout + panels matching HeroAside surfaces
+function AboutPanel({
   children,
   className = "",
   delay = 0,
-  span = "col-span-1",
-  rowSpan = "row-span-1",
+  span = "",
 }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   span?: string;
-  rowSpan?: string;
-}) => {
+}) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-        scale: 0.95,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-      }}
+      initial={
+        reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+      }
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{
-        duration: 0.6,
-        delay: delay * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        duration: reduceMotion ? 0 : 0.55,
+        delay: reduceMotion ? 0 : delay,
+        ease: heroEase,
       }}
-      whileHover={{
-        y: -2,
-        transition: { duration: 0.3, ease: "easeOut" },
-      }}
-      className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 ${className}`}
-      style={{
-        background: "rgba(255, 255, 255, 0.05)",
-        backdropFilter: "blur(20px) saturate(200%)",
-        border: "1px solid rgba(255, 255, 255, 0.1)",
-        boxShadow:
-          "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-      }}
+      className={`rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors duration-300 hover:border-white/15 ${span} ${className}`}
+      style={asideShadow}
     >
-      {/* Gradient overlay */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "var(--accent-gradient-faint)",
-        }}
-      />
-
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500" />
-
-      {/* Content */}
-      <div className="relative z-10 h-full">{children}</div>
+      {children}
     </motion.div>
   );
-};
+}
 
-// About section component with bento grid layout
 export default function About() {
-  // Smooth scroll handler
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string,
-  ) => {
-    e.preventDefault();
-    const element = document.querySelector(targetId);
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
       id="about"
-      className="pt-6 pb-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
+      className="pt-6 pb-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 lg:mb-12 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-[60px] lg:min-h-[calc(100dvh-4rem)] lg:flex lg:flex-col lg:justify-center lg:py-8"
     >
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="max-w-6xl mx-auto w-full lg:flex-1 lg:flex lg:flex-col lg:justify-center lg:min-h-0">
+        <motion.header
+          initial={
+            reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{
-            duration: 0.7,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            duration: reduceMotion ? 0 : 0.55,
+            ease: heroEase,
           }}
-          className="text-left mb-8 sm:mb-12"
+          className="text-left mb-6 sm:mb-8 lg:mb-6 space-y-2 sm:space-y-3 shrink-0"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
-            <TypewriterHeader
-              fullText="02. About Me"
-              delay={100}
-              speed={80}
-              style={{
-                background:
-                  "var(--accent-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            />
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight text-balance">
+            About me
           </h2>
-          <p className="text-slate-400 text-base max-w-2xl">
+          <SectionTitleRule />
+          <p className="text-slate-400 text-base md:text-lg max-w-2xl leading-relaxed">
             A glimpse into my journey from healthcare to full-stack development
           </p>
-        </motion.div>
+        </motion.header>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-[minmax(200px,1fr)] md:auto-rows-[minmax(180px,1fr)] lg:auto-rows-[minmax(160px,1fr)]">
-          {/* Bio & Philosophy Card - Large */}
-          <BentoCard
-            span="col-span-1 md:col-span-2 lg:col-span-2"
-            rowSpan="row-span-2"
-            delay={0.2}
-            className="p-4 sm:p-6"
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:grid-rows-[auto_auto] lg:gap-x-8 lg:gap-y-6 lg:items-stretch lg:min-h-0 lg:flex-1">
+          <AboutPanel
+            span="lg:col-span-7 lg:row-start-1 lg:col-start-1"
+            delay={0.06}
+            className="p-5 sm:p-6 lg:p-6 min-h-0"
           >
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4">
-                  My Story
-                </h3>
-                <AnimatedStaggerContainer className="space-y-3 text-base md:text-lg text-slate-300 leading-relaxed">
-                  <AnimatedStaggerItem>
-                    <p>
-                      I&apos;m a{" "}
-                      <span
-                        style={{
-                          background:
-                            "var(--accent-gradient)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text",
-                        }}
-                      >
-                        full-stack software developer
-                      </span>{" "}
-                      with a background in{" "}
-                      <span
-                        style={{
-                          background:
-                            "var(--accent-gradient)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text",
-                        }}
-                      >
-                        healthcare
-                      </span>{" "}
-                      and a passion for building practical, purpose-built tools.
-                    </p>
-                  </AnimatedStaggerItem>
-                  <AnimatedStaggerItem>
-                    <p>
-                      After 10 years in patient care, I bring a detail-oriented
-                      mindset and genuine interest in{" "}
-                      <span
-                        style={{
-                          background:
-                            "var(--accent-gradient)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                          backgroundClip: "text",
-                        }}
-                      >
-                        health tech
-                      </span>{" "}
-                      and SaaS products that simplify everyday tasks.
-                    </p>
-                  </AnimatedStaggerItem>
-                  <AnimatedStaggerItem>
-                    <p>
-                      I love bringing ideas to life through responsive,
-                      accessible design that makes complex tasks feel simple.
-                      Every project should solve real problems with clean,
-                      user-friendly interfaces.
-                    </p>
-                  </AnimatedStaggerItem>
-                </AnimatedStaggerContainer>
-              </div>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-4">
+              My story
+            </p>
+            <div className="space-y-2.5 sm:space-y-3 text-base md:text-lg text-slate-400 leading-relaxed">
+              <p>
+                I&apos;m a{" "}
+                <span className="font-medium text-slate-200">
+                  full-stack software developer
+                </span>{" "}
+                with a background in{" "}
+                <span className="font-medium text-slate-200">healthcare</span>{" "}
+                and a passion for building practical, purpose-built tools.
+              </p>
+              <p>
+                After 10 years in patient care, I bring a detail-oriented mindset
+                and genuine interest in{" "}
+                <span className="font-medium text-slate-200">health tech</span>{" "}
+                and SaaS products that simplify everyday tasks.
+              </p>
+              <p>
+                I love bringing ideas to life through responsive, accessible
+                design that makes complex tasks feel simple. Every project should
+                solve real problems with clean, user-friendly interfaces.
+              </p>
             </div>
-          </BentoCard>
+          </AboutPanel>
 
-          {/* Profile Image Card */}
-          <BentoCard
-            span="col-span-1 lg:col-span-1"
-            rowSpan="row-span-2"
-            delay={0.3}
-            className="p-3"
+          <AboutPanel
+            span="lg:col-span-5 lg:row-span-2 lg:row-start-1 lg:col-start-8"
+            delay={0.12}
+            className="p-4 sm:p-5 lg:p-5 min-h-0 flex flex-col"
           >
-            <div className="relative h-full group">
-              <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                {/* Gradient background */}
-                <div
-                  className="absolute inset-0 rounded-2xl transform rotate-2 transition-all duration-500 group-hover:rotate-4"
-                  style={{
-                    background:
-                      "var(--accent-gradient)",
-                    boxShadow:
-                      "0 20px 40px rgba(96, 165, 250, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-                  }}
-                />
-
-                {/* Image container */}
-                <div
-                  className="relative w-full h-full rounded-2xl overflow-hidden transition-all duration-500"
-                  style={{
-                    boxShadow:
-                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                  }}
-                >
-                  <Image
-                    src="/jeffrey-patey.jpg"
-                    alt="Jeffrey Patey"
-                    fill
-                    className="object-cover transition-transform duration-500"
-                    priority
-                  />
-                </div>
-              </div>
+            <div className="relative w-full aspect-[4/5] max-h-[min(420px,70vh)] mx-auto rounded-2xl overflow-hidden border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.25)] lg:flex-1 lg:aspect-auto lg:max-h-none lg:min-h-[220px] lg:mx-0">
+              <Image
+                src="/jeffrey-patey.jpg"
+                alt="Jeffrey Patey"
+                fill
+                className="object-cover"
+                priority
+                sizes="(min-width: 1024px) 40vw, 100vw"
+              />
             </div>
-          </BentoCard>
+          </AboutPanel>
 
-          {/* Projects Card */}
-          <BentoCard
-            span="col-span-1"
-            rowSpan="row-span-1"
-            delay={0.4}
-            className="p-4"
+          <AboutPanel
+            span="lg:col-span-7 lg:row-start-2 lg:col-start-1"
+            delay={0.18}
+            className="p-5 sm:p-6 lg:p-6 min-h-0"
           >
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4">
-                  Featured Projects
-                </h3>
-                <div className="space-y-2 text-base md:text-lg text-slate-300">
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="#streamln"
-                      onClick={(e) => handleSmoothScroll(e, "#streamln")}
-                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
-                    >
-                      StreamLn
-                    </a>
-                    <span className="text-sm text-slate-500">Building</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="#homekeep"
-                      onClick={(e) => handleSmoothScroll(e, "#homekeep")}
-                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
-                    >
-                      HomeKeep
-                    </a>
-                    <span className="text-sm text-slate-500">App Store</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <a
-                      href="#oralcheckr"
-                      onClick={(e) => handleSmoothScroll(e, "#oralcheckr")}
-                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
-                    >
-                      OralCheckr
-                    </a>
-                    <span className="text-sm text-slate-500">Web App</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </BentoCard>
-
-          {/* Skills Card - Large */}
-          <BentoCard
-            span="col-span-1 md:col-span-2 lg:col-span-2"
-            rowSpan="row-span-1"
-            delay={0.5}
-            className="p-4"
-          >
-            <div className="h-full flex flex-col justify-between">
-              <div>
-                <h3 className="text-lg md:text-xl lg:text-2xl font-bold text-white mb-4">
-                  Tech Stack
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-2 text-xs sm:text-sm">
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    React & React Native
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    SwiftUI & Xcode
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    Node.js & Express
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    Next.js & TypeScript
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    PostgreSQL & Supabase
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    RESTful API Design
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    Vercel
-                  </div>
-                  <div className="flex items-center">
-                    <span className="text-cyan-400/90 mr-2">▸</span>
-                    Auth (JWT, OAuth)
-                  </div>
-                </div>
-              </div>
-            </div>
-          </BentoCard>
+            <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3 lg:mb-3">
+              Tech stack
+            </p>
+            <ul
+              role="list"
+              className="list-disc list-outside pl-5 text-sm text-slate-400 marker:text-slate-500 space-y-1.5 sm:columns-2 sm:gap-x-8 lg:columns-2 xl:columns-3 [column-fill:balance]"
+            >
+              {[
+                "React & React Native",
+                "SwiftUI & Xcode",
+                "Node.js & Express",
+                "Next.js & TypeScript",
+                "PostgreSQL & Supabase",
+                "RESTful API Design",
+                "Vercel",
+                "Auth (JWT, OAuth)",
+              ].map((label) => (
+                <li key={label} className="break-inside-avoid leading-snug">
+                  {label}
+                </li>
+              ))}
+            </ul>
+          </AboutPanel>
         </div>
       </div>
     </section>

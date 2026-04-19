@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Code, HeartPulse } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import TypewriterHeader from "./TypewriterHeader";
+import SectionTitleRule from "./SectionTitleRule";
 
 // Experience card component with glassmorphism
 const ExperienceCard = ({
@@ -94,9 +95,9 @@ export default function Experience() {
           }}
           className="text-left mb-8 sm:mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-0">
             <TypewriterHeader
-              fullText="03. Where I've Worked"
+              fullText="Where I've Worked"
               delay={100}
               speed={80}
               style={{
@@ -108,7 +109,8 @@ export default function Experience() {
               }}
             />
           </h2>
-          <p className="text-slate-400 text-base max-w-2xl">
+          <SectionTitleRule className="mt-3" />
+          <p className="mt-4 text-slate-400 text-base max-w-2xl">
             My professional experience in technology and healthcare
           </p>
         </motion.div>

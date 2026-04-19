@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import ContactForm from "./ContactForm";
 import TypewriterHeader from "./TypewriterHeader";
+import SectionTitleRule from "./SectionTitleRule";
 
 // Bento grid card component with glassmorphism
 const BentoCard = ({
@@ -87,9 +88,9 @@ export default function Contact() {
           }}
           className="text-left mb-8 sm:mb-12"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-0">
             <TypewriterHeader
-              fullText="05. Get In Touch"
+              fullText="Get In Touch"
               delay={100}
               speed={80}
               style={{
@@ -101,7 +102,8 @@ export default function Contact() {
               }}
             />
           </h2>
-          <p className="text-slate-400 text-base max-w-2xl">
+          <SectionTitleRule className="mt-3" />
+          <p className="mt-4 text-slate-400 text-base max-w-2xl">
             Feel free to reach out — I&apos;d love to hear from you.
           </p>
         </motion.div>

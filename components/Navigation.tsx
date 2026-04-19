@@ -104,11 +104,11 @@ export default function Navigation() {
   }, [isMobileMenuOpen]);
 
   const navItems = [
-    { href: "#", label: "Home", number: "01" },
-    { href: "#about", label: "About", number: "02" },
-    { href: "#experience", label: "Experience", number: "03" },
-    { href: "#projects", label: "Projects", number: "04" },
-    { href: "#contact", label: "Contact", number: "05" },
+    { href: "#", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#experience", label: "Experience" },
+    { href: "#projects", label: "Projects" },
+    { href: "#contact", label: "Contact" },
   ];
 
   return (
@@ -156,7 +156,7 @@ export default function Navigation() {
 
           {/* Navigation Links - Centered */}
           <div className="hidden md:flex md:justify-self-center items-center justify-center min-w-0">
-            <div className="flex items-center gap-0.5 sm:gap-1 bg-white/[0.04] backdrop-blur-md rounded-full px-1 sm:px-1.5 py-1 border border-white/10">
+            <div className="flex items-center gap-1 sm:gap-1.5 bg-white/[0.04] backdrop-blur-md rounded-full px-2 sm:px-2.5 py-1.5 border border-white/10">
               {navItems.map((item) => {
                 const isActive =
                   (item.href === "#" && activeSection === "") ||
@@ -167,27 +167,18 @@ export default function Navigation() {
                     key={item.href}
                     href={item.href}
                     onClick={(e) => handleSmoothScroll(e, item.href)}
-                    className={`group relative px-2 sm:px-2.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                    className={`group relative px-3 sm:px-3.5 lg:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
                       isActive
                         ? "text-white bg-white/10 ring-1 ring-white/15"
                         : "text-slate-400 hover:text-slate-100"
                     }`}
                   >
-                    <span className="relative z-10 whitespace-nowrap">
-                      <span
-                        className={`text-xs transition-colors duration-200 ${
-                          isActive ? "text-cyan-400" : "text-slate-500"
-                        }`}
-                      >
-                        {item.number}.
-                      </span>{" "}
-                      <span
-                        className={
-                          isActive ? "text-white" : "text-slate-300"
-                        }
-                      >
-                        {item.label}
-                      </span>
+                    <span
+                      className={`relative z-10 whitespace-nowrap ${
+                        isActive ? "text-white" : "text-slate-300"
+                      }`}
+                    >
+                      {item.label}
                     </span>
                     {!isActive && (
                       <div className="absolute inset-0 rounded-full bg-white/[0.06] opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" />
@@ -264,8 +255,13 @@ export default function Navigation() {
                 "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
             }}
           >
-            <div className="max-w-7xl mx-auto px-6 py-6 space-y-1">
-              {navItems.map((item, index) => (
+            <div className="max-w-7xl mx-auto px-6 py-6 space-y-2">
+              {navItems.map((item, index) => {
+                const isMobileActive =
+                  item.href === "#"
+                    ? activeSection === ""
+                    : activeSection === item.href.slice(1);
+                return (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, x: -20 }}
@@ -278,34 +274,29 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
-                      activeSection === item.href.slice(1)
+                    className={`block px-5 py-3.5 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                      isMobileActive
                         ? "text-white"
                         : "text-slate-300 hover:text-white"
                     }`}
                     style={{
-                      background:
-                        activeSection === item.href.slice(1)
-                          ? "rgba(255, 255, 255, 0.08)"
-                          : "rgba(255, 255, 255, 0.05)",
+                      background: isMobileActive
+                        ? "rgba(255, 255, 255, 0.08)"
+                        : "rgba(255, 255, 255, 0.05)",
                       backdropFilter: "blur(20px) saturate(200%)",
-                      border:
-                        activeSection === item.href.slice(1)
-                          ? "1px solid rgba(34, 211, 238, 0.25)"
-                          : "1px solid rgba(255, 255, 255, 0.1)",
-                      boxShadow:
-                        activeSection === item.href.slice(1)
-                          ? "0 2px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06)"
-                          : "0 2px 8px rgba(0, 0, 0, 0.1)",
+                      border: isMobileActive
+                        ? "1px solid rgba(34, 211, 238, 0.25)"
+                        : "1px solid rgba(255, 255, 255, 0.1)",
+                      boxShadow: isMobileActive
+                        ? "0 2px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06)"
+                        : "0 2px 8px rgba(0, 0, 0, 0.1)",
                     }}
                   >
-                    <span className="text-xs text-slate-500 mr-2">
-                      {item.number}.
-                    </span>
                     {item.label}
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
 
               {/* Mobile Resume Button */}
               <motion.div
