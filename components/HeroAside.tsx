@@ -34,7 +34,7 @@ export default function HeroAside({ item }: { item: Variants }) {
             "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
         }}
       >
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-6">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-6">
           At a glance
         </p>
         <ul className="space-y-6 list-none p-0 m-0">
@@ -43,7 +43,7 @@ export default function HeroAside({ item }: { item: Variants }) {
               key={row.label}
               className="flex flex-col gap-1 border-b border-white/5 pb-6 last:border-0 last:pb-0"
             >
-              <p className="text-sm text-slate-500">{row.label}</p>
+              <p className="text-sm text-slate-400">{row.label}</p>
               <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
                 {row.value}
               </p>

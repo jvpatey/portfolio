@@ -102,39 +102,22 @@ export default function Hero() {
               <motion.a
                 href="#projects"
                 onClick={(e) => handleSmoothScroll(e, "#projects")}
-                className="relative group inline-flex justify-center items-center w-full sm:w-auto text-center px-10 py-4 rounded-full font-semibold text-base transition-all duration-500 overflow-hidden cursor-pointer"
-                style={{
-                  background: "var(--accent-gradient-soft)",
-                  color: "white",
-                  boxShadow:
-                    "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                  backdropFilter: "blur(20px) saturate(200%)",
-                  border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                }}
+                className="relative inline-flex justify-center items-center w-full sm:w-auto text-center px-10 py-4 rounded-full font-semibold text-base text-white cursor-pointer border border-cyan-300/35 shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] duration-300 hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+                style={{ backgroundColor: "var(--cta-solid)" }}
                 whileHover={
                   reduceMotion
                     ? undefined
                     : {
                         scale: 1.04,
-                        boxShadow:
-                          "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+                        backgroundColor: "var(--cta-solid-hover)",
                       }
                 }
                 whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <div className="absolute inset-0 rounded-full overflow-hidden">
-                  <motion.div
-                    className="absolute inset-0 bg-white/20 rounded-full"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileTap={
-                      reduceMotion ? undefined : { scale: 1, opacity: 1 }
-                    }
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                  />
-                </div>
-                <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full" />
-                <span className="relative z-10">Check out my work</span>
+                <span className="relative z-10 drop-shadow-sm">
+                  Check out my work
+                </span>
               </motion.a>
 
               <a

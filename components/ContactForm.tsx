@@ -54,7 +54,7 @@ const FloatingTextarea = ({
           transition={{ duration: 0.3, ease: "easeOut" }}
           style={{
             background:
-              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+              "var(--accent-gradient)",
             padding: "2px",
           }}
         >
@@ -70,7 +70,7 @@ const FloatingTextarea = ({
           onInput={handleInput}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm min-h-[100px]"
+          className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] transition-all duration-300 resize-none backdrop-blur-sm min-h-[100px]"
           style={{
             background: "rgba(255, 255, 255, 0.05)",
             backdropFilter: "blur(20px) saturate(200%)",
@@ -153,7 +153,7 @@ const FloatingInput = ({
             transition={{ duration: 0.3, ease: "easeOut" }}
             style={{
               background:
-                "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                "var(--accent-gradient)",
               padding: "2px",
             }}
           >
@@ -175,7 +175,7 @@ const FloatingInput = ({
               required={required}
               rows={rows}
               placeholder={placeholder}
-              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 resize-none backdrop-blur-sm"
+              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] transition-all duration-300 resize-none backdrop-blur-sm"
               style={{
                 background: "rgba(255, 255, 255, 0.05)",
                 backdropFilter: "blur(20px) saturate(200%)",
@@ -196,7 +196,7 @@ const FloatingInput = ({
               onBlur={handleBlur}
               required={required}
               placeholder={placeholder}
-              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none transition-all duration-300 backdrop-blur-sm"
+              className="relative w-full px-4 py-3 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] transition-all duration-300 backdrop-blur-sm"
               style={{
                 background: "rgba(255, 255, 255, 0.05)",
                 backdropFilter: "blur(20px) saturate(200%)",
@@ -293,7 +293,7 @@ export default function ContactForm() {
         className="absolute inset-0 rounded-3xl opacity-30 blur-xl"
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "var(--accent-gradient-faint)",
         }}
       />
 
@@ -342,7 +342,7 @@ export default function ContactForm() {
                   ? "bg-green-500/10 text-green-400 border border-green-500/20"
                   : status.type === "error"
                   ? "bg-red-500/10 text-red-400 border border-red-500/20"
-                  : "bg-blue-500/10 text-blue-400 border border-blue-500/20"
+                  : "bg-cyan-500/10 text-cyan-300 border border-cyan-500/25"
               }`}
               style={{
                 background:
@@ -423,7 +423,7 @@ export default function ContactForm() {
           className="relative group w-full px-8 py-4 rounded-2xl font-semibold text-base transition-all duration-500 overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed"
           style={{
             background:
-              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+              "var(--accent-gradient-soft)",
             color: "white",
             boxShadow:
               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -451,7 +451,7 @@ export default function ContactForm() {
             animate={{ opacity: status.type === "loading" ? 1 : 0 }}
             style={{
               background:
-                "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+                "var(--accent-gradient-faint)",
             }}
           />
 

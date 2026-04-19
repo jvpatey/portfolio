@@ -53,7 +53,7 @@ const BentoCard = ({
           ? "1px solid rgba(255, 255, 255, 0.2)"
           : "1px solid rgba(255, 255, 255, 0.1)",
         boxShadow: featured
-          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(52, 120, 246, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(34, 211, 238, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
           : "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
       }}
     >
@@ -62,7 +62,7 @@ const BentoCard = ({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "var(--accent-gradient-faint)",
         }}
       />
 
@@ -81,7 +81,7 @@ export default function Projects() {
     <section
       id="projects"
       className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
+      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto overflow-hidden">
         {/* Section Header */}
@@ -102,7 +102,7 @@ export default function Projects() {
               speed={80}
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "var(--accent-gradient)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -130,7 +130,7 @@ export default function Projects() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "var(--accent-gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -142,9 +142,9 @@ export default function Projects() {
               <span
                 className="px-3 py-1 rounded-full text-xs font-medium animate-pulse"
                 style={{
-                  background: "rgba(255, 149, 0, 0.2)",
-                  border: "1px solid rgba(255, 149, 0, 0.4)",
-                  color: "#ff9500",
+                  background: "rgba(129, 140, 248, 0.18)",
+                  border: "1px solid rgba(129, 140, 248, 0.38)",
+                  color: "#a5f3fc",
                 }}
               >
                 Currently building
@@ -214,9 +214,9 @@ export default function Projects() {
                             key={tech}
                             className="px-2 py-1 rounded-full text-xs"
                             style={{
-                              background: "rgba(52, 120, 246, 0.1)",
-                              border: "1px solid rgba(52, 120, 246, 0.2)",
-                              color: "#60a5fa",
+                              background: "rgba(34, 211, 238, 0.1)",
+                              border: "1px solid rgba(34, 211, 238, 0.22)",
+                              color: "#67e8f9",
                             }}
                           >
                             {tech}
@@ -247,7 +247,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -284,7 +284,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -341,7 +341,7 @@ export default function Projects() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "var(--accent-gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -408,9 +408,9 @@ export default function Projects() {
                               key={tech}
                               className="px-2 py-1 rounded-full text-xs"
                               style={{
-                                background: "rgba(52, 120, 246, 0.1)",
-                                border: "1px solid rgba(52, 120, 246, 0.2)",
-                                color: "#60a5fa",
+                                background: "rgba(34, 211, 238, 0.1)",
+                                border: "1px solid rgba(34, 211, 238, 0.22)",
+                                color: "#67e8f9",
                               }}
                             >
                               {tech}
@@ -441,7 +441,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -478,7 +478,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -529,7 +529,7 @@ export default function Projects() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "var(--accent-gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -599,9 +599,9 @@ export default function Projects() {
                             key={tech}
                             className="px-2 py-1 rounded-full text-xs"
                             style={{
-                              background: "rgba(52, 120, 246, 0.1)",
-                              border: "1px solid rgba(52, 120, 246, 0.2)",
-                              color: "#60a5fa",
+                              background: "rgba(34, 211, 238, 0.1)",
+                              border: "1px solid rgba(34, 211, 238, 0.22)",
+                              color: "#67e8f9",
                             }}
                           >
                             {tech}
@@ -631,7 +631,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -670,7 +670,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -729,7 +729,7 @@ export default function Projects() {
                 <span
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "var(--accent-gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -786,9 +786,9 @@ export default function Projects() {
                             key={tech}
                             className="px-2 py-1 rounded-full text-xs"
                             style={{
-                              background: "rgba(52, 120, 246, 0.1)",
-                              border: "1px solid rgba(52, 120, 246, 0.2)",
-                              color: "#60a5fa",
+                              background: "rgba(34, 211, 238, 0.1)",
+                              border: "1px solid rgba(34, 211, 238, 0.22)",
+                              color: "#67e8f9",
                             }}
                           >
                             {tech}
@@ -818,7 +818,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -857,7 +857,7 @@ export default function Projects() {
                           className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                           style={{
                             background:
-                              "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                              "var(--accent-gradient-soft)",
                             color: "white",
                             boxShadow:
                               "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",

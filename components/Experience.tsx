@@ -49,7 +49,7 @@ const ExperienceCard = ({
           ? "1px solid rgba(255, 255, 255, 0.2)"
           : "1px solid rgba(255, 255, 255, 0.1)",
         boxShadow: featured
-          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(52, 120, 246, 0.12), 0 0 60px rgba(255, 45, 85, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
+          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(34, 211, 238, 0.1), 0 0 60px rgba(129, 140, 248, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.15)"
           : "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
       }}
     >
@@ -61,8 +61,7 @@ const ExperienceCard = ({
             : "opacity-0 group-hover:opacity-100"
         }`}
         style={{
-          background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.12) 0%, rgba(255, 45, 85, 0.12) 50%, rgba(255, 149, 0, 0.12) 100%)",
+          background: "var(--accent-gradient-medium)",
         }}
       />
 
@@ -81,7 +80,7 @@ export default function Experience() {
     <section
       id="experience"
       className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
+      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto overflow-hidden">
         {/* Section Header */}
@@ -102,7 +101,7 @@ export default function Experience() {
               speed={80}
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "var(--accent-gradient)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -133,7 +132,7 @@ export default function Experience() {
                 className="w-16 h-16 rounded-full mx-auto flex items-center justify-center flex-shrink-0"
                 style={{
                   background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                    "var(--accent-gradient)",
                 }}
               >
                 <Code className="w-8 h-8 text-white" />
@@ -145,7 +144,7 @@ export default function Experience() {
                 className="text-base md:text-lg flex items-center justify-center"
                 style={{
                   background:
-                    "linear-gradient(135deg, #60a5fa 0%, #34d399 100%)",
+                    "linear-gradient(135deg, rgba(125, 211, 252, 0.95) 0%, rgba(165, 180, 252, 0.9) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -164,11 +163,11 @@ export default function Experience() {
               <div className="flex flex-col items-center pt-4">
                 <div className="space-y-2 text-sm md:text-base text-slate-400 w-fit text-left">
                   <div className="flex items-center gap-2">
-                    <span className="text-[#FF2D55] flex-shrink-0">▸</span>
+                    <span className="text-cyan-400/90 flex-shrink-0">▸</span>
                     <span>Swift, SwiftUI, CloudKit & Xcode</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[#FF2D55] flex-shrink-0">▸</span>
+                    <span className="text-cyan-400/90 flex-shrink-0">▸</span>
                     <span>Core features, architecture & UX</span>
                   </div>
                 </div>
@@ -192,7 +191,7 @@ export default function Experience() {
                 className="w-16 h-16 rounded-full mx-auto flex items-center justify-center flex-shrink-0"
                 style={{
                   background:
-                    "linear-gradient(135deg, rgba(52, 120, 246, 0.4) 0%, rgba(255, 45, 85, 0.35) 50%, rgba(255, 149, 0, 0.35) 100%)",
+                    "var(--accent-gradient-strong)",
                 }}
               >
                 <HeartPulse className="w-8 h-8 text-white/90" />
@@ -204,7 +203,7 @@ export default function Experience() {
                 className="text-base md:text-lg flex items-center justify-center"
                 style={{
                   background:
-                    "linear-gradient(135deg, rgba(96, 165, 250, 0.8) 0%, rgba(52, 211, 153, 0.7) 100%)",
+                    "linear-gradient(135deg, rgba(103, 232, 249, 0.85) 0%, rgba(165, 180, 252, 0.75) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -226,7 +225,7 @@ export default function Experience() {
                   <div className="flex items-center gap-2">
                     <span
                       className="flex-shrink-0"
-                      style={{ color: "rgba(255, 45, 85, 0.7)" }}
+                      style={{ color: "rgba(34, 211, 238, 0.75)" }}
                     >
                       ▸
                     </span>
@@ -235,7 +234,7 @@ export default function Experience() {
                   <div className="flex items-center gap-2">
                     <span
                       className="flex-shrink-0"
-                      style={{ color: "rgba(255, 45, 85, 0.7)" }}
+                      style={{ color: "rgba(34, 211, 238, 0.75)" }}
                     >
                       ▸
                     </span>

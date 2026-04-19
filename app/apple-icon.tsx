@@ -17,7 +17,7 @@ export default function AppleIcon() {
     (
       <div
         style={{
-          background: "#000000",
+          background: "#07080c",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -56,8 +56,7 @@ export default function AppleIcon() {
         {/* JP Text with gradient */}
         <div
           style={{
-            background:
-              "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+            background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             color: "transparent",

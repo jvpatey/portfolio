@@ -54,7 +54,7 @@ const BentoCard = ({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "var(--accent-gradient-faint)",
         }}
       />
 
@@ -73,7 +73,7 @@ export default function Contact() {
     <section
       id="contact"
       className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
+      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -94,7 +94,7 @@ export default function Contact() {
               speed={80}
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "var(--accent-gradient)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -150,7 +150,7 @@ export default function Contact() {
                     className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                     style={{
                       background:
-                        "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                        "var(--accent-gradient-soft)",
                       color: "white",
                       boxShadow:
                         "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -188,7 +188,7 @@ export default function Contact() {
                     className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                     style={{
                       background:
-                        "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                        "var(--accent-gradient-soft)",
                       color: "white",
                       boxShadow:
                         "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
@@ -246,7 +246,7 @@ export default function Contact() {
                     className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
                     style={{
                       background:
-                        "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                        "var(--accent-gradient-soft)",
                       boxShadow:
                         "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                       backdropFilter: "blur(20px) saturate(200%)",

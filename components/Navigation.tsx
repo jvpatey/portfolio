@@ -129,7 +129,10 @@ export default function Navigation() {
             >
               <div className="relative">
                 {/* Gradient glow on hover */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 via-pink-500/20 to-orange-500/20 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
+                <div
+                  className="absolute -inset-1 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"
+                  style={{ background: "var(--accent-gradient-soft)" }}
+                />
 
                 {/* Main logo container - Glassmorphism */}
                 <div
@@ -246,7 +249,10 @@ export default function Navigation() {
 
                   {/* Active indicator */}
                   {activeSection === item.href.slice(1) && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-pink-500/30 backdrop-blur-sm rounded-full border border-pink-400/40"></div>
+                    <div
+                      className="absolute inset-0 backdrop-blur-sm rounded-full border border-indigo-400/35"
+                      style={{ background: "var(--accent-gradient-ui)" }}
+                    />
                   )}
 
                   {/* Hover effect */}

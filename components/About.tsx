@@ -59,7 +59,7 @@ const BentoCard = ({
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
         style={{
           background:
-            "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+            "var(--accent-gradient-faint)",
         }}
       />
 
@@ -93,7 +93,7 @@ export default function About() {
     <section
       id="about"
       className="pt-6 pb-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "#000000", scrollMarginTop: "60px" }}
+      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
     >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -114,7 +114,7 @@ export default function About() {
               speed={80}
               style={{
                 background:
-                  "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                  "var(--accent-gradient)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -147,7 +147,7 @@ export default function About() {
                       <span
                         style={{
                           background:
-                            "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                            "var(--accent-gradient)",
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent",
                           backgroundClip: "text",
@@ -159,7 +159,7 @@ export default function About() {
                       <span
                         style={{
                           background:
-                            "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                            "var(--accent-gradient)",
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent",
                           backgroundClip: "text",
@@ -177,7 +177,7 @@ export default function About() {
                       <span
                         style={{
                           background:
-                            "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                            "var(--accent-gradient)",
                           WebkitBackgroundClip: "text",
                           WebkitTextFillColor: "transparent",
                           backgroundClip: "text",
@@ -215,7 +215,7 @@ export default function About() {
                   className="absolute inset-0 rounded-2xl transform rotate-2 transition-all duration-500 group-hover:rotate-4"
                   style={{
                     background:
-                      "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      "var(--accent-gradient)",
                     boxShadow:
                       "0 20px 40px rgba(96, 165, 250, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
                   }}
@@ -258,7 +258,7 @@ export default function About() {
                     <a
                       href="#streamln"
                       onClick={(e) => handleSmoothScroll(e, "#streamln")}
-                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
+                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
                     >
                       StreamLn
                     </a>
@@ -268,7 +268,7 @@ export default function About() {
                     <a
                       href="#homekeep"
                       onClick={(e) => handleSmoothScroll(e, "#homekeep")}
-                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
+                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
                     >
                       HomeKeep
                     </a>
@@ -278,7 +278,7 @@ export default function About() {
                     <a
                       href="#oralcheckr"
                       onClick={(e) => handleSmoothScroll(e, "#oralcheckr")}
-                      className="text-[#FF2D55] hover:text-[#FF9500] transition-colors underline decoration-[#FF2D55]/30 hover:decoration-[#FF9500]/30 cursor-pointer"
+                      className="text-cyan-400 hover:text-indigo-300 transition-colors underline decoration-cyan-500/30 hover:decoration-indigo-400/30 cursor-pointer"
                     >
                       OralCheckr
                     </a>
@@ -303,35 +303,35 @@ export default function About() {
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-1 md:gap-x-3 md:gap-y-2 text-xs sm:text-sm">
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     React & React Native
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     SwiftUI & Xcode
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     Node.js & Express
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     Next.js & TypeScript
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     PostgreSQL & Supabase
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     RESTful API Design
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     Vercel
                   </div>
                   <div className="flex items-center">
-                    <span className="text-[#FF2D55] mr-2">▸</span>
+                    <span className="text-cyan-400/90 mr-2">▸</span>
                     Auth (JWT, OAuth)
                   </div>
                 </div>

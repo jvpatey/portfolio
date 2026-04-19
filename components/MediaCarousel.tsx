@@ -90,7 +90,7 @@ export default function MediaCarousel({
               width: "calc(50% - 3px)",
               left: currentMediaType === "images" ? "3px" : "calc(50% + 0px)",
               background:
-                "linear-gradient(135deg, rgba(52, 120, 246, 0.15) 0%, rgba(255, 45, 85, 0.15) 50%, rgba(255, 149, 0, 0.15) 100%)",
+                "var(--accent-gradient-muted)",
               borderRadius: "9999px",
               backdropFilter: "blur(10px)",
               boxShadow:

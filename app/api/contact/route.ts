@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       subject: `New message from ${name} - Portfolio Contact`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-          <h2 style="color: #333; border-bottom: 2px solid #3478F6; padding-bottom: 10px;">
+          <h2 style="color: #333; border-bottom: 2px solid #22d3ee; padding-bottom: 10px;">
             New Contact Form Submission
           </h2>
           
@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
             <p><strong>Name:</strong> ${name}</p>
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Message:</strong></p>
-            <div style="background: white; padding: 15px; border-radius: 4px; margin-top: 10px; border-left: 4px solid #3478F6;">
+            <div style="background: white; padding: 15px; border-radius: 4px; margin-top: 10px; border-left: 4px solid #22d3ee;">
               ${message.replace(/\n/g, "<br>")}
             </div>
           </div>

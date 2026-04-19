@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 // Main portfolio page
 export default function Home() {
   return (
-    <div className="min-h-screen text-white bg-[#050508] overflow-x-hidden">
+    <div className="min-h-screen text-white bg-[var(--hero-base)] overflow-x-hidden">
       <Navigation />
 
       {/* Main Content */}
