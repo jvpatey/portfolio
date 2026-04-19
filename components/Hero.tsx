@@ -1,72 +1,38 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import GradientBackground from "./GradientBackground";
+import HeroAside from "./HeroAside";
 
-// Hero section component - includes name, title, and work button
+// Hero: editorial layout, soft depth backdrop, paired CTAs
 export default function Hero() {
+  const reduceMotion = useReducedMotion();
+
   const container: Variants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: reduceMotion ? 1 : 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.4,
+        staggerChildren: reduceMotion ? 0 : 0.07,
+        delayChildren: reduceMotion ? 0 : 0.12,
       },
     },
   };
 
   const item: Variants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: reduceMotion
+      ? { opacity: 1, y: 0 }
+      : { opacity: 0, y: 18 },
     show: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.8,
+        duration: reduceMotion ? 0 : 0.55,
         ease: [0.21, 0.47, 0.32, 0.98] as const,
       },
     },
   };
 
-  // Typewriter effect for "full stack software developer"
-  const [displayedText, setDisplayedText] = useState("");
-  const fullText = "full stack software developer";
-  const [showCursor, setShowCursor] = useState(true);
-  const [isTyping, setIsTyping] = useState(true);
-
-  useEffect(() => {
-    // Add delay before typing starts so users can see the animation
-    const startTyping = setTimeout(() => {
-      let index = 0;
-      const typingInterval = setInterval(() => {
-        if (index < fullText.length) {
-          setDisplayedText(fullText.slice(0, index + 1));
-          index++;
-        } else {
-          clearInterval(typingInterval);
-          setIsTyping(false);
-          // Keep cursor blinking after typing is complete
-          setTimeout(() => setShowCursor(false), 3000);
-        }
-      }, 80); // Slightly faster typing speed
-
-      return () => clearInterval(typingInterval);
-    }, 800); // 0.8 second delay before typing starts
-
-    return () => clearTimeout(startTyping);
-  }, []);
-
-  // Cursor blink effect - only when not typing
-  useEffect(() => {
-    if (!isTyping && showCursor) {
-      const cursorInterval = setInterval(() => {
-        setShowCursor((prev) => !prev);
-      }, 500);
-      return () => clearInterval(cursorInterval);
-    }
-  }, [isTyping, showCursor]);
-
-  // Smooth scroll handler
   const handleSmoothScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
     targetId: string,
@@ -75,7 +41,7 @@ export default function Hero() {
     const element = document.querySelector(targetId);
     if (element) {
       element.scrollIntoView({
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
         block: "start",
       });
     }
@@ -83,137 +49,116 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-start sm:items-center justify-start sm:justify-center px-4 sm:px-6 lg:px-8 pt-20 pb-8 sm:pb-16 sm:py-16 overflow-hidden"
-      style={{ backgroundColor: "#000000" }}
+      id="hero"
+      className="relative min-h-screen flex items-start lg:items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-12 sm:pt-28 sm:pb-16 overflow-hidden"
     >
+      <GradientBackground />
+
       <motion.div
-        className="relative max-w-6xl w-full z-20"
+        className="relative z-20 max-w-6xl w-full"
         variants={container}
         initial="hidden"
         animate="show"
       >
-        <div className="w-full">
-          {/* Section 1: Name */}
-          <div className="mb-12 sm:mb-8 md:mb-16">
-            <motion.p
-              variants={item}
-              className="text-lg sm:text-lg font-medium text-slate-400 mb-3"
-            >
-              Hi, my name is
-            </motion.p>
-            <motion.h1
-              variants={item}
-              className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight"
-            >
-              Jeffrey Patey.
-            </motion.h1>
-          </div>
-
-          {/* Section 2: Role */}
-          <div className="mb-12 sm:mb-8 md:mb-16 space-y-3 sm:space-y-2">
-            <motion.div
-              variants={item}
-              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight xl:whitespace-nowrap leading-tight"
-            >
-              I&apos;m a{" "}
-              <span
-                className="font-semibold tracking-tight"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  textShadow: "0 0 30px rgba(52, 120, 246, 0.4)",
-                  fontFamily:
-                    "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
-                }}
+        <div className="w-full lg:grid lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10 lg:items-center">
+          <div className="lg:col-span-7 space-y-8 sm:space-y-9">
+            <header className="space-y-3 sm:space-y-4">
+              <motion.p
+                variants={item}
+                className="text-sm font-medium uppercase tracking-widest text-slate-500"
               >
-                {displayedText}
-                <span style={{ visibility: showCursor ? "visible" : "hidden" }}>
-                  |
+                Hi, my name is
+              </motion.p>
+              <motion.h1
+                variants={item}
+                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight text-balance"
+              >
+                Jeffrey Patey
+              </motion.h1>
+              <motion.p
+                variants={item}
+                className="text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-snug text-balance max-w-xl"
+              >
+                Full stack software developer
+                <span className="mt-2 block text-lg sm:text-xl md:text-2xl font-medium text-slate-400">
+                  with a healthcare background.
                 </span>
-              </span>
-            </motion.div>
-            <motion.div
-              variants={item}
-              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-tight"
-            >
-              with a healthcare background.
-            </motion.div>
-          </div>
+              </motion.p>
+            </header>
 
-          {/* Section 3: Passion Statement */}
-          <div className="mb-12 sm:mb-8 md:mb-16">
             <motion.p
               variants={item}
-              className="text-xl sm:text-xl text-slate-300 max-w-2xl leading-relaxed"
+              className="text-lg sm:text-xl text-slate-200 max-w-2xl leading-relaxed"
             >
               My passion for{" "}
-              <motion.span
-                className="font-medium cursor-pointer inline-block"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  textShadow: "0 0 20px rgba(255, 45, 85, 0.4)",
-                }}
-                whileHover={{
-                  scale: 1.15,
-                  rotate: [0, -3, 3, 0],
-                  transition: { duration: 0.3, ease: "easeInOut" },
-                }}
-                whileTap={{ scale: 0.9 }}
-              >
-                health tech
-              </motion.span>{" "}
+              <span className="font-semibold text-white">health tech</span>{" "}
               drives every solution I create.
             </motion.p>
-          </div>
 
-          {/* Section 4: CTA Button */}
-          <div className="mt-4 sm:mt-0">
-            <motion.div variants={item}>
+            <motion.div
+              variants={item}
+              className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center pt-1"
+            >
               <motion.a
                 href="#projects"
                 onClick={(e) => handleSmoothScroll(e, "#projects")}
-                className="relative group inline-block w-full sm:w-auto text-center px-12 py-6 rounded-full font-semibold text-lg transition-all duration-500 overflow-hidden cursor-pointer"
+                className="relative group inline-flex justify-center items-center w-full sm:w-auto text-center px-10 py-4 rounded-full font-semibold text-base transition-all duration-500 overflow-hidden cursor-pointer"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                  background: "var(--accent-gradient-soft)",
                   color: "white",
                   boxShadow:
                     "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                   backdropFilter: "blur(20px) saturate(200%)",
                   border: "0.5px solid rgba(255, 255, 255, 0.2)",
                 }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow:
-                    "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)",
-                }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        scale: 1.04,
+                        boxShadow:
+                          "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+                      }
+                }
+                whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                {/* Ripple effect */}
                 <div className="absolute inset-0 rounded-full overflow-hidden">
                   <motion.div
                     className="absolute inset-0 bg-white/20 rounded-full"
                     initial={{ scale: 0, opacity: 0 }}
-                    whileTap={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    whileTap={
+                      reduceMotion ? undefined : { scale: 1, opacity: 1 }
+                    }
+                    transition={{ duration: 0.25, ease: "easeOut" }}
                   />
                 </div>
-
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
+                <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full" />
                 <span className="relative z-10">Check out my work</span>
               </motion.a>
+
+              <a
+                href="#contact"
+                onClick={(e) => handleSmoothScroll(e, "#contact")}
+                className="inline-flex justify-center items-center w-full sm:w-auto px-8 py-4 rounded-full font-medium text-base text-slate-200 border border-white/15 hover:border-white/25 hover:bg-white/[0.04] transition-colors"
+              >
+                Get in touch
+              </a>
             </motion.div>
+
+            <motion.p variants={item} className="text-sm text-slate-500">
+              <a
+                href="/jeffpatey_resume_2026.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-white/20 underline-offset-4 hover:text-slate-300 hover:decoration-white/40 transition-colors"
+              >
+                View resume (PDF)
+              </a>
+            </motion.p>
           </div>
+
+          <HeroAside item={item} />
         </div>
       </motion.div>
     </section>

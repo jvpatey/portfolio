@@ -149,8 +149,7 @@ export default function Navigation() {
                   <div
                     className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     style={{
-                      background:
-                        "linear-gradient(135deg, rgba(52, 120, 246, 0.1) 0%, rgba(255, 45, 85, 0.1) 50%, rgba(255, 149, 0, 0.1) 100%)",
+                      background: "var(--accent-gradient-faint)",
                     }}
                   />
 
@@ -158,8 +157,7 @@ export default function Navigation() {
                   <span
                     className="relative z-10 font-bold text-lg tracking-tight transition-all duration-300"
                     style={{
-                      background:
-                        "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)",
+                      background: "var(--accent-gradient)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -200,7 +198,7 @@ export default function Navigation() {
                             : "#6b7280",
                         background:
                           activeSection === item.href.slice(1)
-                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
+                            ? "var(--accent-gradient)"
                             : "none",
                         WebkitBackgroundClip:
                           activeSection === item.href.slice(1)
@@ -226,7 +224,7 @@ export default function Navigation() {
                             : "inherit",
                         background:
                           activeSection === item.href.slice(1)
-                            ? "linear-gradient(135deg, #3478F6 0%, #FF2D55 50%, #FF9500 100%)"
+                            ? "var(--accent-gradient)"
                             : "none",
                         WebkitBackgroundClip:
                           activeSection === item.href.slice(1)
@@ -344,7 +342,7 @@ export default function Navigation() {
                     style={{
                       background:
                         activeSection === item.href.slice(1)
-                          ? "linear-gradient(135deg, rgba(52, 120, 246, 0.2) 0%, rgba(255, 45, 85, 0.2) 50%, rgba(255, 149, 0, 0.2) 100%)"
+                          ? "var(--accent-gradient-ui)"
                           : "rgba(255, 255, 255, 0.05)",
                       backdropFilter: "blur(20px) saturate(200%)",
                       border:
@@ -378,8 +376,7 @@ export default function Navigation() {
                   rel="noopener noreferrer"
                   className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"
                   style={{
-                    background:
-                      "linear-gradient(135deg, rgba(52, 120, 246, 0.25) 0%, rgba(255, 45, 85, 0.25) 50%, rgba(255, 149, 0, 0.25) 100%)",
+                    background: "var(--accent-gradient-soft)",
                     boxShadow:
                       "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                     backdropFilter: "blur(20px) saturate(200%)",
