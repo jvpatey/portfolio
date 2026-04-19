@@ -4,6 +4,7 @@ import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 import GradientBackground from "@/components/GradientBackground";
 
 // Main portfolio page
@@ -16,12 +17,13 @@ export default function Home() {
       <Navigation />
 
       {/* Main Content */}
-      <main className="relative z-10 pt-16 overflow-hidden">
+      <main className="relative z-10 overflow-x-hidden pt-16">
         <Hero />
         <About />
         <Experience />
         <Projects />
         <Contact />
+        <Footer />
       </main>
     </div>
   );
