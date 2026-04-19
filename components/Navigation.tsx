@@ -194,7 +194,7 @@ export default function Navigation() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-[0_8px_24px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md transition-colors hover:border-white/15 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -246,14 +246,7 @@ export default function Navigation() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 shadow-xl"
-            style={{
-              background: "rgba(0, 0, 0, 0.95)",
-              backdropFilter: "blur(20px) saturate(200%)",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
-              boxShadow:
-                "0 8px 32px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-            }}
+            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 bg-[var(--hero-base)]/92 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150"
           >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-2">
               {navItems.map((item, index) => {
@@ -274,23 +267,11 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block px-5 py-3.5 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_8px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
                       isMobileActive
-                        ? "text-white"
-                        : "text-slate-300 hover:text-white"
+                        ? "border-cyan-400/25 bg-white/[0.1] text-white ring-1 ring-white/10"
+                        : "border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
                     }`}
-                    style={{
-                      background: isMobileActive
-                        ? "rgba(255, 255, 255, 0.08)"
-                        : "rgba(255, 255, 255, 0.05)",
-                      backdropFilter: "blur(20px) saturate(200%)",
-                      border: isMobileActive
-                        ? "1px solid rgba(34, 211, 238, 0.25)"
-                        : "1px solid rgba(255, 255, 255, 0.1)",
-                      boxShadow: isMobileActive
-                        ? "0 2px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06)"
-                        : "0 2px 8px rgba(0, 0, 0, 0.1)",
-                    }}
                   >
                     {item.label}
                   </Link>
@@ -309,20 +290,11 @@ export default function Navigation() {
                   href="/jeffpatey_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-center px-8 py-4 text-white rounded-full font-medium transition-all duration-500 overflow-hidden relative group"
-                  style={{
-                    background: "var(--accent-gradient-soft)",
-                    boxShadow:
-                      "0 6px 24px rgba(0, 0, 0, 0.15), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                    backdropFilter: "blur(20px) saturate(200%)",
-                    border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                  }}
+                  className="block rounded-full border border-cyan-300/35 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+                  style={{ backgroundColor: "var(--cta-solid)" }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {/* Shimmer effect */}
-                  <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500"></div>
-
-                  <span className="relative z-10">View Resume</span>
+                  View Resume
                 </a>
               </motion.div>
             </div>

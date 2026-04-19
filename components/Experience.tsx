@@ -54,8 +54,8 @@ const experiences: ExperienceEntry[] = [
 const DETAIL_PANEL_ID = "experience-detail-panel";
 
 function ExperienceIcon({ kind }: { kind: ExperienceEntry["icon"] }) {
-  const wrap = "inline-flex shrink-0 pt-0.5";
-  const size = "h-[1.35rem] w-[1.35rem] sm:h-6 sm:w-6";
+  const wrap = "inline-flex shrink-0 pt-px sm:pt-0.5";
+  const size = "h-4 w-4 sm:h-[1.15rem] sm:w-[1.15rem] md:h-5 md:w-5";
   if (kind === "code") {
     return (
       <span className={wrap} aria-hidden>
@@ -129,7 +129,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-[60px]"
+      className="py-8 sm:py-10 md:py-14 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden scroll-mt-[60px] lg:py-12"
     >
       <div className="max-w-6xl mx-auto overflow-hidden">
         <motion.header
@@ -142,7 +142,7 @@ export default function Experience() {
             duration: reduceMotion ? 0 : 0.55,
             ease: heroEase,
           }}
-          className="text-left mb-8 sm:mb-12 space-y-2 sm:space-y-3"
+          className="text-left mb-6 space-y-2 sm:mb-10 sm:space-y-3 lg:mb-8"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight text-balance">
             Experience
@@ -153,7 +153,7 @@ export default function Experience() {
           </p>
         </motion.header>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-x-8 lg:items-stretch min-w-0">
+        <div className="grid grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-x-6 xl:gap-x-7 lg:items-stretch min-w-0">
           <motion.div
             initial={
               reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
@@ -165,17 +165,17 @@ export default function Experience() {
               delay: reduceMotion ? 0 : 0.06,
               ease: heroEase,
             }}
-            className={`lg:col-span-5 min-w-0 ${panelClass} p-2 sm:p-2.5`}
+            className={`lg:col-span-4 min-w-0 max-w-md lg:max-w-none ${panelClass} p-1.5 sm:p-2`}
             style={asideShadow}
           >
-            <p className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <p className="px-2 pt-1.5 pb-0.5 text-[0.65rem] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">
               Roles
             </p>
             <div
               role="tablist"
               aria-label="Work history"
               aria-orientation="vertical"
-              className="flex flex-col gap-1"
+              className="flex flex-col gap-0.5"
             >
               {experiences.map((exp, index) => {
                 const isSelected = selectedId === exp.id;
@@ -193,7 +193,7 @@ export default function Experience() {
                     tabIndex={isSelected ? 0 : -1}
                     onClick={() => setSelectedId(exp.id)}
                     onKeyDown={(e) => onTabKeyDown(e, index)}
-                    className={`flex w-full items-start gap-3 rounded-2xl px-3 py-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                    className={`flex w-full items-start gap-2 rounded-xl px-2 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
                       isSelected
                         ? "bg-white/[0.08] text-white ring-1 ring-white/12"
                         : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
@@ -201,13 +201,13 @@ export default function Experience() {
                   >
                     <ExperienceIcon kind={exp.icon} />
                     <span className="min-w-0 flex-1">
-                      <span className="block font-semibold text-white leading-snug">
+                      <span className="block text-sm font-semibold leading-snug text-white sm:text-base">
                         {exp.company}
                       </span>
-                      <span className="mt-0.5 block text-sm font-medium text-slate-300 leading-snug">
+                      <span className="mt-0.5 block text-xs font-medium leading-snug text-slate-300 sm:text-sm">
                         {exp.title}
                       </span>
-                      <span className="mt-1 block text-xs text-slate-500">
+                      <span className="mt-0.5 block text-[0.65rem] text-slate-500 sm:text-xs">
                         {exp.period}
                       </span>
                     </span>
@@ -230,7 +230,7 @@ export default function Experience() {
             id={DETAIL_PANEL_ID}
             role="tabpanel"
             aria-labelledby={`exp-tab-${selectedId}`}
-            className={`lg:col-span-7 min-w-0 ${panelClass} p-6 sm:p-8`}
+            className={`lg:col-span-8 min-w-0 ${panelClass} p-5 sm:p-6 lg:p-7`}
             style={asideShadow}
           >
             <div className="flex flex-col gap-4 sm:gap-5">

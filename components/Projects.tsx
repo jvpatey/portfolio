@@ -1,909 +1,589 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Apple, Github, ExternalLink } from "lucide-react";
 import ImageCarousel from "./ImageCarousel";
 import MediaCarousel from "./MediaCarousel";
-import TypewriterHeader from "./TypewriterHeader";
 import SectionTitleRule from "./SectionTitleRule";
 
-// Bento grid card component with glassmorphism
-const BentoCard = ({
-  children,
-  className = "",
-  delay = 0,
-  span = "col-span-1",
-  rowSpan = "row-span-1",
-  featured = false,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-  span?: string;
-  rowSpan?: string;
-  featured?: boolean;
-}) => {
-  return (
-    <motion.div
-      initial={{
-        opacity: 0,
-        y: 30,
-        scale: 0.95,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        scale: 1,
-      }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{
-        duration: 0.6,
-        delay: delay * 0.1,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      }}
-      whileHover={{
-        y: featured ? -4 : -2,
-        transition: { duration: 0.3, ease: "easeOut" },
-      }}
-      className={`${span} ${rowSpan} group relative overflow-hidden rounded-3xl transition-all duration-500 min-w-0 ${className}`}
-      style={{
-        background: featured
-          ? "rgba(255, 255, 255, 0.08)"
-          : "rgba(255, 255, 255, 0.05)",
-        backdropFilter: "blur(20px) saturate(200%)",
-        border: featured
-          ? "1px solid rgba(255, 255, 255, 0.2)"
-          : "1px solid rgba(255, 255, 255, 0.1)",
-        boxShadow: featured
-          ? "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 40px rgba(34, 211, 238, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
-          : "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-      }}
-    >
-      {/* Gradient overlay */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "var(--accent-gradient-faint)",
-        }}
-      />
+const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
-      {/* Shimmer effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500" />
+const asideShadow = {
+  boxShadow:
+    "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+} as const;
 
-      {/* Content */}
-      <div className="relative z-10 h-full w-full min-w-0">{children}</div>
-    </motion.div>
-  );
+const panelClass =
+  "rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors duration-300 hover:border-white/15";
+
+/** Inset sections inside the detail panel — no second fill (avoids stacked white/3% lifts). */
+const detailSectionClass =
+  "min-w-0 rounded-2xl border border-white/[0.08] bg-transparent p-4 sm:p-6";
+
+const DETAIL_PANEL_ID = "projects-detail-panel";
+
+const HASH_IDS = ["streamln", "homekeep", "oralcheckr", "burdens"] as const;
+
+type ProjectId = (typeof HASH_IDS)[number];
+
+type ProjectMeta = {
+  id: ProjectId;
+  name: string;
+  tagline: string;
 };
 
-// Projects section component with bento grid layout
+const PROJECTS: ProjectMeta[] = [
+  {
+    id: "streamln",
+    name: "StreamLn",
+    tagline: "Productivity workspace — canvas, notes, tasks",
+  },
+  {
+    id: "homekeep",
+    name: "HomeKeep",
+    tagline: "Home maintenance reminders & tracking",
+  },
+  {
+    id: "oralcheckr",
+    name: "OralCheckr",
+    tagline: "Oral health assessment & habit tracking",
+  },
+  {
+    id: "burdens",
+    name: "Freelance Web Development",
+    tagline: "Burden's General Store — responsive site & integrations",
+  },
+];
+
+const chipClass =
+  "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
+
+const primaryCtaClass =
+  "inline-flex w-full items-center justify-center gap-2 rounded-full border border-cyan-300/35 px-6 py-3.5 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] duration-300 hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]";
+
+const ghostCtaClass =
+  "inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3.5 text-center text-sm font-medium text-slate-200 transition-colors hover:border-white/25 hover:bg-white/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]";
+
+function TechChips({ items }: { items: string[] }) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {items.map((tech) => (
+        <span key={tech} className={chipClass}>
+          {tech}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function StreamLnDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <MediaCarousel
+          images={[
+            "/streamln1.png",
+            "/streamln2.png",
+            "/streamln3.png",
+            "/streamln4.png",
+            "/streamln5.png",
+            "/streamln6.png",
+            "/streamln7.png",
+            "/streamln8.png",
+          ]}
+          videos={[
+            "/streamln_video_1.mp4",
+            "/streamln_video_2.mp4",
+            "/streamln_video_3.mp4",
+            "/streamln_video_4.mp4",
+            "/streamln_video_5.mp4",
+            "/streamln_video_6.mp4",
+            "/streamln_video_7.mp4",
+            "/streamln_video_8.mp4",
+            "/streamln_video_9.mp4",
+          ]}
+          alt="StreamLn media"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            Productivity workspace for developers. Infinite 2D canvas with
+            notes, documents, tasks, and export—built for structure and
+            clarity. Map out your projects, notes, and tasks on a limitless
+            workspace.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={[
+                "Next.js",
+                "React",
+                "TypeScript",
+                "Prisma",
+                "PostgreSQL",
+                "Clerk",
+                "Tailwind CSS",
+                "Framer Motion",
+              ]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/StreamLn"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+            <a
+              href="https://streamln.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={primaryCtaClass}
+              style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Live demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HomeKeepDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <MediaCarousel
+          images={[
+            "/homekeep1.png",
+            "/homekeep2.png",
+            "/homekeep3.png",
+            "/homekeep4.png",
+            "/homekeep5.png",
+            "/homekeep6.png",
+            "/homekeep7.png",
+            "/homekeep8.png",
+            "/homekeep9.png",
+          ]}
+          videos={[
+            "/homekeep-video-1.mov",
+            "/homekeep-video-2.mov",
+            "/homekeep-video-3.mov",
+            "/homekeep-video-4.mov",
+            "/homekeep-video-5.mov",
+          ]}
+          alt="HomeKeep media"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            A mobile app that makes home maintenance manageable. Create
+            recurring tasks, get reminders when things are due, and track your
+            progress—all with a clean, intuitive interface.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={["React Native", "TypeScript", "Expo", "Supabase"]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/homekeep-mobile"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+            <a
+              href="https://apps.apple.com/ca/app/homekeep/id6751912377"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={primaryCtaClass}
+              style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <Apple className="h-4 w-4 shrink-0" aria-hidden />
+              App Store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OralCheckrDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <MediaCarousel
+          images={[
+            "/oralcheckr1.png",
+            "/oralcheckr2.png",
+            "/oralcheckr3.png",
+            "/oralcheckr4.png",
+            "/oralcheckr5.png",
+            "/oralcheckr6.png",
+            "/oralcheckr7.png",
+            "/oralcheckr8.png",
+            "/oralcheckr9.png",
+            "/oralcheckr10.png",
+          ]}
+          videos={[
+            "/oralcheckr-recording-1.mov",
+            "/oralcheckr-recording-2.mov",
+            "/oralcheckr-recording-3.mov",
+            "/oralcheckr-recording-4.mov",
+            "/oralcheckr-recording-5.mov",
+            "/oralcheckr-recording-6.mov",
+          ]}
+          alt="OralCheckr media"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            A comprehensive web app for oral health assessment and habit
+            tracking with personalized recommendations and progress analytics.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={[
+                "React",
+                "TypeScript",
+                "Vite",
+                "Node.js",
+                "Express",
+                "MySQL",
+              ]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/OralCheckr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+            <a
+              href="https://jvpatey.github.io/OralCheckr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={primaryCtaClass}
+              style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Live demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BurdensDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <ImageCarousel
+          images={[
+            "/burdens1.png",
+            "/burdens2.png",
+            "/burdens3.png",
+            "/burdens4.png",
+            "/burdens5.png",
+            "/burdens6.png",
+          ]}
+          alt="Burden's General Store screenshots"
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            A freelance web development project featuring modern design,
+            responsive layouts, dark/light mode, and seamless third-party
+            integrations.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={[
+                "Next.js",
+                "TypeScript",
+                "Tailwind CSS",
+                "shadcn/ui",
+                "Vercel",
+              ]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/burdens-general-store"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+            <a
+              href="https://burdensgeneralstore.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={primaryCtaClass}
+              style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Live demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ProjectDetailBody({ id }: { id: ProjectId }) {
+  switch (id) {
+    case "streamln":
+      return <StreamLnDetail />;
+    case "homekeep":
+      return <HomeKeepDetail />;
+    case "oralcheckr":
+      return <OralCheckrDetail />;
+    case "burdens":
+      return <BurdensDetail />;
+    default:
+      return null;
+  }
+}
+
 export default function Projects() {
+  const reduceMotion = useReducedMotion();
+  const [selectedId, setSelectedId] = useState<ProjectId>(PROJECTS[0].id);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const selectedMeta = useMemo(
+    () => PROJECTS.find((p) => p.id === selectedId) ?? PROJECTS[0],
+    [selectedId],
+  );
+
+  useEffect(() => {
+    const applyHash = () => {
+      const raw = window.location.hash.replace(/^#/, "");
+      if (HASH_IDS.includes(raw as ProjectId)) {
+        setSelectedId(raw as ProjectId);
+        requestAnimationFrame(() => {
+          document.getElementById(raw)?.scrollIntoView({
+            behavior: reduceMotion ? "auto" : "smooth",
+            block: "start",
+          });
+        });
+      }
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, [reduceMotion]);
+
+  const focusTab = useCallback((index: number) => {
+    const i = (index + PROJECTS.length) % PROJECTS.length;
+    queueMicrotask(() => tabRefs.current[i]?.focus());
+  }, []);
+
+  const onTabKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+      switch (e.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          e.preventDefault();
+          setSelectedId(PROJECTS[(index + 1) % PROJECTS.length].id);
+          focusTab(index + 1);
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          e.preventDefault();
+          setSelectedId(
+            PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length].id,
+          );
+          focusTab(index - 1);
+          break;
+        case "Home":
+          e.preventDefault();
+          setSelectedId(PROJECTS[0].id);
+          focusTab(0);
+          break;
+        case "End":
+          e.preventDefault();
+          setSelectedId(PROJECTS[PROJECTS.length - 1].id);
+          focusTab(PROJECTS.length - 1);
+          break;
+        default:
+          break;
+      }
+    },
+    [focusTab],
+  );
+
   return (
     <section
       id="projects"
-      className="py-8 sm:py-12 md:py-16 mb-12 sm:mb-16 md:mb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
-      style={{ backgroundColor: "var(--hero-base)", scrollMarginTop: "60px" }}
+      className="mb-12 scroll-mt-[60px] overflow-hidden px-4 py-8 sm:mb-16 sm:px-6 sm:py-10 md:mb-20 md:py-14 lg:px-8 lg:py-12"
     >
-      <div className="max-w-6xl mx-auto overflow-hidden">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="mx-auto max-w-6xl overflow-hidden">
+        <motion.header
+          initial={
+            reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{
-            duration: 0.7,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            duration: reduceMotion ? 0 : 0.55,
+            ease: heroEase,
           }}
-          className="text-left mb-8 sm:mb-12"
+          className="mb-6 space-y-2 text-left sm:mb-10 sm:space-y-3 lg:mb-8"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-0">
-            <TypewriterHeader
-              fullText="What I've Built"
-              delay={100}
-              speed={80}
-              style={{
-                background:
-                  "var(--accent-gradient)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-              }}
-            />
+          <h2 className="text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            Projects
           </h2>
-          <SectionTitleRule className="mt-3" />
-          <p className="mt-4 text-slate-400 text-base max-w-2xl">
-            Featured projects
+          <SectionTitleRule />
+          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
+            Things I&apos;ve built and shipped—products, mobile apps, and client
+            sites.
           </p>
-        </motion.div>
+        </motion.header>
 
-        {/* Projects Grid - Each project has separate cards */}
-        <div className="space-y-16 sm:space-y-20">
-          {/* StreamLn Project - Featured first */}
-          <div id="streamln" className="space-y-6 scroll-mt-20">
-            {/* Project Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex flex-wrap items-center gap-3"
+        <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-x-6 xl:gap-x-7 lg:items-stretch">
+          <motion.div
+            initial={
+              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+            }
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.55,
+              delay: reduceMotion ? 0 : 0.06,
+              ease: heroEase,
+            }}
+            className={`min-w-0 max-w-md lg:max-w-none lg:col-span-4 ${panelClass} p-1.5 sm:p-2`}
+            style={asideShadow}
+          >
+            <p className="px-2 pb-0.5 pt-1.5 text-[0.65rem] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">
+              Work
+            </p>
+            <div
+              role="tablist"
+              aria-label="Projects"
+              aria-orientation="vertical"
+              className="flex flex-col gap-0.5"
             >
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                <span
-                  style={{
-                    background:
-                      "var(--accent-gradient)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  StreamLn
-                </span>
-              </h3>
-              <span
-                className="px-3 py-1 rounded-full text-xs font-medium animate-pulse"
-                style={{
-                  background: "rgba(129, 140, 248, 0.18)",
-                  border: "1px solid rgba(129, 140, 248, 0.38)",
-                  color: "#a5f3fc",
-                }}
-              >
-                Currently building
-              </span>
-            </motion.div>
-
-            {/* Project Cards Grid */}
-            <div className="space-y-6">
-              {/* Combined Media Carousel Card - Images and Videos */}
-              <BentoCard span="col-span-1" delay={0.2} featured className="p-4">
-                <MediaCarousel
-                  images={[
-                    "/streamln1.png",
-                    "/streamln2.png",
-                    "/streamln3.png",
-                    "/streamln4.png",
-                    "/streamln5.png",
-                    "/streamln6.png",
-                    "/streamln7.png",
-                    "/streamln8.png",
-                  ]}
-                  videos={[
-                    "/streamln_video_1.mp4",
-                    "/streamln_video_2.mp4",
-                    "/streamln_video_3.mp4",
-                    "/streamln_video_4.mp4",
-                    "/streamln_video_5.mp4",
-                    "/streamln_video_6.mp4",
-                    "/streamln_video_7.mp4",
-                    "/streamln_video_8.mp4",
-                    "/streamln_video_9.mp4",
-                  ]}
-                  alt="StreamLn media"
-                />
-              </BentoCard>
-
-              {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
-                {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1 min-w-0" delay={0.3} featured className="p-4 sm:p-6">
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      About
-                    </h4>
-                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                      Productivity workspace for developers. Infinite 2D canvas
-                      with notes, documents, tasks, and export—built for
-                      structure and clarity. Map out your projects, notes, and
-                      tasks on a limitless workspace.
-                    </p>
-                    <div className="mt-4">
-                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
-                        Tech Stack
-                      </h5>
-                      <div className="flex flex-wrap gap-1">
-                        {[
-                          "Next.js",
-                          "React",
-                          "TypeScript",
-                          "Prisma",
-                          "PostgreSQL",
-                          "Clerk",
-                          "Tailwind CSS",
-                          "Framer Motion",
-                        ].map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 rounded-full text-xs"
-                            style={{
-                              background: "rgba(34, 211, 238, 0.1)",
-                              border: "1px solid rgba(34, 211, 238, 0.22)",
-                              color: "#67e8f9",
-                            }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-
-                {/* Links Card */}
-                <BentoCard
-                  span="col-span-1"
-                  delay={0.4}
-                  featured
-                  className="p-4 sm:p-6"
-                >
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      Links
-                    </h4>
-                    <div className="flex flex-col justify-center">
-                      <div className="space-y-3">
-                        <a
-                          href="https://github.com/jvpatey/StreamLn"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                            </svg>
-                            GitHub
-                          </span>
-                        </a>
-                        <a
-                          href="https://streamln.vercel.app/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
-                            Live Demo
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-              </div>
+              {PROJECTS.map((p, index) => {
+                const isSelected = selectedId === p.id;
+                return (
+                  <button
+                    key={p.id}
+                    id={p.id}
+                    ref={(el) => {
+                      tabRefs.current[index] = el;
+                    }}
+                    type="button"
+                    role="tab"
+                    aria-selected={isSelected}
+                    aria-controls={DETAIL_PANEL_ID}
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={() => setSelectedId(p.id)}
+                    onKeyDown={(e) => onTabKeyDown(e, index)}
+                    className={`w-full scroll-mt-28 rounded-xl px-2 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
+                      isSelected
+                        ? "bg-white/[0.08] text-white ring-1 ring-white/12"
+                        : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
+                    }`}
+                  >
+                    <span className="flex min-w-0 flex-col gap-0.5">
+                      <span className="text-sm font-semibold leading-snug text-white sm:text-base">
+                        {p.name}
+                      </span>
+                      <span className="text-xs leading-snug text-slate-400 sm:text-sm">
+                        {p.tagline}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </motion.div>
 
-          {/* HomeKeep Project */}
-          <div id="homekeep" className="space-y-6 scroll-mt-20">
-            {/* Project Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                <span
-                  style={{
-                    background:
-                      "var(--accent-gradient)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  HomeKeep
-                </span>
+          <motion.div
+            key={selectedId}
+            initial={
+              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
+            }
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.35,
+              ease: heroEase,
+            }}
+            id={DETAIL_PANEL_ID}
+            role="tabpanel"
+            aria-labelledby={`${selectedId}`}
+            className={`min-w-0 lg:col-span-8 ${panelClass} p-4 sm:p-6 lg:p-7`}
+            style={asideShadow}
+          >
+            <div className="mb-6 border-b border-white/10 pb-5">
+              <h3 className="text-xl font-bold text-white sm:text-2xl">
+                {selectedMeta.name}
               </h3>
-            </motion.div>
-
-            {/* Project Cards Grid - Side by Side for Mobile App */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
-              {/* Media Carousel Card - Left Side - Images and Videos */}
-              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
-                <MediaCarousel
-                  images={[
-                    "/homekeep1.png",
-                    "/homekeep2.png",
-                    "/homekeep3.png",
-                    "/homekeep4.png",
-                    "/homekeep5.png",
-                    "/homekeep6.png",
-                    "/homekeep7.png",
-                    "/homekeep8.png",
-                    "/homekeep9.png",
-                  ]}
-                  videos={[
-                    "/homekeep-video-1.mov",
-                    "/homekeep-video-2.mov",
-                    "/homekeep-video-3.mov",
-                    "/homekeep-video-4.mov",
-                    "/homekeep-video-5.mov",
-                  ]}
-                  alt="HomeKeep media"
-                />
-              </BentoCard>
-
-              {/* Right Side - Two Separate Cards (grid ensures full width like StreamLn) */}
-              <div className="grid grid-cols-1 gap-4 min-w-0">
-                {/* About & Tech Stack Card */}
-                <BentoCard
-                  span="col-span-1 min-w-0"
-                  delay={0.3}
-                  className="p-4 sm:p-6"
-                >
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      About
-                    </h4>
-                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                      A mobile app that makes home maintenance manageable.
-                      Create recurring tasks, get reminders when things are due,
-                      and track your progress—all with a clean, intuitive
-                      interface.
-                    </p>
-                    <div className="mt-4">
-                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
-                        Tech Stack
-                      </h5>
-                      <div className="flex flex-wrap gap-1">
-                        {["React Native", "TypeScript", "Expo", "Supabase"].map(
-                          (tech) => (
-                            <span
-                              key={tech}
-                              className="px-2 py-1 rounded-full text-xs"
-                              style={{
-                                background: "rgba(34, 211, 238, 0.1)",
-                                border: "1px solid rgba(34, 211, 238, 0.22)",
-                                color: "#67e8f9",
-                              }}
-                            >
-                              {tech}
-                            </span>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-
-                {/* Links Card */}
-                <BentoCard
-                  span="col-span-1 min-w-0"
-                  delay={0.4}
-                  className="p-4 sm:p-6"
-                >
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      Links
-                    </h4>
-                    <div className="flex flex-col justify-center">
-                      <div className="space-y-3">
-                        <a
-                          href="https://github.com/jvpatey/homekeep-mobile"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                            </svg>
-                            GitHub
-                          </span>
-                        </a>
-                        <a
-                          href="https://apps.apple.com/ca/app/homekeep/id6751912377"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" />
-                            </svg>
-                            App Store
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-              </div>
+              <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
             </div>
-          </div>
-
-          {/* OralCheckr Project */}
-          <div id="oralcheckr" className="space-y-6 scroll-mt-20">
-            {/* Project Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                <span
-                  style={{
-                    background:
-                      "var(--accent-gradient)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  OralCheckr
-                </span>
-              </h3>
-            </motion.div>
-
-            {/* Project Cards Grid */}
-            <div className="space-y-6 min-w-0">
-              {/* Combined Media Carousel Card - Images and Videos */}
-              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
-                <MediaCarousel
-                  images={[
-                    "/oralcheckr1.png",
-                    "/oralcheckr2.png",
-                    "/oralcheckr3.png",
-                    "/oralcheckr4.png",
-                    "/oralcheckr5.png",
-                    "/oralcheckr6.png",
-                    "/oralcheckr7.png",
-                    "/oralcheckr8.png",
-                    "/oralcheckr9.png",
-                    "/oralcheckr10.png",
-                  ]}
-                  videos={[
-                    "/oralcheckr-recording-1.mov",
-                    "/oralcheckr-recording-2.mov",
-                    "/oralcheckr-recording-3.mov",
-                    "/oralcheckr-recording-4.mov",
-                    "/oralcheckr-recording-5.mov",
-                    "/oralcheckr-recording-6.mov",
-                  ]}
-                  alt="OralCheckr media"
-                />
-              </BentoCard>
-
-              {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
-                {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1 min-w-0" delay={0.3} className="p-4 sm:p-6">
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      About
-                    </h4>
-                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                      A comprehensive web app for oral health assessment and
-                      habit tracking with personalized recommendations and
-                      progress analytics.
-                    </p>
-                    <div className="mt-4">
-                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
-                        Tech Stack
-                      </h5>
-                      <div className="flex flex-wrap gap-1">
-                        {[
-                          "React",
-                          "TypeScript",
-                          "Vite",
-                          "Node.js",
-                          "Express",
-                          "MySQL",
-                        ].map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 rounded-full text-xs"
-                            style={{
-                              background: "rgba(34, 211, 238, 0.1)",
-                              border: "1px solid rgba(34, 211, 238, 0.22)",
-                              color: "#67e8f9",
-                            }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-
-                {/* Links Card */}
-                <BentoCard
-                  span="col-span-1"
-                  delay={0.4}
-                  className="p-4 sm:p-6"
-                >
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      Links
-                    </h4>
-                    <div className="flex flex-col justify-center">
-                      <div className="space-y-3">
-                        <a
-                          href="https://github.com/jvpatey/OralCheckr"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                            </svg>
-                            GitHub
-                          </span>
-                        </a>
-                        <a
-                          href="https://jvpatey.github.io/OralCheckr/"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
-                            Live Demo
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-              </div>
-            </div>
-          </div>
-
-          {/* Burden's General Store Project */}
-          <div className="space-y-6">
-            {/* Project Title */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                <span
-                  style={{
-                    background:
-                      "var(--accent-gradient)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  Freelance Web Development
-                </span>
-              </h3>
-            </motion.div>
-
-            {/* Project Cards Grid */}
-            <div className="space-y-6 min-w-0">
-              {/* Image Carousel Card - Full Width */}
-              <BentoCard span="col-span-1 min-w-0" delay={0.2} className="p-4">
-                <ImageCarousel
-                  images={[
-                    "/burdens1.png",
-                    "/burdens2.png",
-                    "/burdens3.png",
-                    "/burdens4.png",
-                    "/burdens5.png",
-                    "/burdens6.png",
-                  ]}
-                  alt="Burden's General Store screenshots"
-                />
-              </BentoCard>
-
-              {/* Description and Links Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 min-w-0">
-                {/* Description & Tech Stack Card */}
-                <BentoCard span="col-span-1 min-w-0" delay={0.3} className="p-4 sm:p-6">
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      About
-                    </h4>
-                    <p className="text-base md:text-lg text-slate-300 leading-relaxed">
-                      A freelance web development project featuring modern
-                      design, responsive layouts, dark/light mode, and seamless
-                      third-party integrations.
-                    </p>
-                    <div className="mt-4">
-                      <h5 className="text-base md:text-lg font-semibold text-white mb-2">
-                        Tech Stack
-                      </h5>
-                      <div className="flex flex-wrap gap-1">
-                        {[
-                          "Next.js",
-                          "TypeScript",
-                          "Tailwind CSS",
-                          "shadcn/ui",
-                          "Vercel",
-                        ].map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-2 py-1 rounded-full text-xs"
-                            style={{
-                              background: "rgba(34, 211, 238, 0.1)",
-                              border: "1px solid rgba(34, 211, 238, 0.22)",
-                              color: "#67e8f9",
-                            }}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-
-                {/* Links Card */}
-                <BentoCard
-                  span="col-span-1"
-                  delay={0.4}
-                  className="p-4 sm:p-6"
-                >
-                  <div className="flex flex-col space-y-4">
-                    <h4 className="text-lg md:text-xl lg:text-2xl font-semibold text-white">
-                      Links
-                    </h4>
-                    <div className="flex flex-col justify-center">
-                      <div className="space-y-3">
-                        <a
-                          href="https://github.com/jvpatey/burdens-general-store"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" />
-                            </svg>
-                            GitHub
-                          </span>
-                        </a>
-                        <a
-                          href="https://burdensgeneralstore.com"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="relative group block w-full px-6 py-3 rounded-full font-semibold text-sm transition-all duration-500 overflow-hidden"
-                          style={{
-                            background:
-                              "var(--accent-gradient-soft)",
-                            color: "white",
-                            boxShadow:
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(20px) saturate(200%)",
-                            border: "0.5px solid rgba(255, 255, 255, 0.2)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 12px 40px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(255, 255, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3)";
-                            e.currentTarget.style.transform = "scale(1.02)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.boxShadow =
-                              "0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 0.5px rgba(255, 255, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
-                            e.currentTarget.style.transform = "scale(1)";
-                          }}
-                        >
-                          {/* Shimmer effect */}
-                          <div className="absolute inset-0 -top-1 -left-1 -right-1 -bottom-1 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-full"></div>
-
-                          <span className="relative z-10 flex items-center justify-center gap-2">
-                            <svg
-                              className="w-4 h-4"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
-                            Live Demo
-                          </span>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </BentoCard>
-              </div>
-            </div>
-          </div>
+            <ProjectDetailBody id={selectedId} />
+          </motion.div>
         </div>
       </div>
     </section>

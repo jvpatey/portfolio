@@ -29,13 +29,16 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
     handleSlideChange(newIndex);
   };
 
+  const carouselArrowBtn =
+    "absolute top-1/2 z-10 flex -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/10 bg-[var(--hero-base)] p-2 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.04)] transition-[opacity,background-color,border-color] duration-300 hover:border-white/15 hover:bg-[var(--surface-1)] disabled:opacity-50 sm:p-2.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100";
+
   return (
     <div className="relative group rounded-lg flex justify-center w-full min-w-0 overflow-hidden">
-      {/* Previous Button - always visible on touch/mobile */}
       <button
+        type="button"
         onClick={prevSlide}
         disabled={isTransitioning}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
+        className={`left-2 ${carouselArrowBtn}`}
         aria-label="Previous screenshot"
       >
         <svg
@@ -53,8 +56,7 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         </svg>
       </button>
 
-      {/* Images Container */}
-      <div className="relative flex justify-center items-center max-h-[500px] w-full max-w-full">
+      <div className="relative flex max-h-[500px] w-full max-w-full items-center justify-center rounded-xl border border-white/10 bg-transparent p-1 sm:p-2">
         {images.map((image, index) => (
           <img
             key={index}
@@ -72,11 +74,11 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         ))}
       </div>
 
-      {/* Next Button - always visible on touch/mobile */}
       <button
+        type="button"
         onClick={nextSlide}
         disabled={isTransitioning}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/80 backdrop-blur-sm hover:bg-slate-900/90 text-white p-2 sm:p-3 rounded-full shadow-lg disabled:opacity-50 touch-manipulation"
+        className={`right-2 ${carouselArrowBtn}`}
         aria-label="Next screenshot"
       >
         <svg
@@ -99,12 +101,13 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
         {images.map((_, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => handleSlideChange(index)}
             disabled={isTransitioning}
-            className={`w-2 h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
+            className={`h-2 rounded-full transition-all duration-300 disabled:opacity-50 ${
               index === currentSlide
-                ? "bg-blue-400 w-8"
-                : "bg-slate-600 hover:bg-slate-500"
+                ? "w-8 bg-[var(--accent-primary)]/90"
+                : "w-2 bg-white/20 hover:bg-white/35"
             }`}
             aria-label={`Go to screenshot ${index + 1}`}
           />
