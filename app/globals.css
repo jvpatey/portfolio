@@ -80,6 +80,11 @@ body {
     background-color: var(--hero-base);
   }
 
+  /* Navbar: light tint + strong blur so hero/page bg reads through */
+  .bg-nav-surface {
+    background-color: color-mix(in srgb, var(--hero-base) 52%, transparent);
+  }
+
   .bg-hero-radials {
     background: radial-gradient(
         ellipse 120% 80% at 10% -10%,

@@ -4,15 +4,19 @@ import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
+import GradientBackground from "@/components/GradientBackground";
 
 // Main portfolio page
 export default function Home() {
   return (
-    <div className="min-h-screen text-white bg-[var(--hero-base)] overflow-x-hidden">
+    <div className="relative min-h-screen text-white overflow-x-hidden">
+      {/* Full-viewport depth so fixed navbar sits over the same surface as the hero */}
+      <GradientBackground fixed />
+
       <Navigation />
 
       {/* Main Content */}
-      <main className="pt-16 overflow-hidden">
+      <main className="relative z-10 pt-16 overflow-hidden">
         <Hero />
         <About />
         <Experience />

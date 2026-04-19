@@ -1,7 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-import GradientBackground from "./GradientBackground";
 import HeroAside from "./HeroAside";
 
 // Hero: editorial layout, soft depth backdrop, paired CTAs
@@ -50,10 +49,8 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-start lg:items-center justify-center px-4 sm:px-6 lg:px-8 pt-24 pb-12 sm:pt-28 sm:pb-16 overflow-hidden"
+      className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14 overflow-hidden"
     >
-      <GradientBackground />
-
       <motion.div
         className="relative z-20 max-w-6xl w-full"
         variants={container}

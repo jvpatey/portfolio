@@ -3,12 +3,13 @@
 // Navigation component - includes logo, navigation links, and resume button
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   // Smooth scroll handler
   const handleSmoothScroll = (
@@ -16,13 +17,14 @@ export default function Navigation() {
     targetId: string
   ) => {
     e.preventDefault();
+    const scrollBehavior = reduceMotion ? "auto" : "smooth";
     if (targetId === "#") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: scrollBehavior });
     } else {
       const element = document.querySelector(targetId);
       if (element) {
         element.scrollIntoView({
-          behavior: "smooth",
+          behavior: scrollBehavior,
           block: "start",
         });
       }
@@ -114,160 +116,96 @@ export default function Navigation() {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.21, 0.47, 0.32, 0.98] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/40 backdrop-blur-md ${
-        isScrolled ? "border-b border-white/10" : "border-b border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-nav-surface backdrop-blur-xl backdrop-saturate-150 ${
+        isScrolled ? "border-b border-white/10" : "border-b border-white/[0.04]"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-        <div className="grid grid-cols-3 items-center h-20">
-          {/* Logo - scrolls to top */}
-          <div>
+        <div className="flex items-center justify-between gap-3 md:grid md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:justify-stretch h-20">
+          {/* Wordmark — full name lg+; compact JP below lg */}
+          <div className="min-w-0 flex-1 md:flex-none flex justify-start pr-1 md:pr-2">
             <Link
               href="#"
-              className="group inline-block cursor-pointer"
+              className="group inline-flex min-w-0 max-w-full items-baseline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               onClick={(e) => handleSmoothScroll(e, "#")}
+              aria-label="Jeffrey Patey, home"
             >
-              <div className="relative">
-                {/* Gradient glow on hover */}
-                <div
-                  className="absolute -inset-1 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700"
-                  style={{ background: "var(--accent-gradient-soft)" }}
-                />
-
-                {/* Main logo container - Glassmorphism */}
-                <div
-                  className="relative w-12 h-12 rounded-3xl flex items-center justify-center transition-all duration-500 group-hover:scale-105"
-                  style={{
-                    background: "rgba(255, 255, 255, 0.05)",
-                    backdropFilter: "blur(20px) saturate(200%)",
-                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                    boxShadow:
-                      "0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
-                  }}
+              <span className="hidden lg:inline-flex items-baseline gap-x-1.5 leading-none">
+                <span className="font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-primary)] shrink-0">
+                  Jeffrey
+                </span>
+                <span
+                  className={`font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-secondary)] shrink-0 ${
+                    reduceMotion
+                      ? ""
+                      : "transition-transform duration-300 ease-out group-hover:translate-x-1.5"
+                  }`}
                 >
-                  {/* Shimmer effect on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-pulse transition-opacity duration-500 rounded-3xl"></div>
-
-                  {/* Gradient overlay on hover */}
-                  <div
-                    className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: "var(--accent-gradient-faint)",
-                    }}
-                  />
-
-                  {/* Text with gradient */}
-                  <span
-                    className="relative z-10 font-bold text-lg tracking-tight transition-all duration-300"
-                    style={{
-                      background: "var(--accent-gradient)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                    }}
-                  >
-                    JP
-                  </span>
-
-                  {/* Inner highlight */}
-                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white/40 rounded-full blur-sm opacity-50"></div>
-                </div>
-              </div>
+                  Patey
+                </span>
+              </span>
+              <span
+                className="lg:hidden inline-flex items-baseline gap-0.5 font-bold text-base sm:text-lg tracking-tight leading-none"
+                aria-hidden="true"
+              >
+                <span className="text-[var(--accent-primary)]">J</span>
+                <span className="text-[var(--accent-secondary)]">P</span>
+              </span>
             </Link>
           </div>
 
           {/* Navigation Links - Centered */}
-          <div className="hidden md:flex items-center justify-center">
-            <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleSmoothScroll(e, item.href)}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-full transition-all duration-300 group whitespace-nowrap cursor-pointer ${
-                    (item.href === "#" && activeSection === "") ||
-                    (item.href !== "#" && activeSection === item.href.slice(1))
-                      ? ""
-                      : "text-slate-300 hover:text-slate-100"
-                  }`}
-                >
-                  <span className="relative z-10 whitespace-nowrap">
-                    <span
-                      className="text-xs transition-colors duration-300"
-                      style={{
-                        color:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "#6b7280",
-                        background:
-                          activeSection === item.href.slice(1)
-                            ? "var(--accent-gradient)"
-                            : "none",
-                        WebkitBackgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                        WebkitTextFillColor:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "initial",
-                        backgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                      }}
-                    >
-                      {item.number}.
-                    </span>{" "}
-                    <span
-                      style={{
-                        color:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "inherit",
-                        background:
-                          activeSection === item.href.slice(1)
-                            ? "var(--accent-gradient)"
-                            : "none",
-                        WebkitBackgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                        WebkitTextFillColor:
-                          activeSection === item.href.slice(1)
-                            ? "transparent"
-                            : "initial",
-                        backgroundClip:
-                          activeSection === item.href.slice(1)
-                            ? "text"
-                            : "initial",
-                      }}
-                    >
-                      {item.label}
+          <div className="hidden md:flex md:justify-self-center items-center justify-center min-w-0">
+            <div className="flex items-center gap-0.5 sm:gap-1 bg-white/[0.04] backdrop-blur-md rounded-full px-1 sm:px-1.5 py-1 border border-white/10">
+              {navItems.map((item) => {
+                const isActive =
+                  (item.href === "#" && activeSection === "") ||
+                  (item.href !== "#" &&
+                    activeSection === item.href.slice(1));
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={(e) => handleSmoothScroll(e, item.href)}
+                    className={`group relative px-2 sm:px-2.5 py-1.5 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                      isActive
+                        ? "text-white bg-white/10 ring-1 ring-white/15"
+                        : "text-slate-400 hover:text-slate-100"
+                    }`}
+                  >
+                    <span className="relative z-10 whitespace-nowrap">
+                      <span
+                        className={`text-xs transition-colors duration-200 ${
+                          isActive ? "text-cyan-400" : "text-slate-500"
+                        }`}
+                      >
+                        {item.number}.
+                      </span>{" "}
+                      <span
+                        className={
+                          isActive ? "text-white" : "text-slate-300"
+                        }
+                      >
+                        {item.label}
+                      </span>
                     </span>
-                  </span>
-
-                  {/* Active indicator */}
-                  {activeSection === item.href.slice(1) && (
-                    <div
-                      className="absolute inset-0 backdrop-blur-sm rounded-full border border-indigo-400/35"
-                      style={{ background: "var(--accent-gradient-ui)" }}
-                    />
-                  )}
-
-                  {/* Hover effect */}
-                  <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </Link>
-              ))}
+                    {!isActive && (
+                      <div className="absolute inset-0 rounded-full bg-white/[0.06] opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none" />
+                    )}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="flex shrink-0 justify-end md:justify-self-end">
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 absolute top-1/2 -translate-y-1/2 right-6"
+              className="md:hidden w-10 h-10 bg-white/5 backdrop-blur-md rounded-lg border border-white/10 flex items-center justify-center text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
             >
               <svg
                 className="w-5 h-5"
@@ -340,7 +278,7 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer ${
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
                       activeSection === item.href.slice(1)
                         ? "text-white"
                         : "text-slate-300 hover:text-white"
@@ -348,16 +286,16 @@ export default function Navigation() {
                     style={{
                       background:
                         activeSection === item.href.slice(1)
-                          ? "var(--accent-gradient-ui)"
+                          ? "rgba(255, 255, 255, 0.08)"
                           : "rgba(255, 255, 255, 0.05)",
                       backdropFilter: "blur(20px) saturate(200%)",
                       border:
                         activeSection === item.href.slice(1)
-                          ? "1px solid rgba(255, 255, 255, 0.2)"
+                          ? "1px solid rgba(34, 211, 238, 0.25)"
                           : "1px solid rgba(255, 255, 255, 0.1)",
                       boxShadow:
                         activeSection === item.href.slice(1)
-                          ? "0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                          ? "0 2px 12px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06)"
                           : "0 2px 8px rgba(0, 0, 0, 0.1)",
                     }}
                   >
