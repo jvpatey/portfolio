@@ -61,11 +61,11 @@ export default function Hero() {
         animate="show"
       >
         <div className="w-full lg:grid lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10 lg:items-center">
-          <div className="lg:col-span-7 space-y-8 sm:space-y-9">
-            <header className="space-y-3 sm:space-y-4">
+          <div className="lg:col-span-7 flex flex-col gap-8 sm:gap-10">
+            <header className="space-y-2 sm:space-y-3">
               <motion.p
                 variants={item}
-                className="text-sm font-medium uppercase tracking-widest text-slate-500"
+                className="text-sm font-medium uppercase tracking-widest text-slate-400 mb-1"
               >
                 Hi, my name is
               </motion.p>
@@ -77,10 +77,10 @@ export default function Hero() {
               </motion.h1>
               <motion.p
                 variants={item}
-                className="text-xl sm:text-2xl md:text-3xl font-semibold text-white leading-snug text-balance max-w-xl"
+                className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/95 leading-snug text-balance max-w-xl"
               >
                 Full stack software developer
-                <span className="mt-2 block text-lg sm:text-xl md:text-2xl font-medium text-slate-400">
+                <span className="mt-1.5 block font-normal text-slate-400 text-base sm:text-lg md:text-xl">
                   with a healthcare background.
                 </span>
               </motion.p>
@@ -88,10 +88,10 @@ export default function Hero() {
 
             <motion.p
               variants={item}
-              className="text-lg sm:text-xl text-slate-200 max-w-2xl leading-relaxed"
+              className="max-w-2xl text-base md:text-lg leading-relaxed text-slate-400"
             >
               My passion for{" "}
-              <span className="font-semibold text-white">health tech</span>{" "}
+              <span className="font-medium text-slate-200">health tech</span>{" "}
               drives every solution I create.
             </motion.p>
 
@@ -146,7 +146,7 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            <motion.p variants={item} className="text-sm text-slate-500">
+            <motion.p variants={item} className="text-sm text-slate-400">
               <a
                 href="/jeffpatey_resume_2026.pdf"
                 target="_blank"
