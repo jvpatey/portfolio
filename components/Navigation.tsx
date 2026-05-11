@@ -287,7 +287,7 @@ export default function Navigation() {
                 className="pt-4"
               >
                 <a
-                  href="/jeffpatey_resume_2026.pdf"
+                  href="/jeff_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block rounded-full border border-cyan-300/45 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.42)] transition-[box-shadow,background-color] hover:border-cyan-200/55 hover:shadow-[0_12px_36px_rgba(6,182,212,0.52)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]"

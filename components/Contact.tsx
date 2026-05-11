@@ -134,7 +134,7 @@ export default function Contact() {
                   </div>
                   <div className="mt-auto flex flex-col pt-1">
                     <a
-                      href="/jeffpatey_resume_2026.pdf"
+                      href="/jeff_resume_2026.pdf"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={primaryCtaClass}
