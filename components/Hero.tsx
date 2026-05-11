@@ -128,7 +128,7 @@ export default function Hero() {
 
             <motion.p variants={item} className="text-sm text-slate-400">
               <a
-                href="/jeffpatey_resume_2026.pdf"
+                href="/jeff_resume_2026.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="underline decoration-white/20 underline-offset-4 hover:text-slate-300 hover:decoration-white/40 transition-colors"

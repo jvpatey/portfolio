@@ -236,18 +236,18 @@ export default function Navigation() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="fixed inset-0 bg-slate-900/80 backdrop-blur-md md:hidden"
+              className="fixed inset-0 z-40 bg-black/88 backdrop-blur-md md:hidden"
               style={{ top: "80px" }}
             />
 
-            {/* Menu Content */}
+            {/* Menu Content — opaque surface so links stay readable over the hero */}
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-            className="md:hidden absolute top-full left-0 right-0 border-b border-white/10 bg-[var(--hero-base)]/92 shadow-[0_8px_32px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-xl backdrop-saturate-150"
-          >
+              className="md:hidden absolute top-full left-0 right-0 z-50 border-t border-white/12 border-b border-white/10 bg-[var(--surface-1)] shadow-[0_12px_40px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]"
+            >
             <div className="max-w-7xl mx-auto px-6 py-6 space-y-2">
               {navItems.map((item, index) => {
                 const isMobileActive =
@@ -267,10 +267,10 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_8px_24px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.05)] backdrop-blur-md transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_4px_20px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)] ${
                       isMobileActive
-                        ? "border-cyan-400/25 bg-white/[0.1] text-white ring-1 ring-white/10"
-                        : "border-white/10 bg-white/[0.04] text-slate-300 hover:border-white/15 hover:bg-white/[0.07] hover:text-white"
+                        ? "border-cyan-400/40 bg-white/[0.14] text-white ring-1 ring-cyan-400/20"
+                        : "border-white/15 bg-white/[0.08] text-slate-100 hover:border-white/22 hover:bg-white/[0.12] hover:text-white"
                     }`}
                   >
                     {item.label}
@@ -287,10 +287,10 @@ export default function Navigation() {
                 className="pt-4"
               >
                 <a
-                  href="/jeffpatey_resume_2026.pdf"
+                  href="/jeff_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block rounded-full border border-cyan-300/35 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+                  className="block rounded-full border border-cyan-300/45 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.42)] transition-[box-shadow,background-color] hover:border-cyan-200/55 hover:shadow-[0_12px_36px_rgba(6,182,212,0.52)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]"
                   style={{ backgroundColor: "var(--cta-solid)" }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
