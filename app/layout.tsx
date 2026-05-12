@@ -5,10 +5,33 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jeffreypatey.dev";
+
+const title = "Jeffrey Patey — Full stack developer";
+const description =
+  "I'm Jeffrey — full stack developer with a healthcare background. Projects I've shipped, how I build, and a simple way to reach me.";
+
 export const metadata: Metadata = {
-  title: "Jeffrey Patey | Portfolio",
-  description:
-    "Software developer portfolio showcasing projects and experience",
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title,
+    description,
+    url: "/",
+    siteName: "Jeffrey Patey",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
