@@ -53,6 +53,10 @@ function isProjectId(raw: string): raw is ProjectId {
   return PROJECTS.some((project) => project.id === raw);
 }
 
+function projectIsInProgress(project: (typeof PROJECTS)[number]) {
+  return "inProgress" in project && project.inProgress === true;
+}
+
 const inProgressBadgeClass =
   "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
 
@@ -609,7 +613,7 @@ export default function Projects() {
                         <span className="text-sm font-semibold leading-snug text-white sm:text-base">
                           {p.name}
                         </span>
-                        {p.inProgress ? <InProgressBadge /> : null}
+                        {projectIsInProgress(p) ? <InProgressBadge /> : null}
                       </span>
                       <span className="text-xs leading-snug text-slate-400 sm:text-sm">
                         {p.tagline}
@@ -642,7 +646,7 @@ export default function Projects() {
                 <h3 className="text-xl font-bold text-white sm:text-2xl">
                   {selectedMeta.name}
                 </h3>
-                {selectedMeta.inProgress ? <InProgressBadge /> : null}
+                {projectIsInProgress(selectedMeta) ? <InProgressBadge /> : null}
               </div>
               <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
             </div>
