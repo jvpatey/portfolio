@@ -37,7 +37,7 @@ const PROJECTS: ProjectMeta[] = [
   {
     id: "homekeep",
     name: "HomeKeep",
-    tagline: "Home maintenance reminders & tracking",
+    tagline: "Guided maintenance plans, tasks & reminders",
   },
   {
     id: "oralcheckr",
@@ -185,9 +185,11 @@ function HomeKeepDetail() {
             About
           </h4>
           <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A mobile app that makes home maintenance manageable. Create
-            recurring tasks, get reminders when things are due, and track your
-            progress—all with a clean, intuitive interface.
+            A mobile app for staying on top of home maintenance—from everyday
+            chores to seasonal prep. Create recurring tasks with push
+            reminders, follow guided plans for spring refresh, cold-weather
+            prep, safety checks, and more, and keep equipment manuals and
+            completion history in one place.
           </p>
           <div className="mt-5">
             <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
@@ -209,6 +211,15 @@ function HomeKeepDetail() {
             >
               <Github className="h-4 w-4 shrink-0" aria-hidden />
               GitHub
+            </a>
+            <a
+              href="https://homekeep-website.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Website
             </a>
             <a
               href="https://apps.apple.com/ca/app/homekeep/id6751912377"
