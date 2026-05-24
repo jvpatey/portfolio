@@ -159,22 +159,22 @@ function HomeKeepDetail() {
       <div className="min-w-0">
         <MediaCarousel
           images={[
-            "/homekeep1.png",
-            "/homekeep2.png",
-            "/homekeep3.png",
-            "/homekeep4.png",
-            "/homekeep5.png",
-            "/homekeep6.png",
-            "/homekeep7.png",
-            "/homekeep8.png",
-            "/homekeep9.png",
+            "/homekeep1.PNG",
+            "/homekeep2.PNG",
+            "/homekeep3.PNG",
+            "/homekeep4.PNG",
+            "/homekeep5.PNG",
+            "/homekeep6.PNG",
+            "/homekeep7.PNG",
+            "/homekeep8.PNG",
+            "/homekeep9.PNG",
+            "/homekeep10.PNG",
           ]}
           videos={[
-            "/homekeep-video-1.mov",
-            "/homekeep-video-2.mov",
-            "/homekeep-video-3.mov",
-            "/homekeep-video-4.mov",
-            "/homekeep-video-5.mov",
+            "/homekeep-video-1.mp4",
+            "/homekeep-video-2.mp4",
+            "/homekeep-video-3.mp4",
+            "/homekeep-video-4.mp4",
           ]}
           alt="HomeKeep media"
         />
