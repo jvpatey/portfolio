@@ -18,21 +18,7 @@ const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
 const DETAIL_PANEL_ID = "projects-detail-panel";
 
-const HASH_IDS = ["chairside", "streamln", "homekeep", "oralcheckr", "burdens"] as const;
-
-type ProjectId = (typeof HASH_IDS)[number];
-
-type ProjectMeta = {
-  id: ProjectId;
-  name: string;
-  tagline: string;
-  inProgress?: boolean;
-};
-
-const inProgressBadgeClass =
-  "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
-
-const PROJECTS: ProjectMeta[] = [
+const PROJECTS = [
   {
     id: "chairside",
     name: "Chairside",
@@ -59,7 +45,16 @@ const PROJECTS: ProjectMeta[] = [
     name: "Freelance Web Development",
     tagline: "Burden's General Store — responsive site & integrations",
   },
-];
+] as const;
+
+type ProjectId = (typeof PROJECTS)[number]["id"];
+
+function isProjectId(raw: string): raw is ProjectId {
+  return PROJECTS.some((project) => project.id === raw);
+}
+
+const inProgressBadgeClass =
+  "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
 
 const chipClass =
   "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
@@ -84,7 +79,7 @@ function ChairsideDetail() {
   return (
     <div className="space-y-4 min-w-0">
       <div className="min-w-0">
-        <ImageCarousel images={["/chairside1.png"]} alt="Chairside screenshots" />
+        <ImageCarousel images={["/chairside1.PNG"]} alt="Chairside screenshots" />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
         <div className={detailSectionClass}>
@@ -220,15 +215,15 @@ function HomeKeepDetail() {
       <div className="min-w-0">
         <MediaCarousel
           images={[
-            "/homekeep1.PNG",
-            "/homekeep2.PNG",
-            "/homekeep3.PNG",
-            "/homekeep4.PNG",
-            "/homekeep5.PNG",
-            "/homekeep6.PNG",
-            "/homekeep7.PNG",
-            "/homekeep8.PNG",
-            "/homekeep9.PNG",
+            "/homekeep1.png",
+            "/homekeep2.png",
+            "/homekeep3.png",
+            "/homekeep4.png",
+            "/homekeep5.png",
+            "/homekeep6.png",
+            "/homekeep7.png",
+            "/homekeep8.png",
+            "/homekeep9.png",
             "/homekeep10.PNG",
           ]}
           videos={[
@@ -481,8 +476,8 @@ export default function Projects() {
   useEffect(() => {
     const applyHash = () => {
       const raw = window.location.hash.replace(/^#/, "");
-      if (HASH_IDS.includes(raw as ProjectId)) {
-        setSelectedId(raw as ProjectId);
+      if (isProjectId(raw)) {
+        setSelectedId(raw);
         requestAnimationFrame(() => {
           document.getElementById(raw)?.scrollIntoView({
             behavior: reduceMotion ? "auto" : "smooth",
