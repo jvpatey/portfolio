@@ -18,7 +18,7 @@ const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
 const DETAIL_PANEL_ID = "projects-detail-panel";
 
-const HASH_IDS = ["streamln", "homekeep", "oralcheckr", "burdens"] as const;
+const HASH_IDS = ["chairside", "streamln", "homekeep", "oralcheckr", "burdens"] as const;
 
 type ProjectId = (typeof HASH_IDS)[number];
 
@@ -26,9 +26,19 @@ type ProjectMeta = {
   id: ProjectId;
   name: string;
   tagline: string;
+  inProgress?: boolean;
 };
 
+const inProgressBadgeClass =
+  "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
+
 const PROJECTS: ProjectMeta[] = [
+  {
+    id: "chairside",
+    name: "Chairside",
+    tagline: "Dental staffing — permanent roles & fill-in shifts",
+    inProgress: true,
+  },
   {
     id: "streamln",
     name: "StreamLn",
@@ -62,6 +72,57 @@ function TechChips({ items }: { items: string[] }) {
           {tech}
         </span>
       ))}
+    </div>
+  );
+}
+
+function InProgressBadge() {
+  return <span className={inProgressBadgeClass}>In progress</span>;
+}
+
+function ChairsideDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <ImageCarousel images={["/chairside1.png"]} alt="Chairside screenshots" />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            A mobile app I&apos;m currently building for dental staffing in
+            Nova Scotia—born from a real hiring problem: clinics struggle to
+            fill permanent roles and last-minute chairside shifts. Clinics post
+            openings and same-day fill-ins; dental professionals browse roles,
+            set availability, and apply with structured profiles and fit
+            scoring.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={["React Native", "TypeScript", "Expo", "Supabase"]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/chairside"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -392,6 +453,8 @@ function BurdensDetail() {
 
 function ProjectDetailBody({ id }: { id: ProjectId }) {
   switch (id) {
+    case "chairside":
+      return <ChairsideDetail />;
     case "streamln":
       return <StreamLnDetail />;
     case "homekeep":
@@ -547,8 +610,11 @@ export default function Projects() {
                     }`}
                   >
                     <span className="flex min-w-0 flex-col gap-0.5">
-                      <span className="text-sm font-semibold leading-snug text-white sm:text-base">
-                        {p.name}
+                      <span className="flex min-w-0 flex-wrap items-center gap-2">
+                        <span className="text-sm font-semibold leading-snug text-white sm:text-base">
+                          {p.name}
+                        </span>
+                        {p.inProgress ? <InProgressBadge /> : null}
                       </span>
                       <span className="text-xs leading-snug text-slate-400 sm:text-sm">
                         {p.tagline}
@@ -577,9 +643,12 @@ export default function Projects() {
             style={asideShadow}
           >
             <div className="mb-6 border-b border-white/10 pb-5">
-              <h3 className="text-xl font-bold text-white sm:text-2xl">
-                {selectedMeta.name}
-              </h3>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  {selectedMeta.name}
+                </h3>
+                {selectedMeta.inProgress ? <InProgressBadge /> : null}
+              </div>
               <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
             </div>
             <ProjectDetailBody id={selectedId} />
