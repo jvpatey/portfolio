@@ -1,6 +1,6 @@
 # Jeffrey Patey - Portfolio Website
 
-A modern, fully responsive portfolio website featuring Apple-style scroll animations and a beautiful UI. Built with Next.js 14, React, TypeScript, and Framer Motion.
+A modern, fully responsive portfolio website featuring scroll animations and a beautiful UI. Built with Next.js 14, React, TypeScript, and Framer Motion.
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://www.jeffreypatey.dev/)
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org/)
@@ -11,7 +11,7 @@ A modern, fully responsive portfolio website featuring Apple-style scroll animat
 
 ### 🎬 Smooth Animations
 
-- **Apple-style scroll animations** powered by Framer Motion
+- **Scroll animations** powered by Framer Motion
 - Staggered entrance animations for content sections
 - Smooth fade-in and slide-up effects as you scroll
 - Professional cubic-bezier easing curves
