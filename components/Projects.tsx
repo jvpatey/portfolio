@@ -18,17 +18,13 @@ const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
 const DETAIL_PANEL_ID = "projects-detail-panel";
 
-const HASH_IDS = ["streamln", "homekeep", "oralcheckr", "burdens"] as const;
-
-type ProjectId = (typeof HASH_IDS)[number];
-
-type ProjectMeta = {
-  id: ProjectId;
-  name: string;
-  tagline: string;
-};
-
-const PROJECTS: ProjectMeta[] = [
+const PROJECTS = [
+  {
+    id: "chairside",
+    name: "Chairside",
+    tagline: "Dental staffing — permanent roles & fill-in shifts",
+    inProgress: true,
+  },
   {
     id: "streamln",
     name: "StreamLn",
@@ -37,7 +33,7 @@ const PROJECTS: ProjectMeta[] = [
   {
     id: "homekeep",
     name: "HomeKeep",
-    tagline: "Home maintenance reminders & tracking",
+    tagline: "Guided maintenance plans, tasks & reminders",
   },
   {
     id: "oralcheckr",
@@ -49,7 +45,20 @@ const PROJECTS: ProjectMeta[] = [
     name: "Freelance Web Development",
     tagline: "Burden's General Store — responsive site & integrations",
   },
-];
+] as const;
+
+type ProjectId = (typeof PROJECTS)[number]["id"];
+
+function isProjectId(raw: string): raw is ProjectId {
+  return PROJECTS.some((project) => project.id === raw);
+}
+
+function projectIsInProgress(project: (typeof PROJECTS)[number]) {
+  return "inProgress" in project && project.inProgress === true;
+}
+
+const inProgressBadgeClass =
+  "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
 
 const chipClass =
   "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
@@ -62,6 +71,57 @@ function TechChips({ items }: { items: string[] }) {
           {tech}
         </span>
       ))}
+    </div>
+  );
+}
+
+function InProgressBadge() {
+  return <span className={inProgressBadgeClass}>In progress</span>;
+}
+
+function ChairsideDetail() {
+  return (
+    <div className="space-y-4 min-w-0">
+      <div className="min-w-0">
+        <ImageCarousel images={["/chairside1.PNG"]} alt="Chairside screenshots" />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">
+            About
+          </h4>
+          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
+            A mobile app I&apos;m currently building for dental staffing in
+            Nova Scotia—born from a real hiring problem: clinics struggle to
+            fill permanent roles and last-minute chairside shifts. Clinics post
+            openings and same-day fill-ins; dental professionals browse roles,
+            set availability, and apply with structured profiles and fit
+            scoring.
+          </p>
+          <div className="mt-5">
+            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
+              Tech stack
+            </h5>
+            <TechChips
+              items={["React Native", "TypeScript", "Expo", "Supabase"]}
+            />
+          </div>
+        </div>
+        <div className={detailSectionClass}>
+          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://github.com/jvpatey/chairside"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <Github className="h-4 w-4 shrink-0" aria-hidden />
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -168,13 +228,13 @@ function HomeKeepDetail() {
             "/homekeep7.png",
             "/homekeep8.png",
             "/homekeep9.png",
+            "/homekeep10.PNG",
           ]}
           videos={[
-            "/homekeep-video-1.mov",
-            "/homekeep-video-2.mov",
-            "/homekeep-video-3.mov",
-            "/homekeep-video-4.mov",
-            "/homekeep-video-5.mov",
+            "/homekeep-video-1.mp4",
+            "/homekeep-video-2.mp4",
+            "/homekeep-video-3.mp4",
+            "/homekeep-video-4.mp4",
           ]}
           alt="HomeKeep media"
         />
@@ -185,9 +245,11 @@ function HomeKeepDetail() {
             About
           </h4>
           <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A mobile app that makes home maintenance manageable. Create
-            recurring tasks, get reminders when things are due, and track your
-            progress—all with a clean, intuitive interface.
+            A mobile app for staying on top of home maintenance—from everyday
+            chores to seasonal prep. Create recurring tasks with push
+            reminders, follow guided plans for spring refresh, cold-weather
+            prep, safety checks, and more, and keep equipment manuals and
+            completion history in one place.
           </p>
           <div className="mt-5">
             <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
@@ -209,6 +271,15 @@ function HomeKeepDetail() {
             >
               <Github className="h-4 w-4 shrink-0" aria-hidden />
               GitHub
+            </a>
+            <a
+              href="https://homekeep-website.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Website
             </a>
             <a
               href="https://apps.apple.com/ca/app/homekeep/id6751912377"
@@ -381,6 +452,8 @@ function BurdensDetail() {
 
 function ProjectDetailBody({ id }: { id: ProjectId }) {
   switch (id) {
+    case "chairside":
+      return <ChairsideDetail />;
     case "streamln":
       return <StreamLnDetail />;
     case "homekeep":
@@ -407,8 +480,8 @@ export default function Projects() {
   useEffect(() => {
     const applyHash = () => {
       const raw = window.location.hash.replace(/^#/, "");
-      if (HASH_IDS.includes(raw as ProjectId)) {
-        setSelectedId(raw as ProjectId);
+      if (isProjectId(raw)) {
+        setSelectedId(raw);
         requestAnimationFrame(() => {
           document.getElementById(raw)?.scrollIntoView({
             behavior: reduceMotion ? "auto" : "smooth",
@@ -536,8 +609,11 @@ export default function Projects() {
                     }`}
                   >
                     <span className="flex min-w-0 flex-col gap-0.5">
-                      <span className="text-sm font-semibold leading-snug text-white sm:text-base">
-                        {p.name}
+                      <span className="flex min-w-0 flex-wrap items-center gap-2">
+                        <span className="text-sm font-semibold leading-snug text-white sm:text-base">
+                          {p.name}
+                        </span>
+                        {projectIsInProgress(p) ? <InProgressBadge /> : null}
                       </span>
                       <span className="text-xs leading-snug text-slate-400 sm:text-sm">
                         {p.tagline}
@@ -566,9 +642,12 @@ export default function Projects() {
             style={asideShadow}
           >
             <div className="mb-6 border-b border-white/10 pb-5">
-              <h3 className="text-xl font-bold text-white sm:text-2xl">
-                {selectedMeta.name}
-              </h3>
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h3 className="text-xl font-bold text-white sm:text-2xl">
+                  {selectedMeta.name}
+                </h3>
+                {projectIsInProgress(selectedMeta) ? <InProgressBadge /> : null}
+              </div>
               <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
             </div>
             <ProjectDetailBody id={selectedId} />

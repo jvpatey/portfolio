@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 interface MediaCarouselProps {
   images: string[];
@@ -149,9 +150,13 @@ export default function MediaCarousel({
             }}
           >
             {currentMediaType === "images" && index === currentSlide && (
-              <img
+              <Image
                 src={image}
                 alt={`${alt} ${index + 1}`}
+                width={1200}
+                height={2400}
+                sizes="(max-width: 768px) 100vw, 60vw"
+                priority={index === 0}
                 className="max-h-[500px] max-w-full w-auto h-auto object-contain mx-auto rounded-lg shadow-2xl"
               />
             )}

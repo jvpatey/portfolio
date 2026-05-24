@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 interface ImageCarouselProps {
   images: string[];
@@ -58,11 +59,15 @@ export default function ImageCarousel({ images, alt }: ImageCarouselProps) {
 
       <div className="relative flex max-h-[500px] w-full max-w-full items-center justify-center rounded-xl border border-white/10 bg-transparent p-1 sm:p-2">
         {images.map((image, index) => (
-          <img
+          <Image
             key={index}
             src={image}
             alt={`${alt} ${index + 1}`}
-            className={`max-h-[500px] max-w-full w-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
+            width={1200}
+            height={2400}
+            sizes="(max-width: 768px) 100vw, 60vw"
+            priority={index === 0}
+            className={`max-h-[500px] max-w-full h-auto w-auto object-contain rounded-lg shadow-2xl transition-all duration-500 ease-in-out ${
               index === currentSlide
                 ? "opacity-100 translate-x-0 relative"
                 : "opacity-0 absolute top-0 left-0 translate-x-4 pointer-events-none"
