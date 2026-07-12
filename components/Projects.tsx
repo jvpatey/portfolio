@@ -22,8 +22,8 @@ const PROJECTS = [
   {
     id: "chairside",
     name: "Chairside",
-    tagline: "Dental staffing — permanent roles & fill-in shifts",
-    inProgress: true,
+    tagline: "Canadian dental staffing — permanent roles & same-day fill-ins",
+    latest: true,
   },
   {
     id: "streamln",
@@ -53,12 +53,12 @@ function isProjectId(raw: string): raw is ProjectId {
   return PROJECTS.some((project) => project.id === raw);
 }
 
-function projectIsInProgress(project: (typeof PROJECTS)[number]) {
-  return "inProgress" in project && project.inProgress === true;
+function projectIsLatest(project: (typeof PROJECTS)[number]) {
+  return "latest" in project && project.latest === true;
 }
 
-const inProgressBadgeClass =
-  "inline-flex shrink-0 items-center rounded-full border border-amber-400/25 bg-amber-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-amber-200/90 sm:text-[0.65rem]";
+const latestBadgeClass =
+  "inline-flex shrink-0 items-center rounded-full border border-cyan-400/25 bg-cyan-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-cyan-200/90 sm:text-[0.65rem]";
 
 const chipClass =
   "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
@@ -75,15 +75,26 @@ function TechChips({ items }: { items: string[] }) {
   );
 }
 
-function InProgressBadge() {
-  return <span className={inProgressBadgeClass}>In progress</span>;
+function LatestProjectBadge() {
+  return <span className={latestBadgeClass}>Latest project</span>;
 }
 
 function ChairsideDetail() {
   return (
     <div className="space-y-4 min-w-0">
       <div className="min-w-0">
-        <ImageCarousel images={["/chairside1.PNG"]} alt="Chairside screenshots" />
+        <ImageCarousel
+          images={[
+            "/chairside_web_1.png",
+            "/chairside_web_2.png",
+            "/chairside_web_3.png",
+            "/chairside_web_4.png",
+            "/chairside_web_5.png",
+            "/chairside_web_6.png",
+            "/chairside_web_7.png",
+          ]}
+          alt="Chairside web screenshots"
+        />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
         <div className={detailSectionClass}>
@@ -91,25 +102,43 @@ function ChairsideDetail() {
             About
           </h4>
           <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A mobile app I&apos;m currently building for dental staffing in
-            Nova Scotia—born from a real hiring problem: clinics struggle to
+            A live dental staffing platform for Canadian clinics and dental
+            professionals—born from a real hiring problem: clinics struggle to
             fill permanent roles and last-minute chairside shifts. Clinics post
-            openings and same-day fill-ins; dental professionals browse roles,
-            set availability, and apply with structured profiles and fit
-            scoring.
+            openings and same-day fill-ins; professionals browse roles, set
+            availability, apply with structured profiles, and coordinate hiring
+            through explainable match scoring, messaging, and interviews. Web
+            is live now; the iOS app is coming soon.
           </p>
           <div className="mt-5">
             <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
               Tech stack
             </h5>
             <TechChips
-              items={["React Native", "TypeScript", "Expo", "Supabase"]}
+              items={[
+                "React Native",
+                "TypeScript",
+                "Expo",
+                "Supabase",
+                "Mapbox",
+                "Pingram",
+              ]}
             />
           </div>
         </div>
         <div className={detailSectionClass}>
           <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
           <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="https://chairsidedental.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={primaryCtaClass}
+              style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+              Live site
+            </a>
             <a
               href="https://github.com/jvpatey/chairside"
               target="_blank"
@@ -119,6 +148,10 @@ function ChairsideDetail() {
               <Github className="h-4 w-4 shrink-0" aria-hidden />
               GitHub
             </a>
+            <span className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-slate-400">
+              <Apple className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
+              iOS app coming soon
+            </span>
           </div>
         </div>
       </div>
@@ -613,7 +646,7 @@ export default function Projects() {
                         <span className="text-sm font-semibold leading-snug text-white sm:text-base">
                           {p.name}
                         </span>
-                        {projectIsInProgress(p) ? <InProgressBadge /> : null}
+                        {projectIsLatest(p) ? <LatestProjectBadge /> : null}
                       </span>
                       <span className="text-xs leading-snug text-slate-400 sm:text-sm">
                         {p.tagline}
@@ -646,7 +679,7 @@ export default function Projects() {
                 <h3 className="text-xl font-bold text-white sm:text-2xl">
                   {selectedMeta.name}
                 </h3>
-                {projectIsInProgress(selectedMeta) ? <InProgressBadge /> : null}
+                {projectIsLatest(selectedMeta) ? <LatestProjectBadge /> : null}
               </div>
               <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
             </div>
