@@ -213,7 +213,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status.type === "loading"}
-        className={`${primaryCtaClass} mt-1 min-h-12 w-full text-[15px] disabled:cursor-not-allowed disabled:opacity-50`}
+        className={`${primaryCtaClass} mt-1 min-h-12 w-full text-[15px] sm:w-auto sm:min-w-[200px] disabled:cursor-not-allowed disabled:opacity-50`}
         style={{ backgroundColor: "var(--cta-solid)" }}
       >
         <span className="flex items-center justify-center gap-2">

@@ -48,7 +48,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-hidden px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16"
+      className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-x-clip px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16"
     >
       <motion.div
         className="relative z-20 mx-auto w-full max-w-6xl"

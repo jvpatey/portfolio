@@ -1,27 +1,14 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { Download, Github, Linkedin } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import ContactForm from "./ContactForm";
 import SectionTitleRule from "./SectionTitleRule";
-import {
-  asideShadow,
-  ghostCtaClass,
-  panelClass,
-  primaryCtaClass,
-} from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
-const contactInsetClass =
-  "min-w-0 rounded-2xl border border-white/[0.08] bg-transparent p-4 sm:p-5";
-
-const insetMotion = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-40px" },
-  transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-} as const;
+const socialLinkClass =
+  "inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition-colors hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] rounded-md";
 
 export default function Contact() {
   const reduceMotion = useReducedMotion();
@@ -29,10 +16,19 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="mb-6 scroll-mt-[60px] px-4 py-6 sm:mb-8 sm:px-6 sm:py-8 md:py-10 lg:px-8"
-      style={{ backgroundColor: "var(--hero-base)" }}
+      className="relative mb-8 scroll-mt-[60px] overflow-hidden px-4 py-10 sm:mb-10 sm:px-6 sm:py-12 md:py-16 lg:px-8"
     >
-      <div className="mx-auto max-w-6xl">
+      {/* Soft copper atmosphere */}
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[min(80%,520px)] w-[min(90%,640px)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80"
+        style={{
+          background:
+            "radial-gradient(circle at center, rgba(224,122,95,0.16) 0%, rgba(224,122,95,0.05) 42%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl">
         <motion.header
           initial={
             reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
@@ -43,112 +39,87 @@ export default function Contact() {
             duration: reduceMotion ? 0 : 0.55,
             ease: heroEase,
           }}
-          className="mb-6 space-y-2 text-left sm:mb-10 sm:space-y-3 lg:mb-8"
+          className="mb-8 space-y-3 text-left sm:mb-10"
         >
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-            Contact
+          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <span
+              className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
+              aria-hidden
+            />
+            Get in touch
+          </p>
+          <h2 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+            Let&apos;s talk
           </h2>
           <SectionTitleRule />
-          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
-            Feel free to reach out — I&apos;d love to hear from you.
+          <p className="max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
+            Questions, collaboration, or just hello—I&apos;d love to hear from
+            you.
           </p>
         </motion.header>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={
+            reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
+          }
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className={`${panelClass} p-3 sm:p-4 lg:p-5`}
-          style={asideShadow}
+          transition={{
+            duration: reduceMotion ? 0 : 0.55,
+            delay: reduceMotion ? 0 : 0.06,
+            ease: heroEase,
+          }}
+          className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-8"
         >
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-stretch lg:gap-5">
-            <motion.div
-              {...insetMotion}
-              transition={{ ...insetMotion.transition, delay: 0.05 }}
-              className={`${contactInsetClass} flex min-h-0 flex-col md:h-full`}
-            >
-              <div className="flex min-h-0 flex-1 flex-col gap-4 md:h-full">
-                <div>
-                  <h3 className="mb-2 text-base font-semibold text-white sm:text-lg md:text-xl">
-                    Let&apos;s Connect
-                  </h3>
-                  <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
-                    I&apos;m always happy to connect — questions, collaboration,
-                    or just hello.
-                  </p>
-                </div>
-                <div className="min-w-0 flex-1">
-                  <ContactForm />
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="flex min-h-0 flex-col gap-4 md:h-full">
-              <motion.div
-                {...insetMotion}
-                transition={{ ...insetMotion.transition, delay: 0.1 }}
-                className={`${contactInsetClass} flex min-h-0 flex-1 flex-col`}
-              >
-                <div className="flex min-h-0 flex-1 flex-col gap-4">
-                  <h3 className="text-base font-semibold text-white sm:text-lg md:text-xl">
-                    Where to Find Me
-                  </h3>
-                  <div className="flex flex-col gap-2.5">
-                    <a
-                      href="https://github.com/jvpatey"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={ghostCtaClass}
-                    >
-                      <Github className="h-4 w-4 shrink-0" aria-hidden />
-                      GitHub
-                    </a>
-                    <a
-                      href="https://www.linkedin.com/in/jeffreypatey/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={ghostCtaClass}
-                    >
-                      <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
-                      LinkedIn
-                    </a>
-                  </div>
-                  <div className="min-h-0 flex-1" aria-hidden />
-                </div>
-              </motion.div>
-
-              <motion.div
-                {...insetMotion}
-                transition={{ ...insetMotion.transition, delay: 0.15 }}
-                className={`${contactInsetClass} flex min-h-0 flex-1 flex-col`}
-              >
-                <div className="flex min-h-0 flex-1 flex-col gap-4">
-                  <div>
-                    <h3 className="mb-2 text-base font-semibold text-white sm:text-lg md:text-xl">
-                      Download Resume
-                    </h3>
-                    <p className="text-sm leading-relaxed text-slate-300 sm:text-base">
-                      PDF overview of experience and skills.
-                    </p>
-                  </div>
-                  <div className="mt-auto flex flex-col pt-1">
-                    <a
-                      href="/jeff_resume_2026.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={primaryCtaClass}
-                      style={{ backgroundColor: "var(--cta-solid)" }}
-                      aria-label="Download Resume"
-                    >
-                      <Download className="h-4 w-4 shrink-0" aria-hidden />
-                      Download Resume
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+          <div className="lg:col-span-7 xl:col-span-8">
+            <ContactForm />
           </div>
+
+          <aside className="flex flex-col justify-between gap-8 border-t border-white/10 pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0 xl:col-span-4">
+            <div>
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                Elsewhere
+              </p>
+              <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
+                <li>
+                  <a
+                    href="https://github.com/jvpatey"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={socialLinkClass}
+                  >
+                    <Github className="h-4 w-4 shrink-0" aria-hidden />
+                    GitHub
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/in/jeffreypatey/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={socialLinkClass}
+                  >
+                    <Linkedin className="h-4 w-4 shrink-0" aria-hidden />
+                    LinkedIn
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+                Resume
+              </p>
+              <a
+                href="/jeff_resume_2026.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-slate-400 underline decoration-white/15 underline-offset-4 transition-colors hover:text-slate-200 hover:decoration-white/35"
+              >
+                View PDF
+              </a>
+            </div>
+          </aside>
         </motion.div>
       </div>
     </section>
