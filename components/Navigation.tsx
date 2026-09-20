@@ -239,7 +239,7 @@ export default function Navigation() {
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
               onClick={() => setIsMobileMenuOpen(false)}
               className="fixed inset-0 z-40 bg-black/88 backdrop-blur-md md:hidden"
-              style={{ top: "80px" }}
+              style={{ top: "64px" }}
             />
 
             {/* Menu Content — opaque surface so links stay readable over the hero */}

@@ -367,6 +367,63 @@ export default function Projects() {
           </p>
         </motion.header>
 
+        {/* Project switcher — above stage so it’s reachable on mobile */}
+        <div
+          role="tablist"
+          aria-label="Projects"
+          aria-orientation="horizontal"
+          className="-mx-1 mb-6 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mb-8"
+        >
+          {PROJECTS.map((p, index) => {
+            const isSelected = selectedId === p.id;
+            return (
+              <button
+                key={p.id}
+                id={`project-tab-${p.id}`}
+                ref={(el) => {
+                  tabRefs.current[index] = el;
+                }}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls={DETAIL_PANEL_ID}
+                tabIndex={isSelected ? 0 : -1}
+                onClick={() => setSelectedId(p.id)}
+                onKeyDown={(e) => onTabKeyDown(e, index)}
+                className={`group flex min-w-[9.25rem] shrink-0 items-center gap-2.5 rounded-lg border px-2.5 py-2 text-left transition-[colors,transform,border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:min-w-[11rem] ${
+                  isSelected
+                    ? "border-[var(--accent-primary)]/40 bg-white/[0.07] text-white"
+                    : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/18 hover:bg-white/[0.04] hover:text-slate-200"
+                }`}
+              >
+                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-white/10">
+                  <Image
+                    src={p.cover}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="40px"
+                  />
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-semibold leading-snug text-inherit">
+                    {p.name}
+                  </span>
+                  {projectIsLatest(p) ? (
+                    <span className="mt-0.5 block text-[0.65rem] font-medium uppercase tracking-wide text-[var(--accent-primary)]">
+                      Latest
+                    </span>
+                  ) : (
+                    <span className="mt-0.5 block truncate text-xs text-slate-500 group-hover:text-slate-400">
+                      {p.tagline}
+                    </span>
+                  )}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Featured media stage */}
         <motion.div
           key={`stage-${selectedId}`}
@@ -411,7 +468,7 @@ export default function Projects() {
             duration: reduceMotion ? 0 : 0.35,
             ease: heroEase,
           }}
-          className="mb-10 grid gap-8 lg:grid-cols-12 lg:gap-10"
+          className="grid gap-8 lg:grid-cols-12 lg:gap-10"
         >
           <div className="lg:col-span-7">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -443,63 +500,6 @@ export default function Projects() {
             <div className={linkRowClass}>{detail.links}</div>
           </div>
         </motion.div>
-
-        {/* Slim project switcher */}
-        <div
-          role="tablist"
-          aria-label="Projects"
-          aria-orientation="horizontal"
-          className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:thin]"
-        >
-          {PROJECTS.map((p, index) => {
-            const isSelected = selectedId === p.id;
-            return (
-              <button
-                key={p.id}
-                id={`project-tab-${p.id}`}
-                ref={(el) => {
-                  tabRefs.current[index] = el;
-                }}
-                type="button"
-                role="tab"
-                aria-selected={isSelected}
-                aria-controls={DETAIL_PANEL_ID}
-                tabIndex={isSelected ? 0 : -1}
-                onClick={() => setSelectedId(p.id)}
-                onKeyDown={(e) => onTabKeyDown(e, index)}
-                className={`group flex min-w-[9.5rem] shrink-0 items-center gap-2.5 rounded-lg border px-2.5 py-2 text-left transition-[colors,transform,border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:min-w-[11rem] ${
-                  isSelected
-                    ? "border-[var(--accent-primary)]/40 bg-white/[0.07] text-white"
-                    : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/18 hover:bg-white/[0.04] hover:text-slate-200"
-                }`}
-              >
-                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-white/10">
-                  <Image
-                    src={p.cover}
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="40px"
-                  />
-                </span>
-                <span className="min-w-0">
-                  <span className="block truncate text-sm font-semibold leading-snug text-inherit">
-                    {p.name}
-                  </span>
-                  {projectIsLatest(p) ? (
-                    <span className="mt-0.5 block text-[0.65rem] font-medium uppercase tracking-wide text-[var(--accent-primary)]">
-                      Latest
-                    </span>
-                  ) : (
-                    <span className="mt-0.5 block truncate text-xs text-slate-500 group-hover:text-slate-400">
-                      {p.tagline}
-                    </span>
-                  )}
-                </span>
-              </button>
-            );
-          })}
-        </div>
       </div>
     </section>
   );

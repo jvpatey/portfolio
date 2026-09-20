@@ -5,6 +5,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type TouchEvent,
   type TransitionEvent,
 } from "react";
 import Image from "next/image";
@@ -24,22 +25,34 @@ interface MediaCarouselProps {
 }
 
 const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const SWIPE_THRESHOLD = 48;
+
+function nearActive(
+  index: number,
+  active: number,
+  underlay: number | null,
+  length: number,
+) {
+  if (index === active || index === underlay) return true;
+  if (length <= 1) return index === active;
+  const prev = (active - 1 + length) % length;
+  const next = (active + 1) % length;
+  return index === prev || index === next;
+}
 
 export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
   const reduceMotion = useReducedMotion();
   const durationMs = reduceMotion ? 0 : 420;
 
-  /** Fully visible slide (and the one that remains on top after a fade). */
   const [active, setActive] = useState(0);
-  /** Previous slide held opaque underneath during the fade — never animated. */
   const [underlay, setUnderlay] = useState<number | null>(null);
-  /** Active slide opacity target; starts false on navigate, then true to fade in. */
   const [topOpaque, setTopOpaque] = useState(true);
 
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const clearTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const raf1 = useRef<number | null>(null);
   const raf2 = useRef<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const busy = underlay !== null;
 
@@ -53,7 +66,6 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
   };
 
   const settle = useCallback(() => {
-    // Drop underlay only after top is solid — top layer never unmounts/swaps.
     setUnderlay(null);
     setTopOpaque(true);
   }, []);
@@ -65,12 +77,10 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
       videoRefs.current[active]?.pause();
       clearScheduled();
 
-      // Hold current as opaque underlay; mount next on top at opacity 0.
       setUnderlay(active);
       setActive(next);
       setTopOpaque(false);
 
-      // Two rAFs so the browser paints opacity 0 before transitioning to 1.
       raf1.current = requestAnimationFrame(() => {
         raf2.current = requestAnimationFrame(() => {
           setTopOpaque(true);
@@ -86,6 +96,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
     setActive(0);
     setUnderlay(null);
     setTopOpaque(true);
+    touchStartX.current = null;
   }, [items]);
 
   useEffect(() => {
@@ -109,6 +120,24 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
     settle();
   };
 
+  const onTouchStart = (event: TouchEvent) => {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+  };
+
+  const onTouchEnd = (event: TouchEvent) => {
+    if (touchStartX.current === null || busy || items.length < 2) return;
+    const endX = event.changedTouches[0]?.clientX;
+    if (endX === undefined) return;
+    const delta = endX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(delta) < SWIPE_THRESHOLD) return;
+    if (delta < 0) {
+      goTo((active + 1) % items.length);
+    } else {
+      goTo((active - 1 + items.length) % items.length);
+    }
+  };
+
   const carouselArrowBtn =
     "absolute top-1/2 z-30 flex -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/10 bg-[var(--hero-base)]/90 p-2 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-[opacity,background-color,border-color] duration-300 hover:border-white/15 hover:bg-[var(--surface-1)] disabled:opacity-50 sm:p-2.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100";
 
@@ -119,11 +148,11 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
           type="button"
           onClick={() => goTo((active - 1 + items.length) % items.length)}
           disabled={busy}
-          className={`left-2 ${carouselArrowBtn}`}
+          className={`left-1.5 sm:left-2 ${carouselArrowBtn}`}
           aria-label="Previous media"
         >
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5 sm:h-6 sm:w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -138,13 +167,20 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
         </button>
       ) : null}
 
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-md bg-transparent sm:aspect-[16/9]">
+      {/* Taller on phones so mobile screenshots read larger */}
+      <div
+        className="relative aspect-[4/5] w-full overflow-hidden rounded-md bg-transparent touch-pan-y sm:aspect-[16/10] md:aspect-[16/9]"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
         {items.map((item, index) => {
+          if (!nearActive(index, active, underlay, items.length)) {
+            return null;
+          }
+
           const isActive = index === active;
           const isUnderlay = index === underlay;
 
-          // Active fades in on top. Underlay stays fully opaque with no transition.
-          // Everything else stays mounted at opacity 0 for decode cache.
           let opacity = 0;
           let zIndex = 0;
           let transition = "none";
@@ -181,7 +217,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
                   width={1600}
                   height={900}
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1152px"
-                  priority={index <= 1}
+                  priority={index === 0}
                   draggable={false}
                   className="h-full w-full rounded-sm object-contain"
                 />
@@ -212,11 +248,11 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
           type="button"
           onClick={() => goTo((active + 1) % items.length)}
           disabled={busy}
-          className={`right-2 ${carouselArrowBtn}`}
+          className={`right-1.5 sm:right-2 ${carouselArrowBtn}`}
           aria-label="Next media"
         >
           <svg
-            className="h-6 w-6"
+            className="h-5 w-5 sm:h-6 sm:w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -232,16 +268,20 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
       ) : null}
 
       {items.length > 1 ? (
-        <div className="mt-3 flex w-full items-center gap-2 overflow-x-auto pb-0.5 [scrollbar-width:thin]">
+        <div className="-mx-1 mt-3 flex w-[calc(100%+0.5rem)] items-center gap-2 overflow-x-auto px-1 pb-0.5 [scrollbar-width:thin]">
           {items.map((item, index) => {
             const device = item.device ?? "web";
-            const prevDevice = index > 0 ? (items[index - 1].device ?? "web") : device;
+            const prevDevice =
+              index > 0 ? (items[index - 1].device ?? "web") : device;
             const showDivider = index > 0 && device !== prevDevice;
             const selected = index === active;
             const isMobile = device === "mobile";
 
             return (
-              <div key={`${item.src}-thumb-wrap`} className="flex shrink-0 items-center gap-2">
+              <div
+                key={`${item.src}-thumb-wrap`}
+                className="flex shrink-0 items-center gap-2"
+              >
                 {showDivider ? (
                   <div
                     className="mx-0.5 flex h-14 w-px shrink-0 self-center bg-white/20 sm:h-16"

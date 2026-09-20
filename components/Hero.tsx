@@ -48,7 +48,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-x-clip px-4 py-12 sm:px-6 sm:py-14 lg:px-8 lg:py-16"
+      className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-x-clip px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16"
     >
       <motion.div
         className="relative z-20 mx-auto w-full max-w-6xl"
@@ -56,42 +56,48 @@ export default function Hero() {
         initial="hidden"
         animate="show"
       >
-        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
-          <div className="flex flex-col gap-7 sm:gap-8 lg:col-span-6">
-            <header className="space-y-3 sm:space-y-4">
-              <motion.p
-                variants={item}
-                className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 sm:text-sm"
-              >
-                <span
-                  className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
-                  aria-hidden
-                />
-                Full stack developer
-              </motion.p>
+        {/*
+          Mobile: name → portrait → copy/CTAs (face in first viewport)
+          Desktop: text left, portrait right
+        */}
+        <div className="grid w-full grid-cols-1 items-center gap-5 sm:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
+          <header className="order-1 space-y-2.5 sm:space-y-4 lg:col-span-6 lg:col-start-1 lg:row-start-1">
+            <motion.p
+              variants={item}
+              className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 sm:text-sm"
+            >
+              <span
+                className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
+                aria-hidden
+              />
+              Full stack developer
+            </motion.p>
 
-              <motion.h1
-                variants={item}
-                className="text-balance text-5xl font-bold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[4.75rem] xl:text-8xl"
-              >
-                Jeffrey Patey
-              </motion.h1>
-
-              <motion.p
-                variants={item}
-                className="max-w-xl text-balance text-2xl font-semibold leading-snug tracking-tight sm:text-3xl md:text-4xl"
-              >
-                <span className="text-white/95">Health tech</span>
-                <span className="text-white/35">
-                  {" "}
-                  products that simplify real workflows.
-                </span>
-              </motion.p>
-            </header>
+            <motion.h1
+              variants={item}
+              className="text-balance text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[4.75rem] xl:text-8xl"
+            >
+              Jeffrey Patey
+            </motion.h1>
 
             <motion.p
               variants={item}
-              className="max-w-lg text-base leading-relaxed text-slate-400 md:text-lg"
+              className="max-w-xl text-balance text-xl font-semibold leading-snug tracking-tight sm:text-3xl md:text-4xl"
+            >
+              <span className="text-white/95">Health tech</span>
+              <span className="text-white/35">
+                {" "}
+                products that simplify real workflows.
+              </span>
+            </motion.p>
+          </header>
+
+          <HeroAside item={item} />
+
+          <div className="order-3 flex flex-col gap-5 sm:gap-6 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:gap-8">
+            <motion.p
+              variants={item}
+              className="max-w-lg text-sm leading-relaxed text-slate-400 sm:text-base md:text-lg"
             >
               Building practical web and mobile tools with a healthcare
               background and a user-first mindset.
@@ -99,12 +105,12 @@ export default function Hero() {
 
             <motion.div
               variants={item}
-              className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
+              className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             >
               <motion.a
                 href="#projects"
                 onClick={(e) => handleSmoothScroll(e, "#projects")}
-                className="relative inline-flex w-full cursor-pointer items-center justify-center rounded-full border border-orange-300/30 px-10 py-4 text-center text-base font-semibold text-white shadow-[0_8px_28px_rgba(201,98,78,0.36)] transition-[box-shadow,background-color] duration-300 hover:border-orange-200/40 hover:shadow-[0_12px_36px_rgba(201,98,78,0.46)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:w-auto"
+                className="relative inline-flex w-full cursor-pointer items-center justify-center rounded-full border border-orange-300/30 px-8 py-3.5 text-center text-base font-semibold text-white shadow-[0_8px_28px_rgba(201,98,78,0.36)] transition-[box-shadow,background-color] duration-300 hover:border-orange-200/40 hover:shadow-[0_12px_36px_rgba(201,98,78,0.46)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:w-auto sm:px-10 sm:py-4"
                 style={{ backgroundColor: "var(--cta-solid)" }}
                 whileHover={
                   reduceMotion
@@ -123,7 +129,7 @@ export default function Hero() {
               <a
                 href="#contact"
                 onClick={(e) => handleSmoothScroll(e, "#contact")}
-                className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-8 py-4 text-base font-medium text-slate-200 transition-colors hover:border-white/25 hover:bg-white/[0.04] sm:w-auto"
+                className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-8 py-3.5 text-base font-medium text-slate-200 transition-colors hover:border-white/25 hover:bg-white/[0.04] sm:w-auto sm:py-4"
               >
                 Let&apos;s talk
               </a>
@@ -140,8 +146,6 @@ export default function Hero() {
               </a>
             </motion.p>
           </div>
-
-          <HeroAside item={item} />
         </div>
       </motion.div>
     </section>
