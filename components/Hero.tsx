@@ -1,12 +1,6 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
-import {
-  heroDisplayClass,
-  heroSubheadClass,
-  sectionEyebrowClass,
-  sectionEyebrowMarkClass,
-} from "@/lib/surfaceStyles";
 import HeroAside from "./HeroAside";
 
 export default function Hero() {
@@ -66,17 +60,26 @@ export default function Hero() {
           <header className="order-1 space-y-2.5 sm:space-y-4 lg:col-span-6 lg:col-start-1 lg:row-start-1">
             <motion.p
               variants={item}
-              className={`${sectionEyebrowClass} sm:text-sm`}
+              className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 sm:text-sm"
             >
-              <span className={sectionEyebrowMarkClass} aria-hidden />
+              <span
+                className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
+                aria-hidden
+              />
               Full stack developer
             </motion.p>
 
-            <motion.h1 variants={item} className={heroDisplayClass}>
+            <motion.h1
+              variants={item}
+              className="text-balance text-5xl font-bold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[4.75rem] xl:text-8xl"
+            >
               Jeffrey Patey
             </motion.h1>
 
-            <motion.p variants={item} className={heroSubheadClass}>
+            <motion.p
+              variants={item}
+              className="max-w-xl text-balance text-xl font-semibold leading-snug tracking-tight sm:text-3xl md:text-4xl"
+            >
               <span className="text-white/95">Health tech</span>
               <span className="text-white/35">
                 {" "}

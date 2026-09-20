@@ -14,7 +14,7 @@ import Image from "next/image";
 import { Apple, Github, ExternalLink } from "lucide-react";
 import MediaCarousel, { type MediaItem } from "./MediaCarousel";
 import SectionTitleRule from "./SectionTitleRule";
-import { ghostCtaClass, panelLabelClass, primaryCtaClass, sectionEyebrowClass, sectionEyebrowMarkClass, sectionHeadingClass, sectionLeadClass } from "@/lib/surfaceStyles";
+import { ghostCtaClass, panelLabelClass, primaryCtaClass } from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 const DETAIL_PANEL_ID = "projects-detail-panel";
@@ -358,15 +358,18 @@ export default function Projects() {
           }}
           className="mx-auto mb-8 max-w-6xl space-y-3 text-left sm:mb-10"
         >
-          <p className={sectionEyebrowClass}>
-            <span className={sectionEyebrowMarkClass} aria-hidden />
+          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <span
+              className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
+              aria-hidden
+            />
             Selected work
           </p>
-          <h2 className={sectionHeadingClass}>
+          <h2 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
             Projects
           </h2>
           <SectionTitleRule />
-          <p className={sectionLeadClass}>
+          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
             Products, mobile apps, and client sites I&apos;ve shipped.
           </p>
         </motion.header>

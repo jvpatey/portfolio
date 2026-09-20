@@ -4,13 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 import ContactForm from "./ContactForm";
 import SectionTitleRule from "./SectionTitleRule";
-import {
-  sectionEyebrowClass,
-  sectionEyebrowMarkClass,
-  sectionHeadingClass,
-  sectionLeadClass,
-  panelLabelClass,
-} from "@/lib/surfaceStyles";
+import { panelLabelClass } from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -48,15 +42,18 @@ export default function Contact() {
           }}
           className="mb-8 space-y-3 text-left sm:mb-10"
         >
-          <p className={sectionEyebrowClass}>
-            <span className={sectionEyebrowMarkClass} aria-hidden />
+          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
+            <span
+              className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
+              aria-hidden
+            />
             Get in touch
           </p>
-          <h2 className={sectionHeadingClass}>
+          <h2 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
             Let&apos;s talk
           </h2>
           <SectionTitleRule />
-          <p className={`${sectionLeadClass} max-w-xl`}>
+          <p className="max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
             Questions, collaboration, or just hello—I&apos;d love to hear from
             you.
           </p>
