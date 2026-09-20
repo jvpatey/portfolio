@@ -1,9 +1,14 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  heroDisplayClass,
+  heroSubheadClass,
+  sectionEyebrowClass,
+  sectionEyebrowMarkClass,
+} from "@/lib/surfaceStyles";
 import HeroAside from "./HeroAside";
 
-// Hero: editorial layout, soft depth backdrop, paired CTAs
 export default function Hero() {
   const reduceMotion = useReducedMotion();
 
@@ -12,8 +17,8 @@ export default function Hero() {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: reduceMotion ? 0 : 0.07,
-        delayChildren: reduceMotion ? 0 : 0.12,
+        staggerChildren: reduceMotion ? 0 : 0.08,
+        delayChildren: reduceMotion ? 0 : 0.1,
       },
     },
   };
@@ -21,7 +26,7 @@ export default function Hero() {
   const item: Variants = {
     hidden: reduceMotion
       ? { opacity: 1, y: 0 }
-      : { opacity: 0, y: 18 },
+      : { opacity: 0, y: 20 },
     show: {
       opacity: 1,
       y: 0,
@@ -49,96 +54,105 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[calc(100dvh-4rem)] items-center justify-center px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-14 overflow-hidden"
+      className="relative flex min-h-[calc(100dvh-4rem)] items-center overflow-x-clip px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16"
     >
       <motion.div
-        className="relative z-20 max-w-6xl w-full"
+        className="relative z-20 mx-auto w-full max-w-6xl"
         variants={container}
         initial="hidden"
         animate="show"
       >
-        <div className="w-full lg:grid lg:grid-cols-12 lg:gap-x-12 lg:gap-y-10 lg:items-center">
-          <div className="lg:col-span-7 flex flex-col gap-8 sm:gap-10">
-            <header className="space-y-2 sm:space-y-3">
-              <motion.p
-                variants={item}
-                className="text-sm font-medium uppercase tracking-widest text-slate-400 mb-1"
-              >
-                Hi, my name is
-              </motion.p>
-              <motion.h1
-                variants={item}
-                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.08] tracking-tight text-balance"
-              >
-                Jeffrey Patey
-              </motion.h1>
-              <motion.p
-                variants={item}
-                className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white/95 leading-snug text-balance max-w-xl"
-              >
-                Full stack software developer
-                <span className="mt-1.5 block font-normal text-slate-400 text-base sm:text-lg md:text-xl">
-                  with a healthcare background.
-                </span>
-              </motion.p>
-            </header>
-
+        <div className="grid w-full grid-cols-1 items-center gap-5 sm:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
+          <header className="order-1 space-y-2.5 sm:space-y-4 lg:col-span-6 lg:col-start-1 lg:row-start-1">
             <motion.p
               variants={item}
-              className="max-w-2xl text-base md:text-lg leading-relaxed text-slate-400"
+              className={`${sectionEyebrowClass} sm:text-sm`}
             >
-              My passion for{" "}
-              <span className="font-medium text-slate-200">health tech</span>{" "}
-              drives every solution I create.
+              <span className={sectionEyebrowMarkClass} aria-hidden />
+              Full stack developer
+            </motion.p>
+
+            <motion.h1 variants={item} className={heroDisplayClass}>
+              Jeffrey Patey
+            </motion.h1>
+
+            <motion.p variants={item} className={heroSubheadClass}>
+              <span className="text-white/95">Health tech</span>
+              <span className="text-white/35">
+                {" "}
+                products that simplify real workflows.
+              </span>
+            </motion.p>
+          </header>
+
+          <HeroAside item={item} />
+
+          <div className="order-3 flex flex-col gap-5 sm:gap-6 lg:col-span-6 lg:col-start-1 lg:row-start-2 lg:gap-8">
+            <motion.p
+              variants={item}
+              className="max-w-lg text-sm leading-relaxed text-slate-400 sm:text-base md:text-lg"
+            >
+              <a
+                href="#chairside"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.hash = "chairside";
+                  document.getElementById("projects")?.scrollIntoView({
+                    behavior: reduceMotion ? "auto" : "smooth",
+                    block: "start",
+                  });
+                }}
+                className="font-medium text-slate-200 underline decoration-[var(--accent-primary)]/40 underline-offset-4 transition-colors hover:text-white hover:decoration-[var(--accent-primary)]/70"
+              >
+                Chairside
+              </a>{" "}
+              is live on web and the App Store—plus HomeKeep and client work
+              shipping in production.
             </motion.p>
 
             <motion.div
               variants={item}
-              className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center pt-1"
+              className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
             >
               <motion.a
                 href="#projects"
                 onClick={(e) => handleSmoothScroll(e, "#projects")}
-                className="relative inline-flex justify-center items-center w-full sm:w-auto text-center px-10 py-4 rounded-full font-semibold text-base text-white cursor-pointer border border-cyan-300/35 shadow-[0_8px_28px_rgba(6,182,212,0.38)] transition-[box-shadow,background-color] duration-300 hover:border-cyan-200/45 hover:shadow-[0_12px_36px_rgba(6,182,212,0.48)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+                className="relative inline-flex w-full cursor-pointer items-center justify-center rounded-full border border-orange-300/30 px-8 py-3.5 text-center text-base font-semibold text-white shadow-[0_8px_28px_rgba(201,98,78,0.36)] transition-[box-shadow,background-color] duration-300 hover:border-orange-200/40 hover:shadow-[0_12px_36px_rgba(201,98,78,0.46)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/55 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:w-auto sm:px-10 sm:py-4"
                 style={{ backgroundColor: "var(--cta-solid)" }}
                 whileHover={
                   reduceMotion
                     ? undefined
                     : {
-                        scale: 1.04,
+                        scale: 1.03,
                         backgroundColor: "var(--cta-solid-hover)",
                       }
                 }
                 whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <span className="relative z-10 drop-shadow-sm">
-                  Check out my work
-                </span>
+                Check out my work
               </motion.a>
 
               <a
                 href="#contact"
                 onClick={(e) => handleSmoothScroll(e, "#contact")}
-                className="inline-flex justify-center items-center w-full sm:w-auto px-8 py-4 rounded-full font-medium text-base text-slate-200 border border-white/15 hover:border-white/25 hover:bg-white/[0.04] transition-colors"
+                className="inline-flex w-full items-center justify-center rounded-full border border-white/15 px-8 py-3.5 text-base font-medium text-slate-200 transition-colors hover:border-white/25 hover:bg-white/[0.04] sm:w-auto sm:py-4"
               >
-                Get in touch
+                Let&apos;s talk
               </a>
             </motion.div>
 
-            <motion.p variants={item} className="text-sm text-slate-400">
+            <motion.p variants={item} className="text-sm text-slate-500">
               <a
                 href="/jeff_resume_2026.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-white/20 underline-offset-4 hover:text-slate-300 hover:decoration-white/40 transition-colors"
+                className="underline decoration-white/15 underline-offset-4 transition-colors hover:text-slate-300 hover:decoration-white/35"
               >
                 View resume (PDF)
               </a>
             </motion.p>
           </div>
-
-          <HeroAside item={item} />
         </div>
       </motion.div>
     </section>

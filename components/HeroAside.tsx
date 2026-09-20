@@ -1,56 +1,50 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
-
-const stats = [
-  {
-    value: "10+",
-    label: "Years in healthcare",
-    detail: "Built around patient care and education",
-  },
-  {
-    label: "Experience",
-    value: "ThinkRad - Consultant",
-    detail: "Halifax, NS",
-  },
-  {
-    label: "Focus",
-    value: "Full stack",
-    detail: "Next.js, TypeScript, React, Swift & SwiftUI",
-  },
-] as const;
+import Image from "next/image";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 export default function HeroAside({ item }: { item: Variants }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.aside
       variants={item}
-      className="mt-14 lg:mt-0 lg:col-span-5"
-      aria-label="Highlights"
+      className="relative order-2 flex justify-center overflow-visible lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:justify-end"
+      aria-label="Portrait"
     >
-      <div
-        className="rounded-3xl p-6 sm:p-8 border border-white/10 bg-white/[0.03] backdrop-blur-md"
-        style={{
-          boxShadow:
-            "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
-        }}
-      >
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-6">
-          At a glance
-        </p>
-        <ul className="space-y-6 list-none p-0 m-0">
-          {stats.map((row) => (
-            <li
-              key={row.label}
-              className="flex flex-col gap-1 border-b border-white/5 pb-6 last:border-0 last:pb-0"
-            >
-              <p className="text-sm text-slate-400">{row.label}</p>
-              <p className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--accent-primary)]">
-                {row.value}
-              </p>
-              <p className="text-sm text-slate-400 leading-snug">{row.detail}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="relative mx-auto w-full max-w-[280px] overflow-visible sm:max-w-[340px] lg:mx-0 lg:max-w-none lg:w-[min(100%,440px)]">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[140%] w-[140%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-2xl sm:h-[160%] sm:w-[160%]"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(224,122,95,0.55) 0%, rgba(224,122,95,0.22) 32%, rgba(224,122,95,0.08) 52%, transparent 70%)",
+          }}
+          aria-hidden
+        />
+
+        <motion.div
+          className="relative z-10 aspect-[4/5] overflow-hidden rounded-lg border border-white/12 shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+          initial={reduceMotion ? false : { y: 16, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.7,
+            delay: reduceMotion ? 0 : 0.2,
+            ease: [0.21, 0.47, 0.32, 0.98],
+          }}
+        >
+          <Image
+            src="/jeffrey-patey.jpg"
+            alt="Jeffrey Patey"
+            fill
+            priority
+            className="object-cover object-[center_20%]"
+            sizes="(min-width: 1024px) 440px, (min-width: 640px) 340px, 280px"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--hero-base)]/25 via-transparent to-transparent"
+            aria-hidden
+          />
+        </motion.div>
       </div>
     </motion.aside>
   );

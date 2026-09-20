@@ -1,21 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
-import { Apple, Github, ExternalLink } from "lucide-react";
-import ImageCarousel from "./ImageCarousel";
-import MediaCarousel from "./MediaCarousel";
-import SectionTitleRule from "./SectionTitleRule";
 import {
-  asideShadow,
-  detailSectionClass,
-  ghostCtaClass,
-  panelClass,
-  primaryCtaClass,
-} from "@/lib/surfaceStyles";
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type ReactNode,
+} from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import Image from "next/image";
+import { Apple, Github, ExternalLink } from "lucide-react";
+import MediaCarousel, { type MediaItem } from "./MediaCarousel";
+import SectionTitleRule from "./SectionTitleRule";
+import { ghostCtaClass, panelLabelClass, primaryCtaClass, sectionEyebrowClass, sectionEyebrowMarkClass, sectionHeadingClass, sectionLeadClass } from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
-
 const DETAIL_PANEL_ID = "projects-detail-panel";
 
 const PROJECTS = [
@@ -23,31 +24,45 @@ const PROJECTS = [
     id: "chairside",
     name: "Chairside",
     tagline: "Canadian dental staffing — permanent roles & same-day fill-ins",
+    cover: "/chairside_web_1.png",
     latest: true,
+  },
+  {
+    id: "homekeep",
+    name: "HomeKeep",
+    tagline: "A maintenance schedule built around your actual home",
+    cover: "/homekeep1.png",
+  },
+  {
+    id: "burdens",
+    name: "Freelance web development",
+    tabLabel: "Freelance",
+    tagline: "Burden's General Store — client site for a NL family business",
+    cover: "/burdens1.png",
   },
   {
     id: "streamln",
     name: "StreamLn",
     tagline: "Productivity workspace — canvas, notes, tasks",
-  },
-  {
-    id: "homekeep",
-    name: "HomeKeep",
-    tagline: "Guided maintenance plans, tasks & reminders",
-  },
-  {
-    id: "oralcheckr",
-    name: "OralCheckr",
-    tagline: "Oral health assessment & habit tracking",
-  },
-  {
-    id: "burdens",
-    name: "Freelance Web Development",
-    tagline: "Burden's General Store — responsive site & integrations",
+    cover: "/streamln1.png",
   },
 ] as const;
 
 type ProjectId = (typeof PROJECTS)[number]["id"];
+
+function projectTabLabel(project: (typeof PROJECTS)[number]) {
+  return "tabLabel" in project && project.tabLabel
+    ? project.tabLabel
+    : project.name;
+}
+
+type ProjectDetail = {
+  alt: string;
+  media: MediaItem[];
+  about: string;
+  tech: string[];
+  links: ReactNode;
+};
 
 function isProjectId(raw: string): raw is ProjectId {
   return PROJECTS.some((project) => project.id === raw);
@@ -58,447 +73,204 @@ function projectIsLatest(project: (typeof PROJECTS)[number]) {
 }
 
 const latestBadgeClass =
-  "inline-flex shrink-0 items-center rounded-full border border-cyan-400/25 bg-cyan-400/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-cyan-200/90 sm:text-[0.65rem]";
+  "inline-flex shrink-0 items-center rounded-full border border-[var(--accent-primary)]/35 bg-[var(--accent-primary)]/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-[var(--accent-2)]";
 
 const chipClass =
   "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
 
-function TechChips({ items }: { items: string[] }) {
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {items.map((tech) => (
-        <span key={tech} className={chipClass}>
-          {tech}
-        </span>
-      ))}
-    </div>
-  );
-}
+const linkRowClass = "flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3";
 
-function LatestProjectBadge() {
-  return <span className={latestBadgeClass}>Latest project</span>;
-}
-
-function ChairsideDetail() {
-  return (
-    <div className="space-y-4 min-w-0">
-      <div className="min-w-0">
-        <ImageCarousel
-          images={[
-            "/chairside_web_1.png",
-            "/chairside_web_2.png",
-            "/chairside_web_3.png",
-            "/chairside_web_4.png",
-            "/chairside_web_5.png",
-            "/chairside_web_6.png",
-            "/chairside_web_7.png",
-          ]}
-          alt="Chairside web screenshots"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">
-            About
-          </h4>
-          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A live dental staffing platform for Canadian clinics and dental
-            professionals—born from a real hiring problem: clinics struggle to
-            fill permanent roles and last-minute chairside shifts. Clinics post
-            openings and same-day fill-ins; professionals browse roles, set
-            availability, apply with structured profiles, and coordinate hiring
-            through explainable match scoring, messaging, and interviews. Web
-            is live now; the iOS app is coming soon.
-          </p>
-          <div className="mt-5">
-            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
-              Tech stack
-            </h5>
-            <TechChips
-              items={[
-                "React Native",
-                "TypeScript",
-                "Expo",
-                "Supabase",
-                "Mapbox",
-                "Pingram",
-              ]}
-            />
-          </div>
-        </div>
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href="https://chairsidedental.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={primaryCtaClass}
-              style={{ backgroundColor: "var(--cta-solid)" }}
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Live site
-            </a>
-            <a
-              href="https://github.com/jvpatey/chairside"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <Github className="h-4 w-4 shrink-0" aria-hidden />
-              GitHub
-            </a>
-            <span className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-slate-400">
-              <Apple className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
-              iOS app coming soon
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StreamLnDetail() {
-  return (
-    <div className="space-y-4 min-w-0">
-      <div className="min-w-0">
-        <MediaCarousel
-          images={[
-            "/streamln1.png",
-            "/streamln2.png",
-            "/streamln3.png",
-            "/streamln4.png",
-            "/streamln5.png",
-            "/streamln6.png",
-            "/streamln7.png",
-            "/streamln8.png",
-          ]}
-          videos={[
-            "/streamln_video_1.mp4",
-            "/streamln_video_2.mp4",
-            "/streamln_video_3.mp4",
-            "/streamln_video_4.mp4",
-            "/streamln_video_5.mp4",
-            "/streamln_video_6.mp4",
-            "/streamln_video_7.mp4",
-            "/streamln_video_8.mp4",
-            "/streamln_video_9.mp4",
-          ]}
-          alt="StreamLn media"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">
-            About
-          </h4>
-          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            Productivity workspace for developers. Infinite 2D canvas with
-            notes, documents, tasks, and export—built for structure and
-            clarity. Map out your projects, notes, and tasks on a limitless
-            workspace.
-          </p>
-          <div className="mt-5">
-            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
-              Tech stack
-            </h5>
-            <TechChips
-              items={[
-                "Next.js",
-                "React",
-                "TypeScript",
-                "Prisma",
-                "PostgreSQL",
-                "Clerk",
-                "Tailwind CSS",
-                "Framer Motion",
-              ]}
-            />
-          </div>
-        </div>
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href="https://github.com/jvpatey/StreamLn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <Github className="h-4 w-4 shrink-0" aria-hidden />
-              GitHub
-            </a>
-            <a
-              href="https://streamln.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={primaryCtaClass}
-              style={{ backgroundColor: "var(--cta-solid)" }}
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Live demo
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function HomeKeepDetail() {
-  return (
-    <div className="space-y-4 min-w-0">
-      <div className="min-w-0">
-        <MediaCarousel
-          images={[
-            "/homekeep1.png",
-            "/homekeep2.png",
-            "/homekeep3.png",
-            "/homekeep4.png",
-            "/homekeep5.png",
-            "/homekeep6.png",
-            "/homekeep7.png",
-            "/homekeep8.png",
-            "/homekeep9.png",
-            "/homekeep10.PNG",
-          ]}
-          videos={[
-            "/homekeep-video-1.mp4",
-            "/homekeep-video-2.mp4",
-            "/homekeep-video-3.mp4",
-            "/homekeep-video-4.mp4",
-          ]}
-          alt="HomeKeep media"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">
-            About
-          </h4>
-          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A mobile app for staying on top of home maintenance—from everyday
-            chores to seasonal prep. Create recurring tasks with push
-            reminders, follow guided plans for spring refresh, cold-weather
-            prep, safety checks, and more, and keep equipment manuals and
-            completion history in one place.
-          </p>
-          <div className="mt-5">
-            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
-              Tech stack
-            </h5>
-            <TechChips
-              items={["React Native", "TypeScript", "Expo", "Supabase"]}
-            />
-          </div>
-        </div>
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href="https://github.com/jvpatey/homekeep-mobile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <Github className="h-4 w-4 shrink-0" aria-hidden />
-              GitHub
-            </a>
-            <a
-              href="https://homekeep-website.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Website
-            </a>
-            <a
-              href="https://apps.apple.com/ca/app/homekeep/id6751912377"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={primaryCtaClass}
-              style={{ backgroundColor: "var(--cta-solid)" }}
-            >
-              <Apple className="h-4 w-4 shrink-0" aria-hidden />
-              App Store
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function OralCheckrDetail() {
-  return (
-    <div className="space-y-4 min-w-0">
-      <div className="min-w-0">
-        <MediaCarousel
-          images={[
-            "/oralcheckr1.png",
-            "/oralcheckr2.png",
-            "/oralcheckr3.png",
-            "/oralcheckr4.png",
-            "/oralcheckr5.png",
-            "/oralcheckr6.png",
-            "/oralcheckr7.png",
-            "/oralcheckr8.png",
-            "/oralcheckr9.png",
-            "/oralcheckr10.png",
-          ]}
-          videos={[
-            "/oralcheckr-recording-1.mov",
-            "/oralcheckr-recording-2.mov",
-            "/oralcheckr-recording-3.mov",
-            "/oralcheckr-recording-4.mov",
-            "/oralcheckr-recording-5.mov",
-            "/oralcheckr-recording-6.mov",
-          ]}
-          alt="OralCheckr media"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">
-            About
-          </h4>
-          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A comprehensive web app for oral health assessment and habit
-            tracking with personalized recommendations and progress analytics.
-          </p>
-          <div className="mt-5">
-            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
-              Tech stack
-            </h5>
-            <TechChips
-              items={[
-                "React",
-                "TypeScript",
-                "Vite",
-                "Node.js",
-                "Express",
-                "MySQL",
-              ]}
-            />
-          </div>
-        </div>
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href="https://github.com/jvpatey/OralCheckr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <Github className="h-4 w-4 shrink-0" aria-hidden />
-              GitHub
-            </a>
-            <a
-              href="https://jvpatey.github.io/OralCheckr/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={primaryCtaClass}
-              style={{ backgroundColor: "var(--cta-solid)" }}
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Live demo
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BurdensDetail() {
-  return (
-    <div className="space-y-4 min-w-0">
-      <div className="min-w-0">
-        <ImageCarousel
-          images={[
-            "/burdens1.png",
-            "/burdens2.png",
-            "/burdens3.png",
-            "/burdens4.png",
-            "/burdens5.png",
-            "/burdens6.png",
-          ]}
-          alt="Burden's General Store screenshots"
-        />
-      </div>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 min-w-0">
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">
-            About
-          </h4>
-          <p className="mt-3 text-base leading-relaxed text-slate-400 md:text-lg">
-            A freelance web development project featuring modern design,
-            responsive layouts, dark/light mode, and seamless third-party
-            integrations.
-          </p>
-          <div className="mt-5">
-            <h5 className="mb-2 text-base font-semibold text-white md:text-lg">
-              Tech stack
-            </h5>
-            <TechChips
-              items={[
-                "Next.js",
-                "TypeScript",
-                "Tailwind CSS",
-                "shadcn/ui",
-                "Vercel",
-              ]}
-            />
-          </div>
-        </div>
-        <div className={detailSectionClass}>
-          <h4 className="text-lg font-semibold text-white md:text-xl">Links</h4>
-          <div className="mt-4 flex flex-col gap-3">
-            <a
-              href="https://github.com/jvpatey/burdens-general-store"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={ghostCtaClass}
-            >
-              <Github className="h-4 w-4 shrink-0" aria-hidden />
-              GitHub
-            </a>
-            <a
-              href="https://burdensgeneralstore.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={primaryCtaClass}
-              style={{ backgroundColor: "var(--cta-solid)" }}
-            >
-              <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
-              Live demo
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectDetailBody({ id }: { id: ProjectId }) {
-  switch (id) {
-    case "chairside":
-      return <ChairsideDetail />;
-    case "streamln":
-      return <StreamLnDetail />;
-    case "homekeep":
-      return <HomeKeepDetail />;
-    case "oralcheckr":
-      return <OralCheckrDetail />;
-    case "burdens":
-      return <BurdensDetail />;
-    default:
-      return null;
-  }
-}
+const DETAILS: Record<ProjectId, ProjectDetail> = {
+  chairside: {
+    alt: "Chairside screenshots",
+    media: [
+      { type: "image", src: "/chairside_web_1.png", device: "web" },
+      { type: "image", src: "/chairside_web_2.png", device: "web" },
+      { type: "image", src: "/chairside_web_3.png", device: "web" },
+      { type: "image", src: "/chairside_web_4.png", device: "web" },
+      { type: "image", src: "/chairside_mobile_1.png", device: "mobile" },
+      { type: "image", src: "/chairside_mobile_2.png", device: "mobile" },
+      { type: "image", src: "/chairside_mobile_3.png", device: "mobile" },
+      { type: "image", src: "/chairside_mobile_4.png", device: "mobile" },
+      { type: "image", src: "/chairside_mobile_5.png", device: "mobile" },
+    ],
+    about:
+      "A live dental staffing platform for Canadian clinics and dental professionals—born from a real hiring problem: clinics struggle to fill permanent roles and last-minute chairside shifts. Clinics post openings and same-day fill-ins; professionals browse roles, set availability, apply with structured profiles, and coordinate hiring through explainable match scoring, messaging, and interviews. Web and iOS are both live now.",
+    tech: [
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "Supabase",
+      "Mapbox",
+      "Pingram",
+    ],
+    links: (
+      <>
+        <a
+          href="https://apps.apple.com/ca/app/chairside-app/id6772834242"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${primaryCtaClass} sm:w-auto`}
+          style={{ backgroundColor: "var(--cta-solid)" }}
+        >
+          <Apple className="h-4 w-4 shrink-0" aria-hidden />
+          App Store
+        </a>
+        <a
+          href="https://chairsidedental.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+          Live site
+        </a>
+        <a
+          href="https://github.com/jvpatey/chairside"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <Github className="h-4 w-4 shrink-0" aria-hidden />
+          GitHub
+        </a>
+      </>
+    ),
+  },
+  streamln: {
+    alt: "StreamLn media",
+    media: [
+      { type: "image", src: "/streamln1.png" },
+      { type: "image", src: "/streamln2.png" },
+      { type: "image", src: "/streamln3.png" },
+      { type: "image", src: "/streamln4.png" },
+    ],
+    about:
+      "Productivity workspace for developers. Infinite 2D canvas with notes, documents, tasks, and export—built for structure and clarity. Map out your projects, notes, and tasks on a limitless workspace.",
+    tech: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Prisma",
+      "PostgreSQL",
+      "Clerk",
+      "Tailwind CSS",
+      "Framer Motion",
+    ],
+    links: (
+      <>
+        <a
+          href="https://streamln.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${primaryCtaClass} sm:w-auto`}
+          style={{ backgroundColor: "var(--cta-solid)" }}
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+          Live demo
+        </a>
+        <a
+          href="https://github.com/jvpatey/StreamLn"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <Github className="h-4 w-4 shrink-0" aria-hidden />
+          GitHub
+        </a>
+      </>
+    ),
+  },
+  homekeep: {
+    alt: "HomeKeep screenshots",
+    media: [
+      { type: "image", src: "/homekeep1.png", device: "mobile" },
+      { type: "image", src: "/homekeep2.png", device: "mobile" },
+      { type: "image", src: "/homekeep3.png", device: "mobile" },
+      { type: "image", src: "/homekeep4.png", device: "mobile" },
+      { type: "image", src: "/homekeep5.png", device: "mobile" },
+      { type: "image", src: "/homekeep6.png", device: "mobile" },
+    ],
+    about:
+      "A mobile app that treats the home as the product—set up address and systems once, and HomeKeep builds a recurring schedule for that house. It surfaces what to do next, tracks completion history, and sends tunable reminders, while keeping practical records in one place: weather and season on the dashboard, a home systems map, emergency shutoff notes and photos, and equipment manuals.",
+    tech: [
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "Supabase",
+      "RevenueCat",
+      "Expo Notifications",
+    ],
+    links: (
+      <>
+        <a
+          href="https://apps.apple.com/ca/app/homekeep/id6751912377"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${primaryCtaClass} sm:w-auto`}
+          style={{ backgroundColor: "var(--cta-solid)" }}
+        >
+          <Apple className="h-4 w-4 shrink-0" aria-hidden />
+          App Store
+        </a>
+        <a
+          href="https://homekeep-website.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+          Website
+        </a>
+        <a
+          href="https://github.com/jvpatey/homekeep-mobile"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <Github className="h-4 w-4 shrink-0" aria-hidden />
+          GitHub
+        </a>
+      </>
+    ),
+  },
+  burdens: {
+    alt: "Burden's General Store screenshots",
+    media: [
+      { type: "image", src: "/burdens1.png", device: "web" },
+      { type: "image", src: "/burdens2.png", device: "web" },
+      { type: "image", src: "/burdens3.png", device: "web" },
+      { type: "image", src: "/burdens4.png", device: "web" },
+      { type: "image", src: "/burdens5.png", device: "web" },
+    ],
+    about:
+      "Freelance web work for Burden's General Store in St. Lunaire-Griquet, NL—a modern marketing site with dark/light mode, story and visit pages, a searchable product ledger, live store hours, and map directions for a family business open since 1959.",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "Vercel"],
+    links: (
+      <>
+        <a
+          href="https://burdensgeneralstore.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${primaryCtaClass} sm:w-auto`}
+          style={{ backgroundColor: "var(--cta-solid)" }}
+        >
+          <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
+          Live site
+        </a>
+        <a
+          href="https://github.com/jvpatey/burdens-general-store"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`${ghostCtaClass} sm:w-auto`}
+        >
+          <Github className="h-4 w-4 shrink-0" aria-hidden />
+          GitHub
+        </a>
+      </>
+    ),
+  },
+};
 
 export default function Projects() {
   const reduceMotion = useReducedMotion();
@@ -509,6 +281,7 @@ export default function Projects() {
     () => PROJECTS.find((p) => p.id === selectedId) ?? PROJECTS[0],
     [selectedId],
   );
+  const detail = DETAILS[selectedId];
 
   useEffect(() => {
     const applyHash = () => {
@@ -516,7 +289,7 @@ export default function Projects() {
       if (isProjectId(raw)) {
         setSelectedId(raw);
         requestAnimationFrame(() => {
-          document.getElementById(raw)?.scrollIntoView({
+          document.getElementById("projects")?.scrollIntoView({
             behavior: reduceMotion ? "auto" : "smooth",
             block: "start",
           });
@@ -534,7 +307,7 @@ export default function Projects() {
   }, []);
 
   const onTabKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
       switch (e.key) {
         case "ArrowDown":
         case "ArrowRight":
@@ -570,9 +343,9 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="mb-12 scroll-mt-[60px] overflow-hidden px-4 py-8 sm:mb-16 sm:px-6 sm:py-10 md:mb-20 md:py-14 lg:px-8 lg:py-12"
+      className="relative mb-12 scroll-mt-[60px] overflow-x-clip px-4 py-10 sm:mb-16 sm:px-6 sm:py-12 md:mb-20 md:py-16 lg:px-8"
     >
-      <div className="mx-auto max-w-6xl overflow-hidden">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.header
           initial={
             reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
@@ -583,109 +356,154 @@ export default function Projects() {
             duration: reduceMotion ? 0 : 0.55,
             ease: heroEase,
           }}
-          className="mb-6 space-y-2 text-left sm:mb-10 sm:space-y-3 lg:mb-8"
+          className="mx-auto mb-8 max-w-6xl space-y-3 text-left sm:mb-10"
         >
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+          <p className={sectionEyebrowClass}>
+            <span className={sectionEyebrowMarkClass} aria-hidden />
+            Selected work
+          </p>
+          <h2 className={sectionHeadingClass}>
             Projects
           </h2>
           <SectionTitleRule />
-          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
-            Things I&apos;ve built and shipped—products, mobile apps, and client
-            sites.
+          <p className={sectionLeadClass}>
+            Products, mobile apps, and client sites I&apos;ve shipped.
           </p>
         </motion.header>
 
-        <div className="grid min-w-0 grid-cols-1 gap-5 lg:grid-cols-12 lg:gap-x-6 xl:gap-x-7 lg:items-stretch">
-          <motion.div
-            initial={
-              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
-            }
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.55,
-              delay: reduceMotion ? 0 : 0.06,
-              ease: heroEase,
-            }}
-            className={`min-w-0 max-w-md lg:max-w-none lg:col-span-4 ${panelClass} p-1.5 sm:p-2`}
-            style={asideShadow}
-          >
-            <p className="px-2 pb-0.5 pt-1.5 text-[0.65rem] font-semibold uppercase tracking-widest text-slate-400 sm:text-xs">
-              Work
-            </p>
-            <div
-              role="tablist"
-              aria-label="Projects"
-              aria-orientation="vertical"
-              className="flex flex-col gap-0.5"
-            >
-              {PROJECTS.map((p, index) => {
-                const isSelected = selectedId === p.id;
-                return (
-                  <button
-                    key={p.id}
-                    id={p.id}
-                    ref={(el) => {
-                      tabRefs.current[index] = el;
-                    }}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    aria-controls={DETAIL_PANEL_ID}
-                    tabIndex={isSelected ? 0 : -1}
-                    onClick={() => setSelectedId(p.id)}
-                    onKeyDown={(e) => onTabKeyDown(e, index)}
-                    className={`w-full scroll-mt-28 rounded-xl px-2 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
-                      isSelected
-                        ? "bg-white/[0.08] text-white ring-1 ring-white/12"
-                        : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
-                    }`}
-                  >
-                    <span className="flex min-w-0 flex-col gap-0.5">
-                      <span className="flex min-w-0 flex-wrap items-center gap-2">
-                        <span className="text-sm font-semibold leading-snug text-white sm:text-base">
-                          {p.name}
-                        </span>
-                        {projectIsLatest(p) ? <LatestProjectBadge /> : null}
-                      </span>
-                      <span className="text-xs leading-snug text-slate-400 sm:text-sm">
-                        {p.tagline}
-                      </span>
+        {/* Slim switcher — thumbs + name; taglines only on small screens */}
+        <div
+          role="tablist"
+          aria-label="Projects"
+          aria-orientation="horizontal"
+          className="mx-auto mb-6 flex w-full max-w-6xl gap-2 overflow-x-auto pb-1 [scrollbar-width:thin] sm:mb-8"
+        >
+          {PROJECTS.map((p, index) => {
+            const isSelected = selectedId === p.id;
+            return (
+              <button
+                key={p.id}
+                id={`project-tab-${p.id}`}
+                ref={(el) => {
+                  tabRefs.current[index] = el;
+                }}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls={DETAIL_PANEL_ID}
+                tabIndex={isSelected ? 0 : -1}
+                onClick={() => setSelectedId(p.id)}
+                onKeyDown={(e) => onTabKeyDown(e, index)}
+                className={`group flex min-w-[9.5rem] flex-1 basis-0 items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-[colors,border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:min-w-0 sm:gap-2.5 ${
+                  isSelected
+                    ? "border-[var(--accent-primary)]/40 bg-white/[0.07] text-white"
+                    : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/18 hover:bg-white/[0.04] hover:text-slate-200"
+                }`}
+              >
+                <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md border border-white/10 sm:h-9 sm:w-9">
+                  <Image
+                    src={p.cover}
+                    alt=""
+                    fill
+                    className="object-cover"
+                    sizes="36px"
+                  />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold leading-snug text-inherit">
+                    {projectTabLabel(p)}
+                  </span>
+                  {projectIsLatest(p) ? (
+                    <span className="mt-0.5 block text-[0.65rem] font-medium uppercase tracking-wide text-[var(--accent-primary)]">
+                      Latest
                     </span>
-                  </button>
-                );
-              })}
-            </div>
-          </motion.div>
+                  ) : (
+                    <span className="mt-0.5 block truncate text-xs text-slate-500 group-hover:text-slate-400 md:hidden">
+                      {p.tagline}
+                    </span>
+                  )}
+                </span>
+              </button>
+            );
+          })}
+        </div>
 
-          <motion.div
-            key={selectedId}
-            initial={
-              reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
-            }
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.35,
-              ease: heroEase,
+        {/* Featured media stage — wider than copy rail */}
+        <motion.div
+          key={`stage-${selectedId}`}
+          initial={
+            reduceMotion
+              ? { opacity: 1, scale: 1 }
+              : { opacity: 0, scale: 0.985 }
+          }
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.4,
+            ease: heroEase,
+          }}
+          className="relative mb-8 overflow-visible"
+        >
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[120%] w-[110%] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(224,122,95,0.28) 0%, rgba(224,122,95,0.1) 40%, transparent 68%)",
             }}
+            aria-hidden
+          />
+          <div
             id={DETAIL_PANEL_ID}
             role="tabpanel"
-            aria-labelledby={`${selectedId}`}
-            className={`min-w-0 lg:col-span-8 ${panelClass} p-4 sm:p-6 lg:p-7`}
-            style={asideShadow}
+            aria-labelledby={`project-tab-${selectedId}`}
+            className="relative z-10 overflow-visible"
           >
-            <div className="mb-6 border-b border-white/10 pb-5">
-              <div className="flex flex-wrap items-center gap-2.5">
-                <h3 className="text-xl font-bold text-white sm:text-2xl">
-                  {selectedMeta.name}
-                </h3>
-                {projectIsLatest(selectedMeta) ? <LatestProjectBadge /> : null}
-              </div>
-              <p className="mt-1 text-sm text-slate-400">{selectedMeta.tagline}</p>
+            <MediaCarousel items={detail.media} alt={detail.alt} />
+          </div>
+        </motion.div>
+
+        {/* Meta + story + CTAs */}
+        <motion.div
+          key={`meta-${selectedId}`}
+          initial={
+            reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 12 }
+          }
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.35,
+            ease: heroEase,
+          }}
+          className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-12 lg:gap-10"
+        >
+          <div className="lg:col-span-7">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                {selectedMeta.name}
+              </h3>
+              {projectIsLatest(selectedMeta) ? (
+                <span className={latestBadgeClass}>Latest</span>
+              ) : null}
             </div>
-            <ProjectDetailBody id={selectedId} />
-          </motion.div>
-        </div>
+            <p className="mt-2 text-base text-slate-400 sm:text-lg">
+              {selectedMeta.tagline}
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-slate-400 md:text-lg">
+              {detail.about}
+            </p>
+            <div className="mt-5 flex flex-wrap gap-1.5">
+              {detail.tech.map((tech) => (
+                <span key={tech} className={chipClass}>
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="lg:col-span-5 lg:border-l lg:border-white/10 lg:pl-8">
+            <p className={`mb-3 ${panelLabelClass}`}>
+              Links
+            </p>
+            <div className={linkRowClass}>{detail.links}</div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

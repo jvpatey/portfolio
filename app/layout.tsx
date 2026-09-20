@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.jeffreypatey.dev";
@@ -47,8 +45,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className={GeistSans.variable}>
+      <body className={`${GeistSans.className} antialiased`}>
         {children}
         <Analytics />
       </body>
