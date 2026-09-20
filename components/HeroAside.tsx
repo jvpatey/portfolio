@@ -2,24 +2,6 @@
 
 import { motion, type Variants } from "framer-motion";
 
-const stats = [
-  {
-    value: "10+",
-    label: "Years in healthcare",
-    detail: "Built around patient care and education",
-  },
-  {
-    label: "Experience",
-    value: "ThinkRad - Consultant",
-    detail: "Halifax, NS",
-  },
-  {
-    label: "Focus",
-    value: "Full stack",
-    detail: "Next.js, TypeScript, React, Swift & SwiftUI",
-  },
-] as const;
-
 export default function HeroAside({ item }: { item: Variants }) {
   return (
     <motion.aside
@@ -28,28 +10,37 @@ export default function HeroAside({ item }: { item: Variants }) {
       aria-label="Highlights"
     >
       <div
-        className="rounded-3xl p-6 sm:p-8 border border-white/10 bg-white/[0.03] backdrop-blur-md"
+        className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md sm:p-8"
         style={{
           boxShadow:
             "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
         }}
       >
-        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-6">
-          At a glance
+        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400">
+          Focus
         </p>
-        <ul className="space-y-6 list-none p-0 m-0">
-          {stats.map((row) => (
-            <li
-              key={row.label}
-              className="flex flex-col gap-1 border-b border-white/5 pb-6 last:border-0 last:pb-0"
-            >
-              <p className="text-sm text-slate-400">{row.label}</p>
-              <p className="text-2xl sm:text-3xl font-semibold tracking-tight text-[var(--accent-primary)]">
-                {row.value}
-              </p>
-              <p className="text-sm text-slate-400 leading-snug">{row.detail}</p>
-            </li>
-          ))}
+        <p className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+          Health tech &amp; practical products
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
+          Shipping full-stack web and mobile tools that simplify real workflows—
+          from dental staffing to home maintenance.
+        </p>
+        <ul className="mt-6 space-y-2 border-t border-white/5 pt-5 text-sm text-slate-400">
+          <li className="flex gap-2">
+            <span
+              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-primary)]"
+              aria-hidden
+            />
+            Next.js, TypeScript, React Native &amp; SwiftUI
+          </li>
+          <li className="flex gap-2">
+            <span
+              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-500"
+              aria-hidden
+            />
+            Based in Halifax, NS
+          </li>
         </ul>
       </div>
     </motion.aside>

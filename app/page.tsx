@@ -7,7 +7,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import GradientBackground from "@/components/GradientBackground";
 
-// Main portfolio page
+// Main portfolio page — proof of work before biography
 export default function Home() {
   return (
     <div className="relative min-h-screen text-white overflow-x-hidden">
@@ -19,9 +19,9 @@ export default function Home() {
       {/* Main Content */}
       <main className="relative z-10 overflow-x-hidden pt-16">
         <Hero />
-        <About />
-        <Experience />
         <Projects />
+        <Experience />
+        <About />
         <Contact />
         <Footer />
       </main>

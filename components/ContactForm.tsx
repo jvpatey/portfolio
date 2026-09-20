@@ -12,7 +12,7 @@ interface FormData {
 
 /** Calm, high-contrast fields: visible labels, native controls, ring-only focus (no stacked glass). */
 const inputClass =
-  "block w-full rounded-xl border border-white/[0.12] bg-[var(--surface-1)] px-3.5 py-3 text-[15px] leading-snug text-white shadow-none placeholder:text-slate-500 transition-[border-color,box-shadow] duration-200 focus:border-cyan-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]";
+  "block w-full rounded-xl border border-white/[0.12] bg-[var(--surface-1)] px-3.5 py-3 text-[15px] leading-snug text-white shadow-none placeholder:text-slate-500 transition-[border-color,box-shadow] duration-200 focus:border-rose-400/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]";
 
 const labelClass =
   "block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500";
@@ -103,7 +103,7 @@ export default function ContactForm() {
       ? "border border-green-500/25 bg-green-500/10 text-green-400"
       : status.type === "error"
         ? "border border-red-500/25 bg-red-500/10 text-red-400"
-        : "border border-cyan-500/30 bg-cyan-500/10 text-cyan-200";
+        : "border border-rose-500/30 bg-rose-500/10 text-rose-200";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -163,7 +163,7 @@ export default function ContactForm() {
             <div className="flex items-center gap-3">
               {status.type === "loading" && (
                 <motion.span
-                  className="inline-block h-4 w-4 rounded-full border-2 border-cyan-300/80 border-t-transparent"
+                  className="inline-block h-4 w-4 rounded-full border-2 border-rose-300/80 border-t-transparent"
                   animate={{ rotate: 360 }}
                   transition={{
                     duration: 0.9,

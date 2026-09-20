@@ -36,14 +36,14 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
 
       // Update active section based on scroll position
-      const sections = ["about", "experience", "projects", "contact"];
+      const sections = ["projects", "experience", "about", "contact"];
 
       // Check if we're still in the hero section (top of page)
-      const aboutSection = document.getElementById("about");
-      if (aboutSection) {
-        const aboutRect = aboutSection.getBoundingClientRect();
-        // If about section hasn't reached the navbar yet, we're in hero
-        if (aboutRect.top > 150) {
+      const firstSection = document.getElementById("projects");
+      if (firstSection) {
+        const firstRect = firstSection.getBoundingClientRect();
+        // If projects hasn't reached the navbar yet, we're in hero
+        if (firstRect.top > 150) {
           setActiveSection("");
           return;
         }
@@ -105,9 +105,9 @@ export default function Navigation() {
 
   const navItems = [
     { href: "#", label: "Home" },
-    { href: "#about", label: "About" },
-    { href: "#experience", label: "Experience" },
     { href: "#projects", label: "Projects" },
+    { href: "#experience", label: "Experience" },
+    { href: "#about", label: "About" },
     { href: "#contact", label: "Contact" },
   ];
 
@@ -126,16 +126,16 @@ export default function Navigation() {
           <div className="min-w-0 flex-1 md:flex-none flex justify-start pr-1 md:pr-2">
             <Link
               href="#"
-              className="group inline-flex min-w-0 max-w-full items-baseline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+              className="group inline-flex min-w-0 max-w-full items-baseline rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               onClick={(e) => handleSmoothScroll(e, "#")}
               aria-label="Jeffrey Patey, home"
             >
               <span className="hidden lg:inline-flex items-baseline gap-x-1.5 leading-none">
-                <span className="font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-primary)] shrink-0">
+                <span className="font-semibold text-xl xl:text-2xl tracking-tight text-white shrink-0">
                   Jeffrey
                 </span>
                 <span
-                  className={`font-semibold text-xl xl:text-2xl tracking-tight text-[var(--accent-secondary)] shrink-0 ${
+                  className={`font-semibold text-xl xl:text-2xl tracking-tight text-slate-300 shrink-0 ${
                     reduceMotion
                       ? ""
                       : "transition-transform duration-300 ease-out group-hover:translate-x-1.5"
@@ -148,8 +148,8 @@ export default function Navigation() {
                 className="lg:hidden inline-flex items-baseline gap-0.5 font-bold text-base sm:text-lg tracking-tight leading-none"
                 aria-hidden="true"
               >
-                <span className="text-[var(--accent-primary)]">J</span>
-                <span className="text-[var(--accent-secondary)]">P</span>
+                <span className="text-white">J</span>
+                <span className="text-slate-300">P</span>
               </span>
             </Link>
           </div>
@@ -167,7 +167,7 @@ export default function Navigation() {
                     key={item.href}
                     href={item.href}
                     onClick={(e) => handleSmoothScroll(e, item.href)}
-                    className={`group relative px-3 sm:px-3.5 lg:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
+                    className={`group relative px-3 sm:px-3.5 lg:px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 whitespace-nowrap cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] ${
                       isActive
                         ? "text-white bg-white/10 ring-1 ring-white/15"
                         : "text-slate-400 hover:text-slate-100"
@@ -194,7 +194,7 @@ export default function Navigation() {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-[0_8px_24px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md transition-colors hover:border-white/15 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.06] text-slate-200 shadow-[0_8px_24px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.06)] backdrop-blur-md transition-colors hover:border-white/15 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
               aria-label="Toggle menu"
               aria-expanded={isMobileMenuOpen}
             >
@@ -267,9 +267,9 @@ export default function Navigation() {
                       handleSmoothScroll(e, item.href);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_4px_20px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)] ${
+                    className={`block cursor-pointer rounded-xl border px-5 py-3.5 text-base font-medium shadow-[0_4px_20px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.06)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)] ${
                       isMobileActive
-                        ? "border-cyan-400/40 bg-white/[0.14] text-white ring-1 ring-cyan-400/20"
+                        ? "border-rose-400/40 bg-white/[0.14] text-white ring-1 ring-rose-400/20"
                         : "border-white/15 bg-white/[0.08] text-slate-100 hover:border-white/22 hover:bg-white/[0.12] hover:text-white"
                     }`}
                   >
@@ -290,7 +290,7 @@ export default function Navigation() {
                   href="/jeff_resume_2026.pdf"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block rounded-full border border-cyan-300/45 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(6,182,212,0.42)] transition-[box-shadow,background-color] hover:border-cyan-200/55 hover:shadow-[0_12px_36px_rgba(6,182,212,0.52)] focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]"
+                  className="block rounded-full border border-rose-300/45 px-8 py-4 text-center text-sm font-semibold text-white shadow-[0_8px_28px_rgba(225,29,72,0.42)] transition-[box-shadow,background-color] hover:border-rose-200/55 hover:shadow-[0_12px_36px_rgba(225,29,72,0.52)] focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-300/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]"
                   style={{ backgroundColor: "var(--cta-solid)" }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >

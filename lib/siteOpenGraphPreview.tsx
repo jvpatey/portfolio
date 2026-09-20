@@ -11,7 +11,7 @@ export function SiteOpenGraphPreview() {
         alignItems: "center",
         justifyContent: "center",
         backgroundImage:
-          "linear-gradient(118deg, #050608 0%, #071924 16%, #0a2540 32%, #0c4a6e 48%, #155e75 58%, #4338ca 78%, #1e1436 100%)",
+          "linear-gradient(118deg, #050508 0%, #12080c 18%, #1f0a12 36%, #3f0a1a 52%, #e11d48 68%, #1a1218 88%, #07070a 100%)",
         position: "relative",
         fontFamily:
           'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
@@ -154,8 +154,8 @@ export function SiteOpenGraphPreview() {
 
           <div style={{ display: "flex", gap: 12 }}>
             {[
-              "rgba(34,211,238,0.4)",
-              "rgba(129,140,248,0.32)",
+              "rgba(244,63,94,0.45)",
+              "rgba(251,113,133,0.3)",
               "rgba(255,255,255,0.09)",
             ].map((bg, i) => (
               <div
@@ -175,12 +175,12 @@ export function SiteOpenGraphPreview() {
               {
                 label: "Projects",
                 barBackgroundImage:
-                  "linear-gradient(135deg, rgba(34,211,238,0.45), rgba(129,140,248,0.35))",
+                  "linear-gradient(135deg, rgba(244,63,94,0.5), rgba(251,113,133,0.3))",
               },
               {
                 label: "Experience",
                 barBackgroundImage:
-                  "linear-gradient(135deg, rgba(129,140,248,0.38), rgba(34,211,238,0.22))",
+                  "linear-gradient(135deg, rgba(251,113,133,0.4), rgba(244,63,94,0.2))",
               },
               {
                 label: "Contact",

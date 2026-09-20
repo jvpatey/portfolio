@@ -22,7 +22,7 @@ export default function Footer() {
             href="https://github.com/jvpatey"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md text-slate-400 transition-colors hover:text-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+            className="rounded-md text-slate-400 transition-colors hover:text-rose-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
             aria-label="GitHub"
           >
             <Github className="h-6 w-6" strokeWidth={1.75} aria-hidden />
@@ -31,7 +31,7 @@ export default function Footer() {
             href="https://www.linkedin.com/in/jeffreypatey/"
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-md text-slate-400 transition-colors hover:text-cyan-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
+            className="rounded-md text-slate-400 transition-colors hover:text-rose-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)]"
             aria-label="LinkedIn"
           >
             <Linkedin className="h-6 w-6" strokeWidth={1.75} aria-hidden />

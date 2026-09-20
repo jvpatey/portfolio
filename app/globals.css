@@ -6,18 +6,18 @@
   --background: #ffffff;
   --foreground: #171717;
 
-  /* Direction A: cool precision — graphite surfaces, cyan → indigo */
-  --surface-0: #07080c;
-  --surface-1: #0a0b10;
+  /* Graphite + white + coral signal */
+  --surface-0: #07070a;
+  --surface-1: #0c0c10;
   --border-subtle: rgba(255, 255, 255, 0.08);
 
-  --accent-primary: #22d3ee;
-  /* Solid CTAs: slightly deeper cyan for white text contrast */
-  --cta-solid: #06b6d4;
-  --cta-solid-hover: #0891b2;
-  --accent-secondary: #818cf8;
+  --accent-primary: #f43f5e;
+  --cta-solid: #e11d48;
+  --cta-solid-hover: #be123c;
+  /* Soft slate for secondary text accents — not a second brand color */
+  --accent-secondary: #94a3b8;
   --accent-1: var(--accent-primary);
-  --accent-2: var(--accent-secondary);
+  --accent-2: #fb7185;
 
   --accent-gradient: linear-gradient(
     135deg,
@@ -26,33 +26,33 @@
   );
   --accent-gradient-soft: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.26) 0%,
-    rgba(129, 140, 248, 0.26) 100%
+    rgba(244, 63, 94, 0.26) 0%,
+    rgba(251, 113, 133, 0.22) 100%
   );
   --accent-gradient-faint: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.1) 0%,
-    rgba(129, 140, 248, 0.1) 100%
+    rgba(244, 63, 94, 0.1) 0%,
+    rgba(251, 113, 133, 0.08) 100%
   );
   --accent-gradient-ui: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.2) 0%,
-    rgba(129, 140, 248, 0.2) 100%
+    rgba(244, 63, 94, 0.2) 0%,
+    rgba(251, 113, 133, 0.16) 100%
   );
   --accent-gradient-muted: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.15) 0%,
-    rgba(129, 140, 248, 0.15) 100%
+    rgba(244, 63, 94, 0.15) 0%,
+    rgba(251, 113, 133, 0.12) 100%
   );
   --accent-gradient-medium: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.12) 0%,
-    rgba(129, 140, 248, 0.12) 100%
+    rgba(244, 63, 94, 0.12) 0%,
+    rgba(251, 113, 133, 0.1) 100%
   );
   --accent-gradient-strong: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.38) 0%,
-    rgba(129, 140, 248, 0.34) 100%
+    rgba(244, 63, 94, 0.38) 0%,
+    rgba(251, 113, 133, 0.3) 100%
   );
 
   --hero-base: var(--surface-0);
@@ -60,7 +60,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #07080c;
+    --background: #07070a;
     --foreground: #ededed;
   }
 }
@@ -88,17 +88,17 @@ body {
   .bg-hero-radials {
     background: radial-gradient(
         ellipse 120% 80% at 10% -10%,
-        rgba(34, 211, 238, 0.12),
+        rgba(244, 63, 94, 0.09),
         transparent 55%
       ),
       radial-gradient(
-        ellipse 90% 70% at 95% 20%,
-        rgba(129, 140, 248, 0.09),
+        ellipse 90% 70% at 95% 15%,
+        rgba(148, 163, 184, 0.06),
         transparent 50%
       ),
       radial-gradient(
         ellipse 70% 50% at 70% 100%,
-        rgba(45, 65, 95, 0.14),
+        rgba(40, 30, 40, 0.2),
         transparent 45%
       );
   }
