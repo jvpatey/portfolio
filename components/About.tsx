@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Code, HeartPulse } from "lucide-react";
 import SectionTitleRule from "./SectionTitleRule";
-import { asideShadow, panelClass } from "@/lib/surfaceStyles";
+import { asideShadow, panelClass, panelLabelClass, sectionEyebrowClass, sectionEyebrowMarkClass, sectionHeadingClass, sectionLeadClass } from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -72,13 +72,15 @@ export default function About() {
             duration: reduceMotion ? 0 : 0.55,
             ease: heroEase,
           }}
-          className="mb-6 space-y-2 text-left sm:mb-8 sm:space-y-3"
+          className="mb-6 space-y-3 text-left sm:mb-8"
         >
-          <h2 className="text-balance text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
-            About
-          </h2>
+          <p className={sectionEyebrowClass}>
+            <span className={sectionEyebrowMarkClass} aria-hidden />
+            Background
+          </p>
+          <h2 className={sectionHeadingClass}>About</h2>
           <SectionTitleRule />
-          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
+          <p className={sectionLeadClass}>
             Healthcare roots, full-stack craft—and the work behind it.
           </p>
         </motion.header>
@@ -100,7 +102,7 @@ export default function About() {
           >
             <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
               <div className="lg:col-span-7">
-                <p className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                <p className={`mb-3 flex items-center gap-2 ${panelLabelClass}`}>
                   <span
                     className="inline-block h-1.5 w-1.5 rounded-[2px] bg-[var(--accent-primary)]"
                     aria-hidden
@@ -124,7 +126,7 @@ export default function About() {
               </div>
 
               <div className="lg:col-span-5 lg:border-l lg:border-white/10 lg:pl-8">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-400">
+                <p className={`mb-3 ${panelLabelClass}`}>
                   Tech stack
                 </p>
                 <ul
@@ -158,7 +160,7 @@ export default function About() {
             className={`p-5 sm:p-6 lg:p-7 ${panelClass}`}
             style={asideShadow}
           >
-            <p className="mb-5 text-xs font-semibold uppercase tracking-widest text-slate-400">
+            <p className={`mb-5 ${panelLabelClass}`}>
               Experience
             </p>
             <ol className="m-0 list-none space-y-0 divide-y divide-white/10 p-0">

@@ -15,7 +15,7 @@ const inputClass =
   "block w-full rounded-xl border border-white/[0.12] bg-[var(--surface-1)] px-3.5 py-3 text-[15px] leading-snug text-white shadow-none placeholder:text-slate-500 transition-[border-color,box-shadow] duration-200 focus:border-[var(--accent-primary)]/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--surface-1)]";
 
 const labelClass =
-  "block text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500";
+  "block text-xs font-semibold uppercase tracking-[0.22em] text-slate-500";
 
 function FieldGroup({
   id,

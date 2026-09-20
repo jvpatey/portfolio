@@ -4,6 +4,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 import ContactForm from "./ContactForm";
 import SectionTitleRule from "./SectionTitleRule";
+import {
+  sectionEyebrowClass,
+  sectionEyebrowMarkClass,
+  sectionHeadingClass,
+  sectionLeadClass,
+  panelLabelClass,
+} from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 
@@ -18,12 +25,12 @@ export default function Contact() {
       id="contact"
       className="relative mb-8 scroll-mt-[60px] overflow-hidden px-4 py-10 sm:mb-10 sm:px-6 sm:py-12 md:py-16 lg:px-8"
     >
-      {/* Soft copper atmosphere */}
+      {/* Quiet atmosphere — copper reserved for hero + project stage */}
       <div
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[min(80%,520px)] w-[min(90%,640px)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[min(70%,440px)] w-[min(85%,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60"
         style={{
           background:
-            "radial-gradient(circle at center, rgba(224,122,95,0.16) 0%, rgba(224,122,95,0.05) 42%, transparent 70%)",
+            "radial-gradient(circle at center, rgba(224,122,95,0.07) 0%, rgba(224,122,95,0.02) 45%, transparent 70%)",
         }}
         aria-hidden
       />
@@ -41,18 +48,15 @@ export default function Contact() {
           }}
           className="mb-8 space-y-3 text-left sm:mb-10"
         >
-          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-            <span
-              className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
-              aria-hidden
-            />
+          <p className={sectionEyebrowClass}>
+            <span className={sectionEyebrowMarkClass} aria-hidden />
             Get in touch
           </p>
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className={sectionHeadingClass}>
             Let&apos;s talk
           </h2>
           <SectionTitleRule />
-          <p className="max-w-xl text-base leading-relaxed text-slate-400 md:text-lg">
+          <p className={`${sectionLeadClass} max-w-xl`}>
             Questions, collaboration, or just hello—I&apos;d love to hear from
             you.
           </p>
@@ -77,7 +81,7 @@ export default function Contact() {
 
           <aside className="flex flex-col justify-between gap-8 border-t border-white/10 pt-8 lg:col-span-5 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0 xl:col-span-4">
             <div>
-              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-500">
+              <p className={`mb-4 ${panelLabelClass}`}>
                 Elsewhere
               </p>
               <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
@@ -107,7 +111,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-slate-500">
+              <p className={`mb-2 ${panelLabelClass}`}>
                 Resume
               </p>
               <a

@@ -14,7 +14,7 @@ import Image from "next/image";
 import { Apple, Github, ExternalLink } from "lucide-react";
 import MediaCarousel, { type MediaItem } from "./MediaCarousel";
 import SectionTitleRule from "./SectionTitleRule";
-import { ghostCtaClass, primaryCtaClass } from "@/lib/surfaceStyles";
+import { ghostCtaClass, panelLabelClass, primaryCtaClass, sectionEyebrowClass, sectionEyebrowMarkClass, sectionHeadingClass, sectionLeadClass } from "@/lib/surfaceStyles";
 
 const heroEase = [0.21, 0.47, 0.32, 0.98] as const;
 const DETAIL_PANEL_ID = "projects-detail-panel";
@@ -36,6 +36,7 @@ const PROJECTS = [
   {
     id: "burdens",
     name: "Freelance web development",
+    tabLabel: "Freelance",
     tagline: "Burden's General Store — client site for a NL family business",
     cover: "/burdens1.png",
   },
@@ -48,6 +49,12 @@ const PROJECTS = [
 ] as const;
 
 type ProjectId = (typeof PROJECTS)[number]["id"];
+
+function projectTabLabel(project: (typeof PROJECTS)[number]) {
+  return "tabLabel" in project && project.tabLabel
+    ? project.tabLabel
+    : project.name;
+}
 
 type ProjectDetail = {
   alt: string;
@@ -338,7 +345,7 @@ export default function Projects() {
       id="projects"
       className="relative mb-12 scroll-mt-[60px] overflow-x-clip px-4 py-10 sm:mb-16 sm:px-6 sm:py-12 md:mb-20 md:py-16 lg:px-8"
     >
-      <div className="relative z-10 mx-auto max-w-6xl">
+      <div className="relative z-10 mx-auto max-w-7xl">
         <motion.header
           initial={
             reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
@@ -349,30 +356,27 @@ export default function Projects() {
             duration: reduceMotion ? 0 : 0.55,
             ease: heroEase,
           }}
-          className="mb-8 space-y-3 text-left sm:mb-10"
+          className="mx-auto mb-8 max-w-6xl space-y-3 text-left sm:mb-10"
         >
-          <p className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">
-            <span
-              className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
-              aria-hidden
-            />
+          <p className={sectionEyebrowClass}>
+            <span className={sectionEyebrowMarkClass} aria-hidden />
             Selected work
           </p>
-          <h2 className="text-balance text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className={sectionHeadingClass}>
             Projects
           </h2>
           <SectionTitleRule />
-          <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
+          <p className={sectionLeadClass}>
             Products, mobile apps, and client sites I&apos;ve shipped.
           </p>
         </motion.header>
 
-        {/* Project switcher — above stage so it’s reachable on mobile */}
+        {/* Slim switcher — thumbs + name; taglines only on small screens */}
         <div
           role="tablist"
           aria-label="Projects"
           aria-orientation="horizontal"
-          className="-mx-1 mb-6 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:thin] sm:mb-8"
+          className="mx-auto mb-6 flex w-full max-w-6xl gap-2 overflow-x-auto pb-1 [scrollbar-width:thin] sm:mb-8"
         >
           {PROJECTS.map((p, index) => {
             const isSelected = selectedId === p.id;
@@ -390,31 +394,31 @@ export default function Projects() {
                 tabIndex={isSelected ? 0 : -1}
                 onClick={() => setSelectedId(p.id)}
                 onKeyDown={(e) => onTabKeyDown(e, index)}
-                className={`group flex min-w-[9.25rem] shrink-0 items-center gap-2.5 rounded-lg border px-2.5 py-2 text-left transition-[colors,transform,border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:min-w-[11rem] ${
+                className={`group flex min-w-[9.5rem] flex-1 basis-0 items-center gap-2 rounded-lg border px-2.5 py-2 text-left transition-[colors,border-color,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:min-w-0 sm:gap-2.5 ${
                   isSelected
                     ? "border-[var(--accent-primary)]/40 bg-white/[0.07] text-white"
                     : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/18 hover:bg-white/[0.04] hover:text-slate-200"
                 }`}
               >
-                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-md border border-white/10">
+                <span className="relative h-8 w-8 shrink-0 overflow-hidden rounded-md border border-white/10 sm:h-9 sm:w-9">
                   <Image
                     src={p.cover}
                     alt=""
                     fill
                     className="object-cover"
-                    sizes="40px"
+                    sizes="36px"
                   />
                 </span>
-                <span className="min-w-0">
+                <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm font-semibold leading-snug text-inherit">
-                    {p.name}
+                    {projectTabLabel(p)}
                   </span>
                   {projectIsLatest(p) ? (
                     <span className="mt-0.5 block text-[0.65rem] font-medium uppercase tracking-wide text-[var(--accent-primary)]">
                       Latest
                     </span>
                   ) : (
-                    <span className="mt-0.5 block truncate text-xs text-slate-500 group-hover:text-slate-400">
+                    <span className="mt-0.5 block truncate text-xs text-slate-500 group-hover:text-slate-400 md:hidden">
                       {p.tagline}
                     </span>
                   )}
@@ -424,7 +428,7 @@ export default function Projects() {
           })}
         </div>
 
-        {/* Featured media stage */}
+        {/* Featured media stage — wider than copy rail */}
         <motion.div
           key={`stage-${selectedId}`}
           initial={
@@ -451,7 +455,7 @@ export default function Projects() {
             id={DETAIL_PANEL_ID}
             role="tabpanel"
             aria-labelledby={`project-tab-${selectedId}`}
-            className="relative z-10 overflow-hidden rounded-lg border border-white/12 bg-white/[0.02] p-1.5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:p-2"
+            className="relative z-10 overflow-visible"
           >
             <MediaCarousel items={detail.media} alt={detail.alt} />
           </div>
@@ -468,7 +472,7 @@ export default function Projects() {
             duration: reduceMotion ? 0 : 0.35,
             ease: heroEase,
           }}
-          className="grid gap-8 lg:grid-cols-12 lg:gap-10"
+          className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-12 lg:gap-10"
         >
           <div className="lg:col-span-7">
             <div className="flex flex-wrap items-center gap-2.5">
@@ -494,7 +498,7 @@ export default function Projects() {
             </div>
           </div>
           <div className="lg:col-span-5 lg:border-l lg:border-white/10 lg:pl-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">
+            <p className={`mb-3 ${panelLabelClass}`}>
               Links
             </p>
             <div className={linkRowClass}>{detail.links}</div>

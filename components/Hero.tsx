@@ -1,6 +1,12 @@
 "use client";
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
+import {
+  heroDisplayClass,
+  heroSubheadClass,
+  sectionEyebrowClass,
+  sectionEyebrowMarkClass,
+} from "@/lib/surfaceStyles";
 import HeroAside from "./HeroAside";
 
 export default function Hero() {
@@ -56,34 +62,21 @@ export default function Hero() {
         initial="hidden"
         animate="show"
       >
-        {/*
-          Mobile: name → portrait → copy/CTAs (face in first viewport)
-          Desktop: text left, portrait right
-        */}
         <div className="grid w-full grid-cols-1 items-center gap-5 sm:gap-8 lg:grid-cols-12 lg:gap-x-10 xl:gap-x-14">
           <header className="order-1 space-y-2.5 sm:space-y-4 lg:col-span-6 lg:col-start-1 lg:row-start-1">
             <motion.p
               variants={item}
-              className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.22em] text-slate-400 sm:text-sm"
+              className={`${sectionEyebrowClass} sm:text-sm`}
             >
-              <span
-                className="inline-block h-2 w-2 shrink-0 rounded-[2px] bg-[var(--accent-primary)]"
-                aria-hidden
-              />
+              <span className={sectionEyebrowMarkClass} aria-hidden />
               Full stack developer
             </motion.p>
 
-            <motion.h1
-              variants={item}
-              className="text-balance text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] text-white sm:text-6xl md:text-7xl lg:text-[4.75rem] xl:text-8xl"
-            >
+            <motion.h1 variants={item} className={heroDisplayClass}>
               Jeffrey Patey
             </motion.h1>
 
-            <motion.p
-              variants={item}
-              className="max-w-xl text-balance text-xl font-semibold leading-snug tracking-tight sm:text-3xl md:text-4xl"
-            >
+            <motion.p variants={item} className={heroSubheadClass}>
               <span className="text-white/95">Health tech</span>
               <span className="text-white/35">
                 {" "}
@@ -99,8 +92,22 @@ export default function Hero() {
               variants={item}
               className="max-w-lg text-sm leading-relaxed text-slate-400 sm:text-base md:text-lg"
             >
-              Building practical web and mobile tools with a healthcare
-              background and a user-first mindset.
+              <a
+                href="#chairside"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.hash = "chairside";
+                  document.getElementById("projects")?.scrollIntoView({
+                    behavior: reduceMotion ? "auto" : "smooth",
+                    block: "start",
+                  });
+                }}
+                className="font-medium text-slate-200 underline decoration-[var(--accent-primary)]/40 underline-offset-4 transition-colors hover:text-white hover:decoration-[var(--accent-primary)]/70"
+              >
+                Chairside
+              </a>{" "}
+              is live on web and the App Store—plus HomeKeep and client work
+              shipping in production.
             </motion.p>
 
             <motion.div

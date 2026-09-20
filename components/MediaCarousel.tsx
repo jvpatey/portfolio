@@ -141,6 +141,68 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
   const carouselArrowBtn =
     "absolute top-1/2 z-30 flex -translate-y-1/2 touch-manipulation items-center justify-center rounded-full border border-white/10 bg-[var(--hero-base)]/90 p-2 text-white shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-sm transition-[opacity,background-color,border-color] duration-300 hover:border-white/15 hover:bg-[var(--surface-1)] disabled:opacity-50 sm:p-2.5 opacity-100 sm:opacity-0 sm:group-hover:opacity-100";
 
+  const renderFramedMedia = (item: MediaItem, index: number, isActive: boolean) => {
+    const device = item.device ?? "web";
+    const media =
+      item.type === "image" ? (
+        <Image
+          src={item.src}
+          alt={isActive ? `${alt} ${index + 1}` : ""}
+          width={1600}
+          height={900}
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 92vw, 1280px"
+          priority={index === 0}
+          draggable={false}
+          className="h-full w-full object-contain"
+        />
+      ) : (
+        <video
+          ref={(el) => {
+            videoRefs.current[index] = el;
+          }}
+          src={item.src}
+          poster={item.poster}
+          controls={isActive && !busy}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="h-full w-full object-contain"
+        >
+          Your browser does not support the video tag.
+        </video>
+      );
+
+    if (device === "mobile") {
+      return (
+        <div className="relative mx-auto flex h-full max-h-full w-auto max-w-[min(100%,280px)] items-center justify-center sm:max-w-[320px]">
+          <div className="relative flex h-full max-h-full aspect-[9/19] max-w-full overflow-hidden rounded-[1.35rem] border-[2.5px] border-white/18 bg-[#050507] p-[3px] shadow-[0_20px_50px_rgba(0,0,0,0.45)] sm:rounded-[1.5rem] sm:border-[3px] sm:p-1">
+            <div className="relative h-full w-full overflow-hidden rounded-[1.05rem] bg-black sm:rounded-[1.15rem]">
+              {media}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="flex h-full w-full max-w-5xl flex-col overflow-hidden rounded-md border border-white/12 bg-[#0a0a0e] shadow-[0_16px_48px_rgba(0,0,0,0.35)]">
+        <div
+          className="flex h-7 shrink-0 items-center gap-1.5 border-b border-white/10 bg-white/[0.03] px-3 sm:h-8"
+          aria-hidden
+        >
+          <span className="h-2 w-2 rounded-full bg-white/25" />
+          <span className="h-2 w-2 rounded-full bg-white/18" />
+          <span className="h-2 w-2 rounded-full bg-white/12" />
+          <div className="ml-2 h-3.5 flex-1 rounded-sm bg-white/[0.06] sm:ml-3 sm:h-4" />
+        </div>
+        <div className="relative min-h-0 flex-1 bg-black/40 p-1 sm:p-1.5">
+          {media}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="group relative flex w-full min-w-0 flex-col items-stretch overflow-hidden rounded-md">
       {items.length > 1 ? (
@@ -167,7 +229,6 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
         </button>
       ) : null}
 
-      {/* Taller on phones so mobile screenshots read larger */}
       <div
         className="relative aspect-[4/5] w-full overflow-hidden rounded-md bg-transparent touch-pan-y sm:aspect-[16/10] md:aspect-[16/9]"
         onTouchStart={onTouchStart}
@@ -201,7 +262,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
               key={item.src}
               aria-hidden={!isActive}
               onTransitionEnd={isActive ? onTopTransitionEnd : undefined}
-              className="absolute inset-0 flex items-center justify-center p-1 sm:p-2"
+              className="absolute inset-0 flex items-center justify-center p-1.5 sm:p-3"
               style={{
                 opacity,
                 zIndex,
@@ -210,34 +271,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
                 willChange: isActive && busy ? "opacity" : "auto",
               }}
             >
-              {item.type === "image" ? (
-                <Image
-                  src={item.src}
-                  alt={isActive ? `${alt} ${index + 1}` : ""}
-                  width={1600}
-                  height={900}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 90vw, 1152px"
-                  priority={index === 0}
-                  draggable={false}
-                  className="h-full w-full rounded-sm object-contain"
-                />
-              ) : (
-                <video
-                  ref={(el) => {
-                    videoRefs.current[index] = el;
-                  }}
-                  src={item.src}
-                  poster={item.poster}
-                  controls={isActive && !busy}
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  className="h-full w-full rounded-sm object-contain"
-                >
-                  Your browser does not support the video tag.
-                </video>
-              )}
+              {renderFramedMedia(item, index, isActive)}
             </div>
           );
         })}
@@ -294,11 +328,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
                   type="button"
                   onClick={() => goTo(index)}
                   disabled={busy}
-                  className={`relative shrink-0 overflow-hidden border transition-[opacity,border-color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 ${
-                    isMobile
-                      ? "h-[4.25rem] w-9 rounded-[0.65rem] sm:h-[4.75rem] sm:w-10 sm:rounded-[0.7rem]"
-                      : "h-14 w-[5.5rem] rounded-md sm:h-[4.5rem] sm:w-28"
-                  } ${
+                  className={`relative h-14 w-[4.75rem] shrink-0 overflow-hidden rounded-md border transition-[opacity,border-color,box-shadow] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 sm:h-[4.25rem] sm:w-[5.5rem] ${
                     selected
                       ? "border-[var(--accent-primary)]/50 ring-1 ring-[var(--accent-primary)]/30"
                       : "border-white/10 opacity-70 hover:opacity-100"
@@ -312,7 +342,7 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
                       alt=""
                       fill
                       className="object-cover object-top"
-                      sizes={isMobile ? "40px" : "112px"}
+                      sizes="88px"
                     />
                   ) : (
                     <span className="flex h-full w-full items-center justify-center bg-white/[0.06] text-[0.65rem] font-medium text-slate-300">
