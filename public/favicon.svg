@@ -12,8 +12,8 @@
   <text x="64" y="82" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="700" text-anchor="middle" fill="url(#text-gradient)" letter-spacing="-2">JP</text>
   
   <!-- Decorative dots (matching navbar hover effect) -->
-  <circle cx="100" cy="28" r="3" fill="#f43f5e" opacity="0.9"/>
-  <circle cx="28" cy="100" r="2.5" fill="#fb7185" opacity="0.9"/>
+  <circle cx="100" cy="28" r="3" fill="#e07a5f" opacity="0.9"/>
+  <circle cx="28" cy="100" r="2.5" fill="#e8a192" opacity="0.9"/>
   
   <defs>
     <!-- Background gradient - slate-800 via slate-900 to slate-800 (matching navbar) -->
@@ -25,14 +25,14 @@
     
     <!-- Inner glow — coral -->
     <linearGradient id="inner-glow" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#f43f5e"/>
-      <stop offset="100%" stop-color="#fb7185"/>
+      <stop offset="0%" stop-color="#e07a5f"/>
+      <stop offset="100%" stop-color="#e8a192"/>
     </linearGradient>
     
     <!-- Text gradient — coral -->
     <linearGradient id="text-gradient" x1="0" y1="0" x2="128" y2="128" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#f43f5e"/>
-      <stop offset="100%" stop-color="#fb7185"/>
+      <stop offset="0%" stop-color="#e07a5f"/>
+      <stop offset="100%" stop-color="#e8a192"/>
     </linearGradient>
   </defs>
 </svg>

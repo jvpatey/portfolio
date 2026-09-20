@@ -1,47 +1,51 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import Image from "next/image";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 
 export default function HeroAside({ item }: { item: Variants }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.aside
       variants={item}
-      className="mt-14 lg:mt-0 lg:col-span-5"
-      aria-label="Highlights"
+      className="relative mt-12 flex justify-center lg:col-span-6 lg:mt-0 lg:justify-end"
+      aria-label="Portrait"
     >
-      <div
-        className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 backdrop-blur-md sm:p-8"
-        style={{
-          boxShadow:
-            "0 8px 32px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
-        }}
-      >
-        <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-slate-400">
-          Focus
-        </p>
-        <p className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-          Health tech &amp; practical products
-        </p>
-        <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
-          Shipping full-stack web and mobile tools that simplify real workflows—
-          from dental staffing to home maintenance.
-        </p>
-        <ul className="mt-6 space-y-2 border-t border-white/5 pt-5 text-sm text-slate-400">
-          <li className="flex gap-2">
-            <span
-              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent-primary)]"
-              aria-hidden
-            />
-            Next.js, TypeScript, React Native &amp; SwiftUI
-          </li>
-          <li className="flex gap-2">
-            <span
-              className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-500"
-              aria-hidden
-            />
-            Based in Halifax, NS
-          </li>
-        </ul>
+      <div className="relative mx-auto w-full max-w-[380px] sm:max-w-[420px] lg:mx-0 lg:max-w-none lg:w-[min(100%,440px)]">
+        {/* Copper spotlight */}
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-90"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(224,122,95,0.45) 0%, rgba(224,122,95,0.18) 38%, transparent 68%)",
+          }}
+          aria-hidden
+        />
+
+        <motion.div
+          className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/12 shadow-[0_24px_80px_rgba(0,0,0,0.45)]"
+          initial={reduceMotion ? false : { y: 16, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.7,
+            delay: reduceMotion ? 0 : 0.2,
+            ease: [0.21, 0.47, 0.32, 0.98],
+          }}
+        >
+          <Image
+            src="/jeffrey-patey.jpg"
+            alt="Jeffrey Patey"
+            fill
+            priority
+            className="object-cover object-[center_20%]"
+            sizes="(min-width: 1024px) 440px, 90vw"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--hero-base)]/35 via-transparent to-transparent"
+            aria-hidden
+          />
+        </motion.div>
       </div>
     </motion.aside>
   );

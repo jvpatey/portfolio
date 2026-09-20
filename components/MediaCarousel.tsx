@@ -139,9 +139,9 @@ export default function MediaCarousel({ items, alt }: MediaCarouselProps) {
                 type="button"
                 onClick={() => handleSlideChange(index)}
                 disabled={isTransitioning}
-                className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/45 ${
+                className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 ${
                   selected
-                    ? "border-rose-300/50 ring-1 ring-rose-400/30"
+                    ? "border-[var(--accent-primary)]/50 ring-1 ring-[var(--accent-primary)]/30"
                     : "border-white/10 opacity-70 hover:opacity-100"
                 }`}
                 aria-label={`Go to media ${index + 1}`}

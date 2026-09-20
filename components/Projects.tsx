@@ -62,7 +62,7 @@ function projectIsLatest(project: (typeof PROJECTS)[number]) {
 }
 
 const latestBadgeClass =
-  "inline-flex shrink-0 items-center rounded-full border border-rose-400/30 bg-rose-500/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-rose-200/90 sm:text-[0.65rem]";
+  "inline-flex shrink-0 items-center rounded-full border border-[var(--accent-primary)]/35 bg-[var(--accent-primary)]/10 px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide text-[var(--accent-2)] sm:text-[0.65rem]";
 
 const chipClass =
   "rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-xs text-slate-300";
@@ -151,8 +151,8 @@ function ChairsideDetail() {
             fill permanent roles and last-minute chairside shifts. Clinics post
             openings and same-day fill-ins; professionals browse roles, set
             availability, apply with structured profiles, and coordinate hiring
-            through explainable match scoring, messaging, and interviews. Web is
-            live now; the iOS app is coming soon.
+            through explainable match scoring, messaging, and interviews. Web and
+            iOS are both live now.
           </p>
         }
         tech={[
@@ -166,11 +166,20 @@ function ChairsideDetail() {
         links={
           <>
             <a
-              href="https://chairsidedental.app/"
+              href="https://apps.apple.com/ca/app/chairside-app/id6772834242"
               target="_blank"
               rel="noopener noreferrer"
               className={primaryCtaClass}
               style={{ backgroundColor: "var(--cta-solid)" }}
+            >
+              <Apple className="h-4 w-4 shrink-0" aria-hidden />
+              App Store
+            </a>
+            <a
+              href="https://chairsidedental.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ghostCtaClass}
             >
               <ExternalLink className="h-4 w-4 shrink-0" aria-hidden />
               Live site
@@ -184,10 +193,6 @@ function ChairsideDetail() {
               <Github className="h-4 w-4 shrink-0" aria-hidden />
               GitHub
             </a>
-            <span className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-slate-400">
-              <Apple className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
-              iOS app coming soon
-            </span>
           </>
         }
       />
@@ -590,20 +595,20 @@ export default function Projects() {
                     tabIndex={isSelected ? 0 : -1}
                     onClick={() => setSelectedId(p.id)}
                     onKeyDown={(e) => onTabKeyDown(e, index)}
-                    className={`w-full scroll-mt-28 rounded-xl px-2 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
+                    className={`w-full scroll-mt-28 rounded-xl px-2 py-2.5 text-left transition-[colors,transform,background-color] duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-primary)]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--hero-base)] sm:rounded-2xl sm:px-2.5 sm:py-3 ${
                       isSelected
                         ? "bg-white/[0.08] text-white ring-1 ring-white/12"
-                        : "text-slate-300 hover:bg-white/[0.04] hover:text-slate-100"
+                        : "text-slate-300 hover:-translate-y-0.5 hover:bg-white/[0.05] hover:text-slate-100"
                     }`}
                   >
                     <span className="flex min-w-0 items-start gap-2.5">
-                      <span className="relative mt-0.5 h-11 w-11 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-white/[0.04]">
+                      <span className="relative mt-0.5 h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.04] shadow-[0_8px_20px_rgba(0,0,0,0.25)] sm:h-14 sm:w-14">
                         <Image
                           src={p.cover}
                           alt=""
                           fill
                           className="object-cover"
-                          sizes="44px"
+                          sizes="56px"
                         />
                       </span>
                       <span className="flex min-w-0 flex-col gap-0.5">
@@ -637,7 +642,7 @@ export default function Projects() {
             id={DETAIL_PANEL_ID}
             role="tabpanel"
             aria-labelledby={`${selectedId}`}
-            className={`min-w-0 p-4 sm:p-6 lg:col-span-8 lg:p-7 ${panelClass}`}
+            className={`min-w-0 p-3 sm:p-5 lg:col-span-8 lg:p-6 ${panelClass}`}
             style={asideShadow}
           >
             <div className="mb-5 border-b border-white/10 pb-4">

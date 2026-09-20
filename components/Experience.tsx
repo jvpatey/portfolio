@@ -92,7 +92,7 @@ export default function Experience() {
           </h2>
           <SectionTitleRule />
           <p className="max-w-2xl text-base leading-relaxed text-slate-400 md:text-lg">
-            Professional experience in technology and healthcare.
+            Technology and healthcare.
           </p>
         </motion.header>
 

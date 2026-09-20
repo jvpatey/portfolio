@@ -17,7 +17,7 @@ export default function Icon() {
     (
       <div
         style={{
-          background: "#060a0b",
+          background: "#07070a",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -56,7 +56,7 @@ export default function Icon() {
         {/* JP Text with gradient */}
         <div
           style={{
-            background: "linear-gradient(135deg, #f43f5e 0%, #fb7185 100%)",
+            background: "linear-gradient(135deg, #e07a5f 0%, #e8a192 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             color: "transparent",
