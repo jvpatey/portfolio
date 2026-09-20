@@ -178,7 +178,7 @@ export function SiteOpenGraphPreview() {
                   "linear-gradient(135deg, rgba(224,122,95,0.5), rgba(232,161,146,0.3))",
               },
               {
-                label: "Experience",
+                label: "About",
                 barBackgroundImage:
                   "linear-gradient(135deg, rgba(232,161,146,0.4), rgba(224,122,95,0.2))",
               },

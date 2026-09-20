@@ -36,7 +36,7 @@ export default function Navigation() {
       setIsScrolled(window.scrollY > 50);
 
       // Update active section based on scroll position
-      const sections = ["projects", "experience", "about", "contact"];
+      const sections = ["projects", "about", "contact"];
 
       // Check if we're still in the hero section (top of page)
       const firstSection = document.getElementById("projects");
@@ -105,7 +105,6 @@ export default function Navigation() {
 
   const navItems = [
     { href: "#projects", label: "Projects" },
-    { href: "#experience", label: "Experience" },
     { href: "#about", label: "About" },
   ];
 
